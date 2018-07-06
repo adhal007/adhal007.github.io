@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Abhilash Dhal
+title: Bayesian Lover
 subtitle: PhD Student, UC Davis
 ---
 
