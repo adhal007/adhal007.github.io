@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Bayesian Lover
+title: aboutme
 subtitle: PhD Student, UC Davis
 ---
 
