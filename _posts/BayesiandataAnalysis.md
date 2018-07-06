@@ -2,6 +2,7 @@
 layout: post
 title: Statistical Data Science
 subtitle: Overview and Principles
+tags: [Data science, statistics]
 ---
 ## Data Science and Patterns:
 
