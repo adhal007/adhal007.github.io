@@ -4,10 +4,11 @@ title: Abhilash Dhal
 subtitle: PhD Student, UC Davis
 ---
 
-My name is Abhilash. This is my first github markdown:
+Hi
+This is Abhilash. I'm a biophysics graduate student aspiting to work in the field of Quantitative genetics and genomics.
 
+Recreational Interests:
 - I like playing soccer
-- I'm extremely loyal to my family
-
-What else do you need?
+- I like reading about statistical prediction algorithms
+- In my leisure times, i also enjoy hiking and visiting mountains.
 
