@@ -8,7 +8,7 @@ tags: [Data science, statistics]
 
 #### **Introduction**
 
-Over the years, different technological fields had advanced into high dimensional data collection methods experimentally, providing ...  observations for a plethora of measurement techniques. For beginners like me, trying to enter into this ever increasing domain of        ...dimensionality, a firm ground to understand the basic principles of data science problems forms the crux. Data science ...   can be majorly factored into two subsets, each of which i will ponder upon in detail with time to give some necessary details   ... for different backgrounds to understand what role might be a consistent fit (neither an overfit, nor an underfit). For now, it ...   is easy to interpret the two major categories in the data science domain as Application and Development, each with their pros and cons. 
+Over the years, different technological fields had advanced into high dimensional data collection methods experimentally,      providing     observations for a plethora of measurement techniques. For beginners like me, trying to enter into this ever   increasing domain of        dimensionality, a firm ground to understand the basic principles of data science problems forms the crux. Data science can be majorly factored into two subsets, each of which i will ponder upon in detail with time to give some necessary details for different backgrounds to understand what role might be a consistent fit (neither an overfit, nor an underfit). For now, it is easy to interpret the two major categories in the data science domain as Application and Development, each with their pros and cons. 
 
 #### **Theoretical framework for Data science**
 
