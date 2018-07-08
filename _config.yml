@@ -24,11 +24,20 @@ description: Bayesian Prediction for Quantitative Genomics
 # List of links in the navigation bar
 navbar-links:
   About Me: "aboutme"
-  Resources:
+  Data Science Resources:
     - Biomedical Data Science: "https://github.com/genomicsclass/labs/"
     - R studio Cheat Sheets: "https://www.rstudio.com/resources/cheatsheets/"
     - Learn markdown: "http://www.markdowntutorial.com/"
     - GitHub Pages: "https://pages.github.com/"
+  
+  Useful Academic Links:
+    -  Overleaf: "https://www.overleaf.com/help/category/video_tutorials"
+  Python Programming:
+    - Bayesian modelling: "https://github.com/AllenDowney/BayesMadeSimple"
+    - Computational Statistics: "https://github.com/AllenDowney/CompStats"
+    - Computational Linear Algebra: "https://github.com/fastai/numerical-linear-algebra"
+  Julia Programming:
+    - Linear Algebra: "https://github.com/andreasnoack/LinearAlgebra.jl"
   #Author's home: "http://deanattali.com"
   -qtl-rocks: "http://qtl.rocks/"
 
