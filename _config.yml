@@ -36,14 +36,14 @@ navbar-links:
     - Bayesian modelling: "https://github.com/AllenDowney/BayesMadeSimple"
     - Computational Statistics: "https://github.com/AllenDowney/CompStats"
     - Computational Linear Algebra: "https://github.com/fastai/numerical-linear-algebra"
+    - Unofficial Python Packages: "https://www.lfd.uci.edu/~gohlke/pythonlibs"
+    - Python Programming Tutorials: "https://pythonprogramming.net"
+
   Julia Programming:
     - Linear Algebra: "https://github.com/andreasnoack/LinearAlgebra.jl"
   #Author's home: "http://deanattali.com"
   -qtl-rocks: "http://qtl.rocks/"
 
-  Python-Programming Resources:
-    - Unofficial Python Packages: "https://www.lfd.uci.edu/~gohlke/pythonlibs"
-    - Python Programming Tutorials: "https://pythonprogramming.net"
 # Image to show in the navigation bar - image must be a square (width = height)
 # Remove this parameter if you don't want an image in the navbar
 #qtl: "/img/avatar-icon.png"
