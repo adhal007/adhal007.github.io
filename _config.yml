@@ -23,7 +23,7 @@ description: Bayesian Prediction for Quantitative Genomics
 
 # List of links in the navigation bar
 navbar-links:
-  About Me: "aboutme"
+  About Me/Contact: "aboutme"
   Data Science Resources:
     - Biomedical Data Science: "https://github.com/genomicsclass/labs/"
     - R studio Cheat Sheets: "https://www.rstudio.com/resources/cheatsheets/"
