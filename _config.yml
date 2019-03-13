@@ -27,7 +27,7 @@ navbar-links:
   
   GCP Tutorials:
     - Data Procs:"https://cloud.google.com/dataproc/docs/tutorials/jupyter-notebook"
-    - Julia Setup: "https://haroldsoh.com/2016/04/28/set-up-anaconda-ipython-tensorflow-julia-on-a-google-compute-engine-vm"
+    - Julia: "https://haroldsoh.com/2016/04/28/set-up-anaconda-ipython-tensorflow-julia-on-a-google-compute-engine-vm"
           
   Useful Academic Links:
     -  Overleaf: "https://www.overleaf.com/help/category/video_tutorials"
@@ -45,6 +45,7 @@ navbar-links:
     - Linear Algebra: "https://github.com/andreasnoack/LinearAlgebra.jl"
     - JWAS: "https://github.com/reworkhow/JWAS.jl"
     - Biomedical Data Science: "https://github.com/genomicsclass/labs/"
+    - Sampling methods: "http://people.duke.edu/~ccc14/sta-663-2018/notebooks/S10X_Resampling_Simulation.html"
 
   #Author's home: "http://deanattali.com"
   Lab Website: "http://qtl.rocks/"
