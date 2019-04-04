@@ -25,6 +25,8 @@ description: Bayesian Prediction for Quantitative Genomics
 navbar-links:
   About Me/Contact: "aboutme"
   
+  Resume: "Abhilash-Dhal-Resume"
+  
   Projects:
     - Starcraft II Agent: "https://github.com/adhal007/SC2-GCP-CNN"
     - Bayesian GWAS: "https://github.com/adhal007/SSBR-JWAS-Implementation"
