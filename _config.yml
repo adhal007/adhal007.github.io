@@ -27,19 +27,22 @@ navbar-links:
   
     
   Projects:
+    - DGE using Outlier sum methods: "https://github.com/adhal007/OmicsProjects/blob/main/OutlierMethodsApplication/README.md" 
+    - Umap and clustering on GE data: "https://github.com/adhal007/OmicsProjects/blob/main/UmapApplication/README.md"
     - Starcraft II Agent: "https://github.com/adhal007/SC2-GCP-CNN"
     - Bayesian GWAS: "https://github.com/adhal007/SSBR-JWAS-Implementation"
-    - Genomic Prediction: "https://github.com/adhal007/Pheno_Corr"
-    - Bayesian Diagnostics: "https://github.com/adhal007/JConv"
+
+    # - Genomic Prediction: "https://github.com/adhal007/Pheno_Corr"
+    # - Bayesian Diagnostics: "https://github.com/adhal007/JConv"
           
-  Useful Academic Links:
-    -  Overleaf: "https://www.overleaf.com/help/category/video_tutorials"
-    - R studio Cheat Sheets: "https://www.rstudio.com/resources/cheatsheets/"
-    - Learn markdown: "http://www.markdowntutorial.com/"
-    - GitHub Pages: "https://pages.github.com/"
-    - Google Cloud tutorial: "http://cs231n.github.io/gce-tutorial/"
-    - Data Procs: "https://cloud.google.com/dataproc/docs/tutorials/jupyter-notebook"
-    - Julia: "https://haroldsoh.com/2016/04/28/set-up-anaconda-ipython-tensorflow-julia-on-a-google-compute-engine-vm"
+  # Useful Academic Links:
+  #   -  Overleaf: "https://www.overleaf.com/help/category/video_tutorials"
+  #   - R studio Cheat Sheets: "https://www.rstudio.com/resources/cheatsheets/"
+  #   - Learn markdown: "http://www.markdowntutorial.com/"
+  #   - GitHub Pages: "https://pages.github.com/"
+  #   - Google Cloud tutorial: "http://cs231n.github.io/gce-tutorial/"
+  #   - Data Procs: "https://cloud.google.com/dataproc/docs/tutorials/jupyter-notebook"
+  #   - Julia: "https://haroldsoh.com/2016/04/28/set-up-anaconda-ipython-tensorflow-julia-on-a-google-compute-engine-vm"
   
   Resume: "abhilashdhalresume.pdf"
 
@@ -54,7 +57,7 @@ navbar-links:
 #     - Biomedical Data Science: "https://github.com/genomicsclass/labs/"
 #     - Sampling methods: "http://people.duke.edu/~ccc14/sta-663-2018/notebooks/S10X_Resampling_Simulation.html"
  #Author's home: "http://deanattali.com"
-  Lab Website: "http://qtl.rocks/"
+  # Lab Website: "http://qtl.rocks/"
 
 # Image to show in the navigation bar - image must be a square (width = height)
 # Remove this parameter if you don't want an image in the navbar
