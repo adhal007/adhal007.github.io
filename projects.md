@@ -19,9 +19,12 @@ Being a data scientist just means living openly - be it open source software, op
  - **Standardization of ML/DL and Bioinfo tools**: Developing and maintaining a streamlined code base for different bioinformatics and ML/DL algorithms.
   
 - **Building Personal Projects**: Some jupyter notebooks showcasing current implemented ones are:
-   - [Differential Gene Expression](/files/DeSeqApplication/docs/workflow.md) using PyDeSeq in kidney cancer sub-types. 
-   - [Multi-label Supervised classification](/files/SupervisedLearningApplication/docs/workflow.md) of kidney cancer subtypes and tumor grade.
-   - [Disease stratification](/files/UmapApplication/docs/workflow.md) using bayesian optimized UMAP and dbscan in kidney cancer.  
+   - **[Differential Gene Expression](/files/DeSeqApplication/docs/workflow.md) using PyDeSeq in kidney cancer sub-types**
+     ![png](/files/DeSeqApplication/images/TCGA_Deseq2_analysis_files/TCGA_Deseq2_analysis_35_0.png)
+   - **[Multi-label Supervised classification](/files/SupervisedLearningApplication/docs/workflow.md) of kidney cancer subtypes and tumor grade**
+     ![png](/files/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_62_1.png)
+   - **[Disease stratification](/files/UmapApplication/docs/workflow.md) using bayesian optimized UMAP and dbscan in kidney cancer**
+     ![png](files/UmapApplication/images/OptimizedClusteringGE.png)  
 
 **Data source**:  A repository for open Omics data can be found on [Genomic data commons](https://portal.gdc.cancer.gov/repository).
 
