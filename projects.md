@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Miscallaneous
+title: Miscellaneous
 subtitle: What's been eating away my free time 
 comments: true
 carbonads: true
