@@ -25,13 +25,13 @@ description: Bayesian Prediction for Quantitative Genomics
 navbar-links:
   About Me/Contact: "aboutme"
   
-  Certifications: "certifications"  
+  # Certifications: "certifications"  
   
-  Projects:
-    - DGE using Outlier sum methods: "https://github.com/adhal007/OmicsProjects/blob/main/OutlierMethodsApplication/README.md" 
-    - Umap and clustering on GE data: "https://github.com/adhal007/OmicsProjects/blob/main/UmapApplication/README.md"
-    - Starcraft II Agent: "https://github.com/adhal007/SC2-GCP-CNN"
-    - Bayesian GWAS: "https://github.com/adhal007/SSBR-JWAS-Implementation"
+  Projects: "projects"
+    # - DeSeq: "https://github.com/adhal007/adhal007.github.io/tree/master/files" 
+    # - Umap and clustering on GE data: "https://github.com/adhal007/OmicsProjects/blob/main/UmapApplication/README.md"
+    # - Starcraft II Agent: "https://github.com/adhal007/SC2-GCP-CNN"
+    # - Bayesian GWAS: "https://github.com/adhal007/SSBR-JWAS-Implementation"
     # - Genomic Prediction: "https://github.com/adhal007/Pheno_Corr"
     # - Bayesian Diagnostics: "https://github.com/adhal007/JConv"
 
