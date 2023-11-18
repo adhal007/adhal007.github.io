@@ -17,7 +17,7 @@ baseurl: ""
 title: "Dhal's Webpage"
 
 # Short description of your site
-description: Bayesian Prediction for Quantitative Genomics
+description: Machine learning, Deep-learning and all Bioinformatics related stuff
 
 # --- Navigation bar options --- #
 
@@ -45,7 +45,7 @@ navbar-links:
   #   - Data Procs: "https://cloud.google.com/dataproc/docs/tutorials/jupyter-notebook"
   #   - Julia: "https://haroldsoh.com/2016/04/28/set-up-anaconda-ipython-tensorflow-julia-on-a-google-compute-engine-vm"
   
-  Resume: "abhilashdhalresume.pdf"
+  Resume: "AbhilashDhalResume20231511.pdf"
 
 # Statistical Modelling:
 #    - Bayesian modelling: "https://github.com/AllenDowney/BayesMadeSimple"
