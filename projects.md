@@ -19,18 +19,18 @@ Being a data scientist just means living openly - be it open source software, op
  - **Standardization of ML/DL and Bioinfo tools**: Developing and maintaining a streamlined code base for different bioinformatics and ML/DL algorithms.
   
 - **Personal Projects**: Some jupyter notebooks showcasing current implemented ones are:
-   - **[(11/2/2023) Differential Gene Expression](/files/DeSeqApplication/docs/workflow.md) using PyDeSeq in kidney cancer sub-types**  
-     ![](/files/DeSeqApplication/images/TCGA_Deseq2_analysis_files/TCGA_Deseq2_analysis_35_0.png ){:height="300" width="500"} 
+   - **[(11/2/2023) Differential Gene Expression](/files/DeSeqApplication/docs/workflow.md) using PyDeSeq in kidney cancer sub-types 
+     ![](/files/DeSeqApplication/images/TCGA_Deseq2_analysis_files/TCGA_Deseq2_analysis_35_0.png ){:height="300" width="500"}** 
 
-   - **[(11/14/20223) Multi-label Supervised classification using Sklearn multioutput](/files/SupervisedLearningApplication/docs/workflow.md) of kidney cancer subtypes and tumor grade**
+   - **[(11/14/20223) Multi-label Supervised classification of kidney cancer subtypes and tumor grade](/files/SupervisedLearningApplication/docs/workflow.md){:height="200" width="600"}**  
      
      ![png](/files/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_62_1.png )
    
-   - **[(11/21/2023)Evaluation of ensemble classifiers ](/files/SuperviseLearningEnsembleApplication/workflow.md)for multi-label classification for kidney cancer** 
-     ![png](files/SuperviseLearningEnsembleApplication/TCGA_Supervised_Multilabel_Classification_with_ensemble_models_files/TCGA_Supervised_Multilabel_Classification_with_ensemble_models_58_0.png)
+   - **[(11/21/2023)Evaluation of ensemble classifiers ](/files/SuperviseLearningEnsembleApplication/workflow.md)for multi-label classification for kidney cancer 
+     ![png](files/SuperviseLearningEnsembleApplication/TCGA_Supervised_Multilabel_Classification_with_ensemble_models_files/TCGA_Supervised_Multilabel_Classification_with_ensemble_models_58_0.png){:height="200" width="600"}** 
    
    - **[(10/25/2023) Disease stratification](/files/UmapApplication/docs/workflow.md) using bayesian optimized UMAP and dbscan in kidney cancer**
-     ![png](files/UmapApplication/images/OptimizedClusteringGE.png){:height="300" width="500"} 
+     ![png](files/UmapApplication/images/OptimizedClusteringGE.png){:height="200" width="600"} 
 
 **Data source**:  A repository for open Omics data can be found on [Genomic data commons](https://portal.gdc.cancer.gov/repository).
 
@@ -58,18 +58,18 @@ I'm a big advocate of writing re-usable and streamline code for data science pro
 
 Here is a list of some useful tools that can be found:
 
-- [Base Preprocessor](https://github.com/adhal007/OmixHub/blob/main/src/base_preprocessor.py)
+- **[Base Preprocessor](https://github.com/adhal007/OmixHub/blob/main/src/base_preprocessor.py)**
   - Example class with methods and attributes inherited by child classes. Some key methods provided are:
     - data skew
     - data leakage
     - patient overlap
     - training_testing_split 
     - etc
-- [Base ml models wrapper](https://github.com/adhal007/OmixHub/blob/main/src/base_ml_models.py)
+- **[Base ml models wrapper](https://github.com/adhal007/OmixHub/blob/main/src/base_ml_models.py)**
   - Example class with functionality to evaluate and plot multiple ML models for a data science application. This is intended to be inherited by specific child classes for building models for different Omics data
-- [Dimensionality reduction and clustering wrapper](https://github.com/adhal007/OmixHub/blob/main/src/DimRedMappers/README.md)
+- **[Dimensionality reduction and clustering wrapper](https://github.com/adhal007/OmixHub/blob/main/src/DimRedMappers/README.md)**
   - Interfaces with Preprocessor classes to facilitate easy application of UMAP and clustering
-- [Differential Analysis Wrapper](https://github.com/adhal007/OmixHub/blob/main/src/pydeseq_utils.py)
+- **[Differential Analysis Wrapper](https://github.com/adhal007/OmixHub/blob/main/src/pydeseq_utils.py)**
   - Faciliatates easy application of pydyseq in a few lines to perform differential analysis
 
 
