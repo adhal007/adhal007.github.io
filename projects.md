@@ -23,6 +23,7 @@ Being a data scientist just means living openly - be it open source software, op
      ![](/files/DeSeqApplication/images/TCGA_Deseq2_analysis_files/TCGA_Deseq2_analysis_35_0.png ){:height="300" width="500"} 
 
    - **[(11/14/20223) Multi-label Supervised classification using Sklearn multioutput](/files/SupervisedLearningApplication/docs/workflow.md) of kidney cancer subtypes and tumor grade**
+     
      ![png](/files/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_62_1.png ){:height="300" width="500"} 
    
    - **[(11/21/2023)Evaluation of ensemble classifiers ](/files/SuperviseLearningEnsembleApplication/workflow.md)for multi-label classification for kidney cancer** 
@@ -30,6 +31,7 @@ Being a data scientist just means living openly - be it open source software, op
    
    - **[(10/25/2023) Disease stratification](/files/UmapApplication/docs/workflow.md) using bayesian optimized UMAP and dbscan in kidney cancer**
      ![png](files/UmapApplication/images/OptimizedClusteringGE.png){:height="300" width="500"} 
+
 **Data source**:  A repository for open Omics data can be found on [Genomic data commons](https://portal.gdc.cancer.gov/repository).
 
 **Codebase**: All the **streamlined modules** for all past/current/future project notebooks can be found at [OmixHub](https://github.com/adhal007/OmixHub).
