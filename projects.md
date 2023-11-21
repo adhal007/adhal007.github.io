@@ -19,15 +19,15 @@ Being a data scientist just means living openly - be it open source software, op
  - **Standardization of ML/DL and Bioinfo tools**: Developing and maintaining a streamlined code base for different bioinformatics and ML/DL algorithms.
   
 - **Personal Projects**: Some jupyter notebooks showcasing current implemented ones are:
-   - **[(11/2/2023) Differential Gene Expression](/files/DeSeqApplication/docs/workflow.md) using PyDeSeq in kidney cancer sub-types**
+   - **[(11/2/2023) Differential Gene Expression](/files/DeSeqApplication/docs/workflow.md) using PyDeSeq in kidney cancer sub-types**  
      ![](/files/DeSeqApplication/images/TCGA_Deseq2_analysis_files/TCGA_Deseq2_analysis_35_0.png ){:height="300" width="500"} 
 
    - **[(11/14/20223) Multi-label Supervised classification using Sklearn multioutput](/files/SupervisedLearningApplication/docs/workflow.md) of kidney cancer subtypes and tumor grade**
      
-     ![png](/files/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_62_1.png ){:height="300" width="500"} 
+     ![png](/files/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_62_1.png )
    
    - **[(11/21/2023)Evaluation of ensemble classifiers ](/files/SuperviseLearningEnsembleApplication/workflow.md)for multi-label classification for kidney cancer** 
-     ![png](files/SuperviseLearningEnsembleApplication/TCGA_Supervised_Multilabel_Classification_with_ensemble_models_files/TCGA_Supervised_Multilabel_Classification_with_ensemble_models_58_0.png){:height="300" width="500"} 
+     ![png](files/SuperviseLearningEnsembleApplication/TCGA_Supervised_Multilabel_Classification_with_ensemble_models_files/TCGA_Supervised_Multilabel_Classification_with_ensemble_models_58_0.png)
    
    - **[(10/25/2023) Disease stratification](/files/UmapApplication/docs/workflow.md) using bayesian optimized UMAP and dbscan in kidney cancer**
      ![png](files/UmapApplication/images/OptimizedClusteringGE.png){:height="300" width="500"} 
@@ -52,6 +52,26 @@ Additionally, I enjoyed undertaking various AI courses in the computer science d
 - Evaluation of bayesian regression models in animal genomics  [(github](https://github.com/adhal007/SSBR-JWAS-Implementation)[,report)](https://www.overleaf.com/project/5e1408bb3d549100019e1d03)
 - Deep learning methods for Intracranial hemorrhage detection [(report)](https://www.overleaf.com/1359439834vszcmwdsjymd#b028db)
 - Real time strategy agents for starcraft II using tactical decision making [(github,](https://github.com/adhal007/SC2-GCP-CNN)[report)](https://www.overleaf.com/project/5c8f7547e49c3964192f4b09)
+
+### Software Development /Object Oriented Programming (OOP) Practices:
+I'm a big advocate of writing re-usable and streamline code for data science projects. Some of the modules that I've built for my personal bioinformatics projects can be found on [OmixHub](https://github.com/adhal007/OmixHub). Some of the crucial and advanced concepts of **inheritance, polymorphism, encapsulation and abstraction** can be seen in all of the modules.
+
+Here is a list of some useful tools that can be found:
+
+- [Base Preprocessor](https://github.com/adhal007/OmixHub/blob/main/src/base_preprocessor.py)
+  - Example class with methods and attributes inherited by child classes. Some key methods provided are:
+    - data skew
+    - data leakage
+    - patient overlap
+    - training_testing_split 
+    - etc
+- [Base ml models wrapper](https://github.com/adhal007/OmixHub/blob/main/src/base_ml_models.py)
+  - Example class with functionality to evaluate and plot multiple ML models for a data science application. This is intended to be inherited by specific child classes for building models for different Omics data
+- [Dimensionality reduction and clustering wrapper](https://github.com/adhal007/OmixHub/blob/main/src/DimRedMappers/README.md)
+  - Interfaces with Preprocessor classes to facilitate easy application of UMAP and clustering
+- [Differential Analysis Wrapper](https://github.com/adhal007/OmixHub/blob/main/src/pydeseq_utils.py)
+  - Faciliatates easy application of pydyseq in a few lines to perform differential analysis
+
 
 ### List of certifications:
 - Introduction to tensorflow for Artificial Intelligence, Machine learning and Deep learning  [(coursera, deeplearning.ai)](https://coursera.org/share/d6d78d704133cc8a37725be520787256)
