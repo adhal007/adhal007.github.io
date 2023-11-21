@@ -15,7 +15,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 ```
 
-    /opt/homebrew/anaconda3/envs/umap-env/lib/python3.11/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
+    /opt/homebrew/anaconda3/envs/umap-env/lib/python3.11/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthefiles.io/en/stable/user_install.html
       from .autonotebook import tqdm as notebook_tqdm
 
 
@@ -85,7 +85,7 @@ ax.set_title("Distribution of min, mean, max of all gene expression values" )
 
 
     
-![png](/ProjectDocs/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_6_2.png)
+![png](/files/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_6_2.png)
     
 
 
@@ -112,13 +112,13 @@ ml_df = pd.get_dummies(ge_kidney_cancer_data_correct_labels, columns=['project_i
     A value is trying to be set on a copy of a slice from a DataFrame.
     Try using .loc[row_indexer,col_indexer] = value instead
     
-    See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+    See the caveats in the documentation: https://pandas.pydata.org/pandas-files/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
       ge_kidney_cancer_data_correct_labels[gene_cols] = ge_kidney_cancer_data_correct_labels[gene_cols] + 1
     /var/folders/ng/bwk7d4ds7wz95l011dbvtc9r0000gn/T/ipykernel_2920/1726230766.py:10: SettingWithCopyWarning: 
     A value is trying to be set on a copy of a slice from a DataFrame.
     Try using .loc[row_indexer,col_indexer] = value instead
     
-    See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+    See the caveats in the documentation: https://pandas.pydata.org/pandas-files/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
       ge_kidney_cancer_data_correct_labels[gene_cols] = transformer.fit_transform(ge_kidney_cancer_data_correct_labels[gene_cols])
 
 
@@ -137,7 +137,7 @@ ml_df = pd.get_dummies(ge_kidney_cancer_data_correct_labels, columns=['project_i
     A value is trying to be set on a copy of a slice from a DataFrame.
     Try using .loc[row_indexer,col_indexer] = value instead
     
-    See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+    See the caveats in the documentation: https://pandas.pydata.org/pandas-files/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
       ge_kidney_cancer_data_correct_labels['project_id_orig'] =ge_kidney_cancer_data_correct_labels['project_id']
     /var/folders/ng/bwk7d4ds7wz95l011dbvtc9r0000gn/T/ipykernel_2920/2156470527.py:3: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
       ge_kidney_cancer_data_correct_labels['Sample_Type_orig'] = ge_kidney_cancer_data_correct_labels['Sample_Type']
@@ -145,7 +145,7 @@ ml_df = pd.get_dummies(ge_kidney_cancer_data_correct_labels, columns=['project_i
     A value is trying to be set on a copy of a slice from a DataFrame.
     Try using .loc[row_indexer,col_indexer] = value instead
     
-    See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+    See the caveats in the documentation: https://pandas.pydata.org/pandas-files/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
       ge_kidney_cancer_data_correct_labels['Sample_Type_orig'] = ge_kidney_cancer_data_correct_labels['Sample_Type']
 
 
@@ -209,7 +209,7 @@ ax.bar_label(ax.containers[0])
 
 
     
-![png](/ProjectDocs/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_16_1.png)
+![png](/files/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_16_1.png)
     
 
 
@@ -245,7 +245,7 @@ ax.bar_label(ax.containers[0])
 
 
     
-![png](/ProjectDocs/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_18_1.png)
+![png](/files/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_18_1.png)
     
 
 
@@ -279,7 +279,7 @@ ge_kidney_cancer_data_correct_labels['Sample_Type'] = ge_kidney_cancer_data_corr
     A value is trying to be set on a copy of a slice from a DataFrame.
     Try using .loc[row_indexer,col_indexer] = value instead
     
-    See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+    See the caveats in the documentation: https://pandas.pydata.org/pandas-files/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
       ge_kidney_cancer_data_correct_labels['Sample_Type'] = ge_kidney_cancer_data_correct_labels['Sample_Type'].apply(lambda x: 'Primary Tumor' if x == 'Additional - New Primary' else x)
 
 
@@ -314,7 +314,7 @@ ax.bar_label(ax.containers[0])
 
 
     
-![png](/ProjectDocs/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_23_1.png)
+![png](/files/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_23_1.png)
     
 
 
@@ -394,7 +394,7 @@ ax1.set_title("Count of samples originally across tumors")
 
 
     
-![png](/ProjectDocs/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_32_1.png)
+![png](/files/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_32_1.png)
     
 
 
@@ -415,7 +415,7 @@ ax.set_title("Count of samples after separating patient overlap samples")
 
 
     
-![png](/ProjectDocs/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_33_1.png)
+![png](/files/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_33_1.png)
     
 
 
@@ -435,7 +435,7 @@ ax.set_title("Samples Count in Kidney cancer(KC) subtypes Originally")
 
 
     
-![png](/ProjectDocs/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_34_1.png)
+![png](/files/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_34_1.png)
     
 
 
@@ -455,7 +455,7 @@ ax.set_title("Samples count in KC subtypes after separating patient overlap")
 
 
     
-![png](/ProjectDocs/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_35_1.png)
+![png](/files/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_35_1.png)
     
 
 
@@ -863,7 +863,7 @@ plt.show()
 
 
     
-![png](/ProjectDocs/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_56_0.png)
+![png](/files/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_56_0.png)
     
 
 
@@ -898,7 +898,7 @@ plt.show()
 
 
     
-![png](/ProjectDocs/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_57_0.png)
+![png](/files/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_57_0.png)
     
 
 
@@ -1063,7 +1063,7 @@ for model, clf_i in best_model_classes:
 
 
     
-![png](/ProjectDocs/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_62_1.png)
+![png](/files/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_62_1.png)
     
 
 
