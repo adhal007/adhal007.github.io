@@ -7,6 +7,17 @@ carbonads: true
 ---
 
 <!-- This is a collection of some personal projects I've worked on that are easily viewable online. Anything that is not browser-friendly will not make the cut :( -->
+
+<style>
+.responsive-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+</style>
+
 ## Streamlining Machine learning, Deep learning and bioinformatics:
 
 Being a data scientist just means living openly - be it open source software, open science or open data. Recently, I've been active in exploring and trying to productionize different machine learning and deep learning tools to be used generalizably across different datasets.
@@ -19,18 +30,27 @@ Being a data scientist just means living openly - be it open source software, op
  - **Standardization of ML/DL and Bioinfo tools**: Developing and maintaining a streamlined code base for different bioinformatics and ML/DL algorithms.
   
 - **Personal Projects**: Some jupyter notebooks showcasing current implemented ones are:
-   - **[(11/2/2023) Differential Gene Expression](/files/DeSeqApplication/docs/workflow.md) using PyDeSeq in kidney cancer sub-types 
-     ![](/files/DeSeqApplication/images/TCGA_Deseq2_analysis_files/TCGA_Deseq2_analysis_35_0.png ){:height="300" width="500"}** 
+   - **[(11/2/2023) Differential Gene Expression](/files/DeSeqApplication/docs/workflow.md) using PyDeSeq in kidney cancer sub-types** 
+     <!-- ![](/files/DeSeqApplication/images/TCGA_Deseq2_analysis_files/TCGA_Deseq2_analysis_35_0.png ){:height="300" width="500"}**  -->
+<img src="/files/DeSeqApplication/images/TCGA_Deseq2_analysis_files/TCGA_Deseq2_analysis_35_0.png" alt="Differential Gene Expression Analysis" class="responsive-image">
 
-   - **[(11/14/20223) Multi-label Supervised classification of kidney cancer subtypes and tumor grade](/files/SupervisedLearningApplication/docs/workflow.md){:height="200" width="600"}**  
+   - **[(11/14/20223) Multi-label Supervised classification of kidney cancer subtypes and tumor grade](/files/SupervisedLearningApplication/docs/workflow.md)** 
      
-     ![png](/files/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_62_1.png )
+<img src="/files/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_62_1.png" alt="Kidney Cancer Classification" class="responsive-image">
    
-   - **[(11/21/2023)Evaluation of ensemble classifiers ](/files/SuperviseLearningEnsembleApplication/workflow.md)for multi-label classification for kidney cancer 
-     ![png](files/SuperviseLearningEnsembleApplication/TCGA_Supervised_Multilabel_Classification_with_ensemble_models_files/TCGA_Supervised_Multilabel_Classification_with_ensemble_models_58_0.png)** 
-   
+   - **[(11/21/2023)Evaluation of ensemble classifiers ](/files/SuperviseLearningEnsembleApplication/workflow.md)for multi-label classification for kidney cancer**
+
+<img src="files/SuperviseLearningEnsembleApplication/TCGA_Supervised_Multilabel_Classification_with_ensemble_models_files/TCGA_Supervised_Multilabel_Classification_with_ensemble_models_58_0.png" alt="Ensemble Classifier Evaluation" class="responsive-image">
+  
+
+
+
+
+
+
+
    - **[(10/25/2023) Disease stratification](/files/UmapApplication/docs/workflow.md) using bayesian optimized UMAP and dbscan in kidney cancer**
-     ![png](files/UmapApplication/images/OptimizedClusteringGE.png)
+<img src="files/UmapApplication/images/OptimizedClusteringGE.png" alt="Disease Stratification" class="responsive-image">
 
 **Data source**:  A repository for open Omics data can be found on [Genomic data commons](https://portal.gdc.cancer.gov/repository).
 
