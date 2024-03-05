@@ -56,7 +56,11 @@ Being a data scientist just means living openly - be it open source software, op
 
 **Codebase**: All the **streamlined modules** for all past/current/future project notebooks can be found at [OmixHub](https://github.com/adhal007/OmixHub).
 
-**B. AIMedicine** (will come up with a cooler name soon): A second project that I've recently started is assembling deep learning algorithms for different imaging analysis (inspired from the course specialization [AI for medicine: deeplearning.ai](https://www.deeplearning.ai/courses/ai-for-medicine-specialization/)) 
+**B. E-Commerce Projects:**
+- **[(5/3/2024) Customer Segmentation using K-means clustering](/files/E_commerce_projects/customer_segmentation_model.md)**
+- **[Propensity score modelling for customer behavior(upcoming)]()**
+
+**C. AIMedicine** (will come up with a cooler name soon): A second project that I've recently started is assembling deep learning algorithms for different imaging analysis (inspired from the course specialization [AI for medicine: deeplearning.ai](https://www.deeplearning.ai/courses/ai-for-medicine-specialization/)) 
 
 - Still in early stage development (Only modules - no tutorial notebooks)
 
