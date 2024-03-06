@@ -58,7 +58,7 @@ Being a data scientist just means living openly - be it open source software, op
 
 **B. E-Commerce Projects:**
 - **[(5/3/2024) Customer Segmentation using K-means clustering](/files/E_commerce_projects/customer_segmentation_model.md)**
-- **[Propensity score modelling for customer behavior(upcoming)]()**
+- **[(5/6/2024) Propensity score modelling for Groupon deals](/files/E_commerce_projects/propensity_score_matching.md)**
 
 **C. AIMedicine** (will come up with a cooler name soon): A second project that I've recently started is assembling deep learning algorithms for different imaging analysis (inspired from the course specialization [AI for medicine: deeplearning.ai](https://www.deeplearning.ai/courses/ai-for-medicine-specialization/)) 
 
