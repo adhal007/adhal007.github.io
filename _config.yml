@@ -35,7 +35,8 @@ navbar-links:
     # - Genomic Prediction: "https://github.com/adhal007/Pheno_Corr"
     # - Bayesian Diagnostics: "https://github.com/adhal007/JConv"
 
-        
+  SoftwareDev: "software_dev_practices"
+  Accomplishments: "accomplishments"    
   # Useful Academic Links:
   #   -  Overleaf: "https://www.overleaf.com/help/category/video_tutorials"
   #   - R studio Cheat Sheets: "https://www.rstudio.com/resources/cheatsheets/"
