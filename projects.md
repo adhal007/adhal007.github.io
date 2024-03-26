@@ -51,15 +51,17 @@ Being a data scientist just means living openly - be it open source software, op
 
    - **[(10/25/2023) Disease stratification](/files/UmapApplication/docs/workflow.md) using bayesian optimized UMAP and dbscan in kidney cancer**
 <!-- <img src="files/UmapApplication/images/OptimizedClusteringGE.png" alt="Disease Stratification" class="responsive-image"> -->
+  - **[(4/2/2023) Analysis of ATAC-Seq Data]() (Incoming)**
+  - **[(4/2/2023) MAG Reconstruction and Strain Resolution](Incoming)**
 
 **Data source**:  A repository for open Omics data can be found on [Genomic data commons](https://portal.gdc.cancer.gov/repository).
 
 **Codebase**: All the **streamlined modules** for all past/current/future project notebooks can be found at [OmixHub](https://github.com/adhal007/OmixHub).
 
-**B. E-Commerce Projects:**
-- **[(5/3/2024) Customer Segmentation using K-means clustering](/files/E_commerce_projects/customer_segmentation_model.md)**
-- **[(6/3/2024) Propensity score modelling using Casual Inference Package](/files/E_commerce_projects/propensity_score_matching.md)**
-- **[(26/3/2024) Analysis of Groupon Deals with minimal requirements using propensity scores]()**
+**B. Data science in E-Commerce:**
+- **[(3/5/2024) Customer Segmentation using K-means clustering](/files/E_commerce_projects/customer_segmentation_model.md)**
+<!-- - **[(6/3/2024) Propensity score modelling using Casual Inference Package](/files/E_commerce_projects/propensity_score_matching.md)** -->
+- **[(3/26/2024) Analysis of Groupon Deals with minimal requirements using propensity scores](/files/E_commerce_projects/groupon_deals_data_analysis.md)**
 
 
 **C. AIMedicine** (will come up with a cooler name soon): A second project that I've recently started is assembling deep learning algorithms for different imaging analysis (inspired from the course specialization [AI for medicine: deeplearning.ai](https://www.deeplearning.ai/courses/ai-for-medicine-specialization/)) 
