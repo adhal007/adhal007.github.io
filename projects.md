@@ -32,15 +32,15 @@ Being a data scientist just means living openly - be it open source software, op
 - **Personal Projects**: Some jupyter notebooks showcasing current implemented ones are:
    - **[(11/2/2023) Differential Gene Expression](/files/DeSeqApplication/docs/workflow.md) using PyDeSeq in kidney cancer sub-types** 
      <!-- ![](/files/DeSeqApplication/images/TCGA_Deseq2_analysis_files/TCGA_Deseq2_analysis_35_0.png ){:height="300" width="500"}**  -->
-<img src="/files/DeSeqApplication/images/TCGA_Deseq2_analysis_files/TCGA_Deseq2_analysis_35_0.png" alt="Differential Gene Expression Analysis" class="responsive-image">
+<!-- <img src="/files/DeSeqApplication/images/TCGA_Deseq2_analysis_files/TCGA_Deseq2_analysis_35_0.png" alt="Differential Gene Expression Analysis" class="responsive-image"> -->
 
    - **[(11/14/20223) Multi-label Supervised classification of kidney cancer subtypes and tumor grade](/files/SupervisedLearningApplication/docs/workflow.md)** 
      
-<img src="/files/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_62_1.png" alt="Kidney Cancer Classification" class="responsive-image">
+<!-- <img src="/files/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_62_1.png" alt="Kidney Cancer Classification" class="responsive-image"> -->
    
    - **[(11/21/2023)Evaluation of ensemble classifiers ](/files/SuperviseLearningEnsembleApplication/workflow.md)for multi-label classification for kidney cancer**
 
-<img src="files/SuperviseLearningEnsembleApplication/TCGA_Supervised_Multilabel_Classification_with_ensemble_models_files/TCGA_Supervised_Multilabel_Classification_with_ensemble_models_58_0.png" alt="Ensemble Classifier Evaluation" class="responsive-image">
+<!-- <img src="files/SuperviseLearningEnsembleApplication/TCGA_Supervised_Multilabel_Classification_with_ensemble_models_files/TCGA_Supervised_Multilabel_Classification_with_ensemble_models_57_0.png" alt="Ensemble Classifier Evaluation" class="responsive-image"> -->
   
 
 
@@ -50,7 +50,7 @@ Being a data scientist just means living openly - be it open source software, op
 
 
    - **[(10/25/2023) Disease stratification](/files/UmapApplication/docs/workflow.md) using bayesian optimized UMAP and dbscan in kidney cancer**
-<img src="files/UmapApplication/images/OptimizedClusteringGE.png" alt="Disease Stratification" class="responsive-image">
+<!-- <img src="files/UmapApplication/images/OptimizedClusteringGE.png" alt="Disease Stratification" class="responsive-image"> -->
 
 **Data source**:  A repository for open Omics data can be found on [Genomic data commons](https://portal.gdc.cancer.gov/repository).
 
@@ -58,7 +58,9 @@ Being a data scientist just means living openly - be it open source software, op
 
 **B. E-Commerce Projects:**
 - **[(5/3/2024) Customer Segmentation using K-means clustering](/files/E_commerce_projects/customer_segmentation_model.md)**
-- **[(5/6/2024) Propensity score modelling for Groupon deals](/files/E_commerce_projects/propensity_score_matching.md)**
+- **[(6/3/2024) Propensity score modelling using Casual Inference Package](/files/E_commerce_projects/propensity_score_matching.md)**
+- **[(26/3/2024) Analysis of Groupon Deals with minimal requirements using propensity scores]()**
+
 
 **C. AIMedicine** (will come up with a cooler name soon): A second project that I've recently started is assembling deep learning algorithms for different imaging analysis (inspired from the course specialization [AI for medicine: deeplearning.ai](https://www.deeplearning.ai/courses/ai-for-medicine-specialization/)) 
 
