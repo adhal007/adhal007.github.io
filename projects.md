@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Miscellaneous
+title: Streamlining Data Science
 subtitle: What's been eating away my free time 
 comments: true
 carbonads: true
@@ -18,7 +18,7 @@ carbonads: true
 }
 </style>
 
-## Streamlining Data Science
+
 
 Being a data scientist just means living openly - be it open source software, open science or open data. Recently, I've been active in exploring and trying to productionize different machine learning and deep learning tools to be used generalizably across different datasets.
 

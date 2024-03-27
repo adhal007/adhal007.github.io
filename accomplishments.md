@@ -1,3 +1,26 @@
+---
+layout: page
+title: Software Development /Object Oriented Programming (OOP) Practices
+subtitle: How I structure my code
+comments: true
+carbonads: true
+---
+
+<!-- This is a collection of some personal projects I've worked on that are easily viewable online. Anything that is not browser-friendly will not make the cut :( -->
+
+<style>
+.responsive-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+</style>
+
+
+Please find some of my most recent work as well as certifications i've attained to stay up-to-date with new data science tools. 
+
 ### Most Recent Publications:
 - Profiling antibody epitopes induced by mRNA-1273 vaccination and boosters [(Frontiers in Immunology, 2024)](https://www.frontiersin.org/journals/immunology/articles/10.3389/fimmu.2024.1285278/full)
 - Distinguishing features of Long COVID identified through immune profiling [(Nature, 2023)](https://www.nature.com/articles/s41586-023-06651-y)
