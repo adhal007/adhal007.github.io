@@ -1,7 +1,7 @@
 ---
 layout: page
-title: Software Development /Object Oriented Programming (OOP) Practices
-subtitle: How I structure my code
+title: Contributions
+subtitle: How I've contributed to data science 
 comments: true
 carbonads: true
 ---
