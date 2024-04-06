@@ -33,3 +33,4 @@ Please find some of my most recent work as well as certifications i've attained 
 - Generative AI: Introduction and Applications [(coursera, IBM)](https://coursera.org/share/46299a8368fa4a1114de9cc7ce89d412)
 - Foundations of data science [(coursera, google)]("https://coursera.org/share/9f37553e8023098ed84a36bce6461f58")
 - Building data science web apps [(coursera)](https://coursera.org/share/e38cbb7230a8e912092a3d345773bff9")
+- AI for Medical Diagnosis [(coursera, deeplearning.ai)](https://coursera.org/share/c4f8673987b62b29ec79c3d907987bd2)
