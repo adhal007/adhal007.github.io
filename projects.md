@@ -22,9 +22,11 @@ carbonads: true
 
 Being a data scientist just means living openly - be it open source software, open science or open data. Recently, I've been active in exploring and trying to productionize different machine learning and deep learning tools to be used generalizably across different datasets.
 
-### Current Projects (Always evolving):
+## Current Projects (Always evolving):
 
-**A. Data science for Bioinformatics (OmixHub)**: I'm working towards building well documented and easy to use modules and algorithms for different omics datasets. Initially, these tools are built for bulk RNA-Seq data, but will be updated for other Omics datasets. Below are some high-level objectives for this vision:
+### A. Data science for Bioinformatics (OmixHub): 
+
+I'm working towards building well documented and easy to use modules and algorithms for different omics datasets. Initially, these tools are built for bulk RNA-Seq data, but will be updated for other Omics datasets. Below are some high-level objectives for this vision:
 
  - **Tutorial for early stage Data scientists**: Help early stage researchers understad, utilize and develop generalizable tools for bioinformatics analysis. 
  - **Standardization of ML/DL and Bioinfo tools**: Developing and maintaining a streamlined code base for different bioinformatics and ML/DL algorithms.
@@ -51,14 +53,16 @@ Being a data scientist just means living openly - be it open source software, op
 
    - **[(10/25/2023) Disease stratification](/files/UmapApplication/docs/workflow.md) using bayesian optimized UMAP and dbscan in kidney cancer**
 <!-- <img src="files/UmapApplication/images/OptimizedClusteringGE.png" alt="Disease Stratification" class="responsive-image"> -->
-  - **[(4/2/2023) Analysis of ATAC-Seq Data]() (Incoming)**
-  - **[(4/2/2023) MAG Reconstruction and Strain Resolution](Incoming)**
+
+**Future work**
+  - **[Analysis of ATAC-Seq Data]() (Incoming)**
+  - **[MAG Reconstruction and Strain Resolution]() (Incoming)**
 
 **Data source**:  A repository for open Omics data can be found on [Genomic data commons](https://portal.gdc.cancer.gov/repository).
 
 **Codebase**: All the **streamlined modules** for all past/current/future project notebooks can be found at [OmixHub](https://github.com/adhal007/OmixHub).
 
-**B. Data science for E-Commerce:**
+### B. Data science for E-Commerce:
 
 While primarily being an expert in data science bioinformatics, I also enjoy streamling data science code across other domains. Here I demonstrate how streamling packages for a few commonly available datasets can be versatibly applied to other E-commerce datasets.  The high level objectives are:
 - **Tutorial for early stage data scientists:** Help early stage data professionals develop generalizable tools for performing analysis for e-commerce companies similar to groupon, etc.
@@ -66,22 +70,35 @@ While primarily being an expert in data science bioinformatics, I also enjoy str
 - **Practising Object Oriented Programming**: Help early stage data professionals understand code structures and adavnced programming in Python (Classes, Class Methods, etc) with real world data
 
 - **Projects:**
-  - **[(3/5/2024) Customer Segmentation using K-means clustering](/files/E_commerce_projects/customer_segmentation_model.md)**
+  - **[(March 3rd, 2024) Customer Segmentation using K-means clustering](/files/E_commerce_projects/customer_segmentation_model.md)**
   <!-- - **[(6/3/2024) Propensity score modelling using Casual Inference Package](/files/E_commerce_projects/propensity_score_matching.md)** -->
-  - **[(3/26/2024) Analysis of Groupon Deals with minimal requirements using propensity scores](/files/E_commerce_projects/groupon_deals_data_analysis.md)**
+  - **[(March 26th, 2024) Analysis of Groupon Deals with minimal requirements using propensity scores](/files/E_commerce_projects/groupon_deals_data_analysis.md)**
+
 
 **Data source**: Kaggle.
 
 **Codebase**: All the streamlined modules for all past/current/future project notebooks can be found at [E-Commerce Projects](https://github.com/adhal007/Data-Science-with-Python).
 
-**C. AI for Medicine** (will come up with a cooler name soon): A second project that I've recently started is assembling deep learning algorithms for different imaging analysis (inspired from the course specialization [AI for medicine: deeplearning.ai](https://www.deeplearning.ai/courses/ai-for-medicine-specialization/)) 
+### C. Data Science for Medical Diagnosis: 
 
-- Still in early stage development (Only modules - no tutorial notebooks)
+A second project that I've recently started is assembling deep learning algorithms for different imaging analysis (inspired from the course specialization [AI for medicine: deeplearning.ai](https://www.deeplearning.ai/courses/ai-for-medicine-specialization/)). Adhering to my principles of code streamlining, I've created a repository that contains a general module for performing deep learning based classification of MRI or X-Ray Images. The reason for creating a single unified module was to be able to pre-process and analyze 2D and 3D image formats for medical diagnosis. Again the high level objectives are:
+
+- **Tutorial for computer vision enthusiasts:** Computer vision is a very popular domain for data scientists and aspiring data professionals looking to explore discriminative AI.
+
+- **Projects:**
+  - **[(April 6, 2024) Multi-label Classification of X-Ray's using DenseNet](/files/ComputerVision/imbalanced_xray_classification.md)**
+
+- **Future Work:**
+  - **Multi-label Classification of MRI images using U-Net**
+  - **Application of other Deep learning models on Chest X-Ray images**
+  - **Evaluating Model Performance on other chest X-Ray datasets** 
+
+**Data source:** You can reach out to me via [email](adhalbiophysics@gmail.com) for the datasets
 
 **Codebase**: All the **streamlined modules** to be used in past/current/future project notebooks can be found [AI for Medicine](https://github.com/adhal007/AIMedicine).
 
 
-### Grad School Projects:
+## D. Grad School Projects:
 
 During my masters, I developed my base programming and algorithm writing skills while doing my thesis in a quantitative genetics lab ([qtl-rocks](https://qtlrocks.notion.site/Quantitative-Genetics-Lab-a34943bdb6094b89b60fc1f10b2e20be)), studying, developing and applying scripts for genomic prediction and genome wide association studies. 
 
