@@ -23,7 +23,7 @@ description: Machine learning, Deep-learning and all Bioinformatics related stuf
 
 # List of links in the navigation bar
 navbar-links:
-  About Me/Contact: "aboutme"
+  # About Me/Contact: "aboutme"
   
   # Certifications: "certifications"  
   
@@ -35,8 +35,8 @@ navbar-links:
     # - Genomic Prediction: "https://github.com/adhal007/Pheno_Corr"
     # - Bayesian Diagnostics: "https://github.com/adhal007/JConv"
 
-  SoftwareDev: "software_dev_practices"
-  Accomplishments: "accomplishments"    
+  # SoftwareDev: "software_dev_practices"
+  Publications: "accomplishments"    
   # Useful Academic Links:
   #   -  Overleaf: "https://www.overleaf.com/help/category/video_tutorials"
   #   - R studio Cheat Sheets: "https://www.rstudio.com/resources/cheatsheets/"
@@ -46,7 +46,7 @@ navbar-links:
   #   - Data Procs: "https://cloud.google.com/dataproc/docs/tutorials/jupyter-notebook"
   #   - Julia: "https://haroldsoh.com/2016/04/28/set-up-anaconda-ipython-tensorflow-julia-on-a-google-compute-engine-vm"
   
-  Resume: "AbhilashDhalResume20231511.pdf"
+  Resume: "Abhilash-Dhal-Full-Resume.pdf"
 
 # Statistical Modelling:
 #    - Bayesian modelling: "https://github.com/AllenDowney/BayesMadeSimple"
