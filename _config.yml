@@ -26,7 +26,7 @@ navbar-links:
   # About Me/Contact: "aboutme"
   
   # Certifications: "certifications"  
-  Blogs:  "_posts"
+  Blogs:  "blog"
   Projects: "projects"
     # - DeSeq: "https://github.com/adhal007/adhal007.github.io/tree/master/files" 
     # - Umap and clustering on GE data: "https://github.com/adhal007/OmicsProjects/blob/main/UmapApplication/README.md"
