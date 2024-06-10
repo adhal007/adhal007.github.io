@@ -96,6 +96,7 @@ Here are some examples of using LLM's for ontology mapping in a one-shot learnin
 2. **Example 2:** In the paper "A Training-Free Approach to Ontology Mapping using LLM's" by Lee et al., the authors used LLM's to predict subsumption mappings between concepts from the "Drug Ontology" and the "Pharmacology Ontology" by capturing the hierarchical relationships between the concepts.
 
 ### Comparison of Approaches
+
 | Approach | Input | Advantages | Disadvantages |
 |----------|-------|------------|---------------|
 | Rule-based | Manual mapping rules | - Easy to understand and implement<br>- Can handle complex mapping scenarios | - **Input**: Requires manual effort to define rules<br>- **Performance:** Limited flexibility in handling new mappings <br>- **Adaptability:** Low, Requires re-training as ontology systems evolve |
