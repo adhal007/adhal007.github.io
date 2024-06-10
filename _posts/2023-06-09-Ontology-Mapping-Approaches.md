@@ -97,9 +97,9 @@ Here are some examples of using LLM's for ontology mapping in a one-shot learnin
 
 ### Comparison of Approaches
 
-| Approach | Input | Advantages | Disadvantages |
-|----------|-------|------------|---------------|
-| Rule-based | Manual mapping rules | - Easy to understand and implement<br>- Can handle complex mapping scenarios | - **Input**: Requires manual effort to define rules<br>- **Performance:** Limited flexibility in handling new mappings <br>- **Adaptability:** Low, Requires re-training as ontology systems evolve |
-| Machine learning-based | Training data with labeled mappings | - Can learn complex patterns and generalize<br>- Can handle new mappings with retraining | - **Input:** Requires labeled training data, particularly for subsumption mapping <br>- **Performance**: May not perform well with limited training data <br>- **Adaptability:** Low, Requires re-training as ontology systems evolve |
-| LLM's | Source and target ontologies | - Can capture concept relationships automatically<br>- Training-free context to context mapping | - **Input**: Well conceptualized framework for task specification (Prompt design) <br>- May require significant computational resources<br>- **Performance**: May not perform well with complex mappings <br>- LLM's are slow to respond usually can process a few tokens. |
-| Sentence Transformers (e.g., BERT) | Source and target ontologies | - Can capture semantic meaning and context<br>- Training-free context to context mapping<br>- Can also be fine-tuned for specific tasks | - **Input**: Requires significant fine-tuning using large amounts of data in positive-negative pairs <br>- **computational burden**: May require significant computational resources<br>- **Performance**: May not perform well with complex mappings |
+| Approach | Input | Disadvantages |
+|----------|-------|---------------|
+| Rule-based | Manual mapping rules | - **Input**: Requires manual effort to define rules<br>- **Performance:** Limited flexibility in handling new mappings <br>- **Adaptability:** Low, Requires re-training as ontology systems evolve |
+| Machine learning-based | Training data with labeled mappings | - **Input:** Requires labeled training data, particularly for subsumption mapping <br>- **Performance**: May not perform well with limited training data <br>- **Adaptability:** Low, Requires re-training as ontology systems evolve |
+| LLM's | Source and target ontologies | - **Input**: Well conceptualized framework for task specification (Prompt design) <br>- May require significant computational resources<br>- **Performance**: May not perform well with complex mappings <br>- LLM's are slow to respond usually can process a few tokens. |
+| Sentence Transformers (e.g., BERT) | Source and target ontologies | - **Input**: Requires significant fine-tuning using large amounts of data in positive-negative pairs <br>- **computational burden**: May require significant computational resources<br>- **Performance**: May not perform well with complex mappings |
