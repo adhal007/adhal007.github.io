@@ -1,112 +1,98 @@
 ---
+---
 layout: page
 title: Streamlining Data Science
-subtitle: What's been eating away my free time 
+subtitle: Exploring the Frontiers of Data Analysis
 comments: true
 carbonads: true
 ---
 
-<!-- This is a collection of some personal projects I've worked on that are easily viewable online. Anything that is not browser-friendly will not make the cut :( -->
-
 <style>
-.responsive-image {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
+.project-section { margin-bottom: 30px; }
+.project-title { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 5px; }
+.project-description { margin-left: 20px; }
+.project-list { list-style-type: none; padding-left: 0; }
+.project-list li { margin-bottom: 10px; }
+.project-list li:before { content: "▹"; color: #3498db; margin-right: 10px; }
+.codebase-link { background-color: #3498db; color: white; padding: 5px 10px; border-radius: 5px; text-decoration: none; }
 </style>
 
+# Data Science Portfolio
 
+As a data scientist, I believe in the power of open source, open science, and open data. My recent focus has been on productionizing machine learning and deep learning tools for versatile use across various datasets.
 
-Being a data scientist just means living openly - be it open source software, open science or open data. Recently, I've been active in exploring and trying to productionize different machine learning and deep learning tools to be used generalizably across different datasets.
+## Current Projects
 
-## Current Projects (Always evolving):
+### A. Data Science for Bioinformatics (OmixHub)
 
-### A. Data science for Bioinformatics (OmixHub): 
+<div class="project-section">
+<h3 class="project-title">Vision</h3>
+<ul class="project-list project-description">
+  <li>Build well-documented, user-friendly modules for omics datasets</li>
+  <li>Provide tutorials for early-stage data scientists in bioinformatics</li>
+  <li>Standardize ML/DL and bioinformatics tools</li>
+</ul>
 
-I'm working towards building well documented and easy to use modules and algorithms for different omics datasets. Initially, these tools are built for bulk RNA-Seq data, but will be updated for other Omics datasets. Below are some high-level objectives for this vision:
+<h3 class="project-title">Implemented Projects</h3>
+<ul class="project-list project-description">
+  <li><a href="/files/DeSeqApplication/docs/workflow.md">Differential Gene Expression in Kidney Cancer Subtypes</a></li>
+  <li><a href="/files/SupervisedLearningApplication/docs/workflow.md">Multi-label Classification of Kidney Cancer Subtypes</a></li>
+  <li><a href="/files/SuperviseLearningEnsembleApplication/workflow.md">Ensemble Classifiers for Kidney Cancer Classification</a></li>
+  <li><a href="/files/UmapApplication/docs/workflow.md">Disease Stratification using UMAP and DBSCAN</a></li>
+</ul>
 
- - **Tutorial for early stage Data scientists**: Help early stage researchers understad, utilize and develop generalizable tools for bioinformatics analysis. 
- - **Standardization of ML/DL and Bioinfo tools**: Developing and maintaining a streamlined code base for different bioinformatics and ML/DL algorithms.
-  
-- **Personal Projects**: Some jupyter notebooks showcasing current implemented ones are:
-   - **[(11/2/2023) Differential Gene Expression](/files/DeSeqApplication/docs/workflow.md) using PyDeSeq in kidney cancer sub-types** 
-     <!-- ![](/files/DeSeqApplication/images/TCGA_Deseq2_analysis_files/TCGA_Deseq2_analysis_35_0.png ){:height="300" width="500"}**  -->
-<!-- <img src="/files/DeSeqApplication/images/TCGA_Deseq2_analysis_files/TCGA_Deseq2_analysis_35_0.png" alt="Differential Gene Expression Analysis" class="responsive-image"> -->
+<p><strong>Data source:</strong> <a href="https://portal.gdc.cancer.gov/repository">Genomic Data Commons</a></p>
+<p><strong>Codebase:</strong> <a href="https://github.com/adhal007/OmixHub" class="codebase-link">OmixHub</a></p>
+</div>
 
-   - **[(11/14/20223) Multi-label Supervised classification of kidney cancer subtypes and tumor grade](/files/SupervisedLearningApplication/docs/workflow.md)** 
-     
-<!-- <img src="/files/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_62_1.png" alt="Kidney Cancer Classification" class="responsive-image"> -->
-   
-   - **[(11/21/2023)Evaluation of ensemble classifiers ](/files/SuperviseLearningEnsembleApplication/workflow.md)for multi-label classification for kidney cancer**
+### B. Data Science for E-Commerce
 
-<!-- <img src="files/SuperviseLearningEnsembleApplication/TCGA_Supervised_Multilabel_Classification_with_ensemble_models_files/TCGA_Supervised_Multilabel_Classification_with_ensemble_models_57_0.png" alt="Ensemble Classifier Evaluation" class="responsive-image"> -->
-  
+<div class="project-section">
+<h3 class="project-title">Vision</h3>
+<ul class="project-list project-description">
+  <li>Develop generalizable tools for e-commerce analysis</li>
+  <li>Demonstrate advanced Python programming (OOP) with real-world data</li>
+</ul>
 
+<h3 class="project-title">Projects</h3>
+<ul class="project-list project-description">
+  <li><a href="/files/E_commerce_projects/customer_segmentation_model.md">Customer Segmentation using K-means Clustering</a></li>
+  <li><a href="/files/E_commerce_projects/groupon_deals_data_analysis.md">Analysis of Groupon Deals using Propensity Scores</a></li>
+</ul>
 
+<p><strong>Data source:</strong> Kaggle</p>
+<p><strong>Codebase:</strong> <a href="https://github.com/adhal007/Data-Science-with-Python" class="codebase-link">E-Commerce Projects</a></p>
+</div>
 
+### C. Data Science for Medical Diagnosis
 
+<div class="project-section">
+<h3 class="project-title">Vision</h3>
+<ul class="project-list project-description">
+  <li>Assemble deep learning algorithms for medical imaging analysis</li>
+  <li>Create unified modules for 2D and 3D image processing</li>
+</ul>
 
+<h3 class="project-title">Projects</h3>
+<ul class="project-list project-description">
+  <li><a href="/files/ComputerVision/imbalanced_xray_classification.md">Multi-label Classification of X-Rays using DenseNet</a></li>
+</ul>
 
+<p><strong>Data source:</strong> Contact via <a href="mailto:adhalbiophysics@gmail.com">email</a></p>
+<p><strong>Codebase:</strong> <a href="https://github.com/adhal007/AIMedicine" class="codebase-link">AI for Medicine</a></p>
+</div>
 
-   - **[(10/25/2023) Disease stratification](/files/UmapApplication/docs/workflow.md) using bayesian optimized UMAP and dbscan in kidney cancer**
-<!-- <img src="files/UmapApplication/images/OptimizedClusteringGE.png" alt="Disease Stratification" class="responsive-image"> -->
+### D. Grad School Projects
 
-**Future work**
-  - **[Analysis of ATAC-Seq Data]() (Incoming)**
-  - **[MAG Reconstruction and Strain Resolution]() (Incoming)**
+<div class="project-section">
+<p>During my masters at <a href="https://cs.ucdavis.edu/">UC Davis</a>, I developed skills in quantitative genetics and AI:</p>
 
-**Data source**:  A repository for open Omics data can be found on [Genomic data commons](https://portal.gdc.cancer.gov/repository).
-
-**Codebase**: All the **streamlined modules** for all past/current/future project notebooks can be found at [OmixHub](https://github.com/adhal007/OmixHub).
-
-### B. Data science for E-Commerce:
-
-While primarily being an expert in data science bioinformatics, I also enjoy streamling data science code across other domains. Here I demonstrate how streamling packages for a few commonly available datasets can be versatibly applied to other E-commerce datasets.  The high level objectives are:
-- **Tutorial for early stage data scientists:** Help early stage data professionals develop generalizable tools for performing analysis for e-commerce companies similar to groupon, etc.
-
-- **Practising Object Oriented Programming**: Help early stage data professionals understand code structures and adavnced programming in Python (Classes, Class Methods, etc) with real world data
-
-- **Projects:**
-  - **[(March 3rd, 2024) Customer Segmentation using K-means clustering](/files/E_commerce_projects/customer_segmentation_model.md)**
-  <!-- - **[(6/3/2024) Propensity score modelling using Casual Inference Package](/files/E_commerce_projects/propensity_score_matching.md)** -->
-  - **[(March 26th, 2024) Analysis of Groupon Deals with minimal requirements using propensity scores](/files/E_commerce_projects/groupon_deals_data_analysis.md)**
-
-
-**Data source**: Kaggle.
-
-**Codebase**: All the streamlined modules for all past/current/future project notebooks can be found at [E-Commerce Projects](https://github.com/adhal007/Data-Science-with-Python).
-
-### C. Data Science for Medical Diagnosis: 
-
-A second project that I've recently started is assembling deep learning algorithms for different imaging analysis (inspired from the course specialization [AI for medicine: deeplearning.ai](https://www.deeplearning.ai/courses/ai-for-medicine-specialization/)). Adhering to my principles of code streamlining, I've created a repository that contains a general module for performing deep learning based classification of MRI or X-Ray Images. The reason for creating a single unified module was to be able to pre-process and analyze 2D and 3D image formats for medical diagnosis. Again the high level objectives are:
-
-- **Tutorial for computer vision enthusiasts:** Computer vision is a very popular domain for data scientists and aspiring data professionals looking to explore discriminative AI.
-
-- **Projects:**
-  - **[(April 6, 2024) Multi-label Classification of X-Ray's using DenseNet](/files/ComputerVision/imbalanced_xray_classification.md)**
-
-- **Future Work:**
-  - **Multi-label Classification of MRI images using U-Net**
-  - **Application of other Deep learning models on Chest X-Ray images**
-  - **Evaluating Model Performance on other chest X-Ray datasets** 
-
-**Data source:** You can reach out to me via [email](adhalbiophysics@gmail.com) for the datasets
-
-**Codebase**: All the **streamlined modules** to be used in past/current/future project notebooks can be found [AI for Medicine](https://github.com/adhal007/AIMedicine).
-
-
-## D. Grad School Projects:
-
-During my masters, I developed my base programming and algorithm writing skills while doing my thesis in a quantitative genetics lab ([qtl-rocks](https://qtlrocks.notion.site/Quantitative-Genetics-Lab-a34943bdb6094b89b60fc1f10b2e20be)), studying, developing and applying scripts for genomic prediction and genome wide association studies. 
-
-Additionally, I enjoyed undertaking various AI courses in the computer science department at [University of California, Davis](https://cs.ucdavis.edu/) which involved group projects that i've been a part of. Below are the list of such projects
-
-- Evaluation of bayesian regression models in animal genomics  [(github](https://github.com/adhal007/SSBR-JWAS-Implementation)[,report)](https://www.overleaf.com/project/5e1408bb3d549100019e1d03)
-- Deep learning methods for Intracranial hemorrhage detection [(report)](https://www.overleaf.com/1359439834vszcmwdsjymd#b028db)
-- Real time strategy agents for starcraft II using tactical decision making [(github,](https://github.com/adhal007/SC2-GCP-CNN)[report)](https://www.overleaf.com/project/5c8f7547e49c3964192f4b09)
+<ul class="project-list">
+  <li><a href="https://github.com/adhal007/SSBR-JWAS-Implementation">Bayesian Regression Models in Animal Genomics</a></li>
+  <li><a href="https://www.overleaf.com/1359439834vszcmwdsjymd#b028db">Deep Learning for Intracranial Hemorrhage Detection</a></li>
+  <li><a href="https://github.com/adhal007/SC2-GCP-CNN">Real-time Strategy Agents for Starcraft II</a></li>
+</ul>
+</div>
 
 <!-- ### Software Development /Object Oriented Programming (OOP) Practices:
 I'm a big advocate of writing re-usable and streamline code for data science projects. Some of the modules that I've built for my personal bioinformatics projects can be found on [OmixHub](https://github.com/adhal007/OmixHub). Some of the crucial and advanced concepts of **inheritance, polymorphism, encapsulation and abstraction** can be seen in all of the modules.
