@@ -1,5 +1,4 @@
 ---
----
 layout: page
 title: Streamlining Data Science
 subtitle: Exploring the Frontiers of Data Analysis
