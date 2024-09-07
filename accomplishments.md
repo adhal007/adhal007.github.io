@@ -11,6 +11,11 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
     color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
@@ -55,10 +60,11 @@ a:hover {
 }
 </style>
 
-<div class="section">
-    <h2>Recent Publications and Certifications</h2>
-    <p>Explore my most recent work and certifications in data science.</p>
-</div>
+<div class="container">
+    <div class="section">
+        <h2>Recent Publications and Certifications</h2>
+        <p>Explore my most recent work and certifications in data science.</p>
+    </div>
 
 <div class="section">
     <h3>Most Recent Publications</h3>
