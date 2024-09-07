@@ -13,16 +13,21 @@ body {
     color: #333;
     margin: 0;
     padding: 0;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
 }
 
 .container {
     max-width: 800px;
-    margin: 0 auto;
+    width: 100%;
     padding: 20px;
+    box-sizing: border-box;
 }
 
 h1, h2, h3 {
     color: #2c3e50;
+    text-align: center;
 }
 
 .section {
@@ -61,10 +66,12 @@ a:hover {
 </style>
 
 <div class="container">
-    <div class="section">
+    <h1>Contributions</h1>
+    <p style="text-align: center;">Explore my most recent work and certifications in data science</p>
+    <!-- <div class="section">
         <h2>Recent Publications and Certifications</h2>
         <p>Explore my most recent work and certifications in data science.</p>
-    </div>
+    </div> -->
 
 <div class="section">
     <h3>Most Recent Publications</h3>
