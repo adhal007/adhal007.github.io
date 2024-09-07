@@ -65,13 +65,10 @@ a:hover {
 }
 </style>
 
-<div class="container">
-    <h1>Contributions</h1>
-    <p style="text-align: center;">Explore my most recent work and certifications in data science</p>
-    <!-- <div class="section">
-        <h2>Recent Publications and Certifications</h2>
-        <p>Explore my most recent work and certifications in data science.</p>
-    </div> -->
+<div class="section">
+    <h2>Recent Publications and Certifications</h2>
+    <p>Explore my most recent work and certifications in data science.</p>
+</div>
 
 <div class="section">
     <h3>Most Recent Publications</h3>
