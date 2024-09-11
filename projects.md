@@ -23,7 +23,7 @@ As a data scientist, I believe in the power of open source, open science, and op
 ## Current Projects
 
 ### A. Data Science for Bioinformatics (OmixHub)
-<a href="markdown-viewer.html?file=test.md" target="_blank">Test Markdown File</a>
+
 <div class="project-section">
 <h3 class="project-title">Vision</h3>
 <ul class="project-list project-description">
@@ -34,10 +34,10 @@ As a data scientist, I believe in the power of open source, open science, and op
 
 <h3 class="project-title">Implemented Projects</h3>
 <ul class="project-list project-description">
-  <li><a href="markdown-viewer.html?file=https://abhilashdhal.com/files/DeSeqApplication/docs/workflow.md">Differential Gene Expression in Kidney Cancer Subtypes</a></li>
-  <li><a href="markdown-viewer.html?file=https://abhilashdhal.com/files/SupervisedLearningApplication/docs/workflow.md">Multi-label Classification of Kidney Cancer Subtypes</a></li>
-  <li><a href="markdown-viewer.html?file=https://abhilashdhal.com/files/SuperviseLearningEnsembleApplication/workflow.md">Ensemble Classifiers for Kidney Cancer Classification</a></li>
-  <li><a href="markdown-viewer.html?file=https://abhilashdhal.com/files/UmapApplication/docs/workflow.md">Disease Stratification using UMAP and DBSCAN</a></li>
+  <li><a href="/files/DeSeqApplication/docs/workflow.html">Differential Gene Expression in Kidney Cancer Subtypes</a></li>
+  <li><a href="/files/SupervisedLearningApplication/docs/workflow.html">Multi-label Classification of Kidney Cancer Subtypes</a></li>
+  <li><a href="/files/SuperviseLearningEnsembleApplication/workflow.html">Ensemble Classifiers for Kidney Cancer Classification</a></li>
+  <li><a href="/files/UmapApplication/docs/workflow.html">Disease Stratification using UMAP and DBSCAN</a></li>
 </ul>
 
 <p><strong>Data source:</strong> <a href="https://portal.gdc.cancer.gov/repository">Genomic Data Commons</a></p>
@@ -55,8 +55,8 @@ As a data scientist, I believe in the power of open source, open science, and op
 
 <h3 class="project-title">Projects</h3>
 <ul class="project-list project-description">
-  <li><a href="/files/E_commerce_projects/customer_segmentation_model.md">Customer Segmentation using K-means Clustering</a></li>
-  <li><a href="/files/E_commerce_projects/groupon_deals_data_analysis.md">Analysis of Groupon Deals using Propensity Scores</a></li>
+  <li><a href="/files/E_commerce_projects/customer_segmentation_model.html">Customer Segmentation using K-means Clustering</a></li>
+  <li><a href="/files/E_commerce_projects/groupon_deals_data_analysis.html">Analysis of Groupon Deals using Propensity Scores</a></li>
 </ul>
 
 <p><strong>Data source:</strong> Kaggle</p>
@@ -74,7 +74,7 @@ As a data scientist, I believe in the power of open source, open science, and op
 
 <h3 class="project-title">Projects</h3>
 <ul class="project-list project-description">
-  <li><a href="/files/ComputerVision/imbalanced_xray_classification.md">Multi-label Classification of X-Rays using DenseNet</a></li>
+  <li><a href="/files/ComputerVision/imbalanced_xray_classification.html">Multi-label Classification of X-Rays using DenseNet</a></li>
 </ul>
 
 <p><strong>Data source:</strong> Contact via <a href="mailto:adhalbiophysics@gmail.com">email</a></p>
@@ -92,24 +92,3 @@ As a data scientist, I believe in the power of open source, open science, and op
   <li><a href="https://github.com/adhal007/SC2-GCP-CNN">Real-time Strategy Agents for Starcraft II</a></li>
 </ul>
 </div>
-
-<!-- ### Software Development /Object Oriented Programming (OOP) Practices:
-I'm a big advocate of writing re-usable and streamline code for data science projects. Some of the modules that I've built for my personal bioinformatics projects can be found on [OmixHub](https://github.com/adhal007/OmixHub). Some of the crucial and advanced concepts of **inheritance, polymorphism, encapsulation and abstraction** can be seen in all of the modules.
-
-Here is a list of some useful tools that can be found:
-
-- **[Base Preprocessor](https://github.com/adhal007/OmixHub/blob/main/src/base_preprocessor.py)**
-  - Example class with methods and attributes inherited by child classes. Some key methods provided are:
-    - data skew
-    - data leakage
-    - patient overlap
-    - training_testing_split 
-    - etc
-- **[Base ml models wrapper](https://github.com/adhal007/OmixHub/blob/main/src/base_ml_models.py)**
-  - Example class with functionality to evaluate and plot multiple ML models for a data science application. This is intended to be inherited by specific child classes for building models for different Omics data
-- **[Dimensionality reduction and clustering wrapper](https://github.com/adhal007/OmixHub/blob/main/src/DimRedMappers/README.md)**
-  - Interfaces with Preprocessor classes to facilitate easy application of UMAP and clustering
-- **[Differential Analysis Wrapper](https://github.com/adhal007/OmixHub/blob/main/src/pydeseq_utils.py)**
-  - Faciliatates easy application of pydyseq in a few lines to perform differential analysis -->
-
-

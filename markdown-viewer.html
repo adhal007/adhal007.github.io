@@ -39,13 +39,8 @@
             // Function to fetch and render Markdown
             function renderMarkdown(url) {
                 debugElement.innerHTML += `<p>Attempting to load: ${url}</p>`;
-                
-                // Convert relative URL to GitHub raw content URL
-                const githubRawUrl = url.replace('https://abhilashdhal.com/', 'https://raw.githubusercontent.com/adhal007/adhal007.github.io/main/');
-                
-                debugElement.innerHTML += `<p>GitHub Raw URL: ${githubRawUrl}</p>`;
-                
-                fetch(githubRawUrl)
+                const corsProxyUrl = `https://cors-anywhere.herokuapp.com/${url}`;
+                fetch(corsProxyUrl)
                     .then(response => {
                         if (!response.ok) {
                             throw new Error(`HTTP error! status: ${response.status}`);
@@ -72,3 +67,4 @@
         });
     </script>
 </body>
+</html>

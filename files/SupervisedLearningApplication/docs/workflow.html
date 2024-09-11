@@ -1,0 +1,2846 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Converted from: workflow.md</title>
+    <meta charset="utf-8"/>
+
+</head>
+<body>
+
+<div
+            class="github-markdown-body"
+            data-color-mode="auto"
+            data-light-theme="light"
+            data-dark-theme="dark"
+        >
+            <div class="github-markdown-content"><span id="markdown-mermaid" aria-hidden="true"
+                    data-dark-mode-theme="dark"
+                    data-light-mode-theme="default"></span>
+                <h2 id="heading-supervised-classification-of-multi-label-kidney-cancer-rna-seq-data">Supervised Classification of multi-label Kidney Cancer RNA-Seq Data</h2>
+<script type="module" src="https://unpkg.com/@github/clipboard-copy-element@latest"></script>
+<style>
+    .ClipboardButton {
+        position: relative;
+    }
+
+    clipboard-copy {
+        /* padding: 0.4em 0.6em; */
+        font: 0.9rem system-ui, sans-serif;
+        display: inline-block;
+        cursor: default;
+        color: var(--vscode-button-foreground);
+        background-color: var(--vscode-button-border);
+        border-color: var(--vscode-textCodeBlock-background);
+        border-radius: 6px;
+        border: 1px solid var(--vscode-widget-border);
+        box-shadow: inset 0 -1px 0 var(--vscode-widget-shadow);
+        transition: 80ms cubic-bezier(0.33, 1, 0.68, 1);
+        transition-property: color,background-color,box-shadow,border-color;
+    }
+
+    clipboard-copy:hover {
+        background-color: var(--vscode-statusBarItem-hoverBackground);
+    }
+
+    clipboard-copy:active {
+        outline: 1px solid var(--vscode-contrastActiveBorder) !important;
+        outline-offset: -1px;
+    }
+
+    clipboard-copy:focus-visible {
+        outline: 1px solid var(--vscode-focusBorder);
+    }
+
+    .d-none {
+        display: none !important;
+    }
+
+    .position-relative {
+        position: relative !important;
+    }
+
+    .position-absolute {
+        position: absolute !important;
+    }
+
+    .right-0 {
+        right: 0 !important;
+    }
+
+    .top-0 {
+        top: 0 !important;
+    }
+
+    .m-2 {
+        margin: var(--base-size-8, 8px) !important;
+    }
+
+    .color-fg-success {
+        color: #3fb950 !important;
+        stroke: #3fb950 !important;
+        border-color: #3fb950 !important;
+    }
+</style>
+<script>
+    document.addEventListener('clipboard-copy', function (event) {
+        const notice_clipboard_copy = event.target;
+        console.log(`notice_clipboard_copy = ${notice_clipboard_copy}`)
+        const notice_copy = event.target.querySelector('.clipboard-copy-icon');
+        const notice_check = event.target.querySelector('.clipboard-check-icon');
+        notice_clipboard_copy.classList.add("color-fg-success");
+        notice_copy.classList.add("d-none");
+        notice_check.classList.remove("d-none");
+        setTimeout(function () {
+            notice_clipboard_copy.classList.remove("color-fg-success");
+            notice_copy.classList.remove("d-none");
+            notice_check.classList.add("d-none");
+        }, 1000)
+    })
+</script><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>import OmicsUtils.DimRedMappers.clusterer
+import OmicsUtils.DimRedMappers.umap_embedders
+from importlib import reload
+reload(OmicsUtils.DimRedMappers.clusterer)
+reload(OmicsUtils.DimRedMappers.umap_embedders)
+
+import pandas as pd 
+import numpy as np
+from sklearn.preprocessing import FunctionTransformer
+from sklearn.model_selection import train_test_split
+import matplotlib.pyplot as plt
+import seaborn as sns
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="import OmicsUtils.DimRedMappers.clusterer
+import OmicsUtils.DimRedMappers.umap_embedders
+from importlib import reload
+reload(OmicsUtils.DimRedMappers.clusterer)
+reload(OmicsUtils.DimRedMappers.umap_embedders)
+
+import pandas as pd 
+import numpy as np
+from sklearn.preprocessing import FunctionTransformer
+from sklearn.model_selection import train_test_split
+import matplotlib.pyplot as plt
+import seaborn as sns" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre data-line="17" class="code-line" dir="auto"><code class="hljs">/opt/homebrew/anaconda3/envs/umap-env/lib/python3.11/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthefiles.io/en/stable/user_install.html
+  from .autonotebook import tqdm as notebook_tqdm
+</code></pre>
+
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="/opt/homebrew/anaconda3/envs/umap-env/lib/python3.11/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthefiles.io/en/stable/user_install.html
+  from .autonotebook import tqdm as notebook_tqdm" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><h2 id="heading-i.-data-preprocessing-and-transformation">I. Data Preprocessing and transformation</h2>
+<h2 id="heading-1.1-read-and-wrangle-the-data-to-get-gene-expression-features-and-clinical-data-into-a-single-dataframe">1.1 Read and wrangle the data to get gene expression features and clinical data into a single dataframe</h2>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>## Read labels and gene expression data 
+fpkm_unstr_df_with_labels = pd.read_csv('./Transcriptomics/data/processed_data/fpkm_unstr_data_with_labels.csv')
+gene_cols = fpkm_unstr_df_with_labels.columns.to_numpy()[:60660]
+exposure_tsv = pd.read_csv('./Transcriptomics/data/clinical.cart.2023-10-29/exposure.tsv', sep='\t')
+
+
+## some columns have whitespace that needs to be removed for better processing
+new_columns = fpkm_unstr_df_with_labels.columns.str.replace(' ', '_').to_numpy()
+fpkm_unstr_df_with_labels.columns = new_columns 
+
+## Merge exposure data to get labels for tumor type and kidney subtype
+ge_kidney_cancer_data_with_tgca_labels = pd.merge(fpkm_unstr_df_with_labels,
+                                                  exposure_tsv[['case_submitter_id', 'project_id']],
+                                                  left_on='Case_ID',
+                                                  right_on='case_submitter_id')
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="## Read labels and gene expression data 
+fpkm_unstr_df_with_labels = pd.read_csv(&#039;./Transcriptomics/data/processed_data/fpkm_unstr_data_with_labels.csv&#039;)
+gene_cols = fpkm_unstr_df_with_labels.columns.to_numpy()[:60660]
+exposure_tsv = pd.read_csv(&#039;./Transcriptomics/data/clinical.cart.2023-10-29/exposure.tsv&#039;, sep=&#039;\t&#039;)
+
+
+## some columns have whitespace that needs to be removed for better processing
+new_columns = fpkm_unstr_df_with_labels.columns.str.replace(&#039; &#039;, &#039;_&#039;).to_numpy()
+fpkm_unstr_df_with_labels.columns = new_columns 
+
+## Merge exposure data to get labels for tumor type and kidney subtype
+ge_kidney_cancer_data_with_tgca_labels = pd.merge(fpkm_unstr_df_with_labels,
+                                                  exposure_tsv[[&#039;case_submitter_id&#039;, &#039;project_id&#039;]],
+                                                  left_on=&#039;Case_ID&#039;,
+                                                  right_on=&#039;case_submitter_id&#039;)" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><h2 id="heading-1.2.-data-transformation">1.2. Data transformation</h2>
+<p>Here, given we have RNA-Seq Gene expression data we apply some commonly applied data transformations</p><ol data-line="48" class="code-line" dir="auto">
+<li><strong>Log transformation</strong>: Gene expression values have a very wide range from (0, 500000) usually in the form of a spike-slab distribution. Hence need to tighten the range with a log transform</li>
+<li><strong>Subsetting</strong>: For purposes of this analysis we only want to look at 3 sub-types of kidney cancer samples ('TCGA-KIRC', 'TCGA-KICH', 'TCGA-KIRP')</li>
+<li><strong>Label conversion</strong>: Converting categorical labels into numerical labels for compatibility with machine learning algorithms</li>
+</ol>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>description_df = fpkm_unstr_df_with_labels.iloc[:, :60660].describe().reset_index()
+showing_value_range = description_df[description_df['index'].isin(['min', 'mean', 'max'])].iloc[:,1:].values.flatten()
+
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="description_df = fpkm_unstr_df_with_labels.iloc[:, :60660].describe().reset_index()
+showing_value_range = description_df[description_df[&#039;index&#039;].isin([&#039;min&#039;, &#039;mean&#039;, &#039;max&#039;])].iloc[:,1:].values.flatten()" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>ax = sns.distplot(showing_value_range)
+ax.set_title("Distribution of min, mean, max of all gene expression values" )
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="ax = sns.distplot(showing_value_range)
+ax.set_title(&quot;Distribution of min, mean, max of all gene expression values&quot; )" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre data-line="65" class="code-line" dir="auto"><code class="hljs">/var/folders/ng/bwk7d4ds7wz95l011dbvtc9r0000gn/T/ipykernel_2920/796282352.py:1: UserWarning: 
+
+`distplot` is a deprecated function and will be removed in seaborn v0.14.0.
+
+Please adapt your code to use either `displot` (a figure-level function with
+similar flexibility) or `histplot` (an axes-level function for histograms).
+
+For a guide to updating your code to use the new functions, please see
+https://gist.github.com/mwaskom/de44147ed2974457ad6372750bbe5751
+
+  ax = sns.distplot(showing_value_range)
+
+
+
+
+
+Text(0.5, 1.0, 'Distribution of min, mean, max of all gene expression values')
+</code></pre>
+
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="/var/folders/ng/bwk7d4ds7wz95l011dbvtc9r0000gn/T/ipykernel_2920/796282352.py:1: UserWarning: 
+
+`distplot` is a deprecated function and will be removed in seaborn v0.14.0.
+
+Please adapt your code to use either `displot` (a figure-level function with
+similar flexibility) or `histplot` (an axes-level function for histograms).
+
+For a guide to updating your code to use the new functions, please see
+https://gist.github.com/mwaskom/de44147ed2974457ad6372750bbe5751
+
+  ax = sns.distplot(showing_value_range)
+
+
+
+
+
+Text(0.5, 1.0, &#039;Distribution of min, mean, max of all gene expression values&#039;)" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><p><img src="/files/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_6_2.png" alt="png" data-src="/files/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_6_2.png" /></p><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>
+## Subset only 3 types of cancer sub-type from the dataset 
+ge_kidney_cancer_data_correct_labels = (ge_kidney_cancer_data_with_tgca_labels[ge_kidney_cancer_data_with_tgca_labels['project_id'].isin(
+    ['TCGA-KIRC', 'TCGA-KICH', 'TCGA-KIRP']
+)]
+)
+
+## Apply log transformation
+transformer = FunctionTransformer(np.log10)
+ge_kidney_cancer_data_correct_labels[gene_cols] = ge_kidney_cancer_data_correct_labels[gene_cols] + 1
+ge_kidney_cancer_data_correct_labels[gene_cols] = transformer.fit_transform(ge_kidney_cancer_data_correct_labels[gene_cols])
+
+## Convert categorical labels to numerical labels 
+columns_for_one_hot = ['project_id', 'Sample_Type']
+ml_df = pd.get_dummies(ge_kidney_cancer_data_correct_labels, columns=['project_id', 'Sample_Type'], prefix=['cancer_subtype', 'tumor_subtype'])
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="## Subset only 3 types of cancer sub-type from the dataset 
+ge_kidney_cancer_data_correct_labels = (ge_kidney_cancer_data_with_tgca_labels[ge_kidney_cancer_data_with_tgca_labels[&#039;project_id&#039;].isin(
+    [&#039;TCGA-KIRC&#039;, &#039;TCGA-KICH&#039;, &#039;TCGA-KIRP&#039;]
+)]
+)
+
+## Apply log transformation
+transformer = FunctionTransformer(np.log10)
+ge_kidney_cancer_data_correct_labels[gene_cols] = ge_kidney_cancer_data_correct_labels[gene_cols] + 1
+ge_kidney_cancer_data_correct_labels[gene_cols] = transformer.fit_transform(ge_kidney_cancer_data_correct_labels[gene_cols])
+
+## Convert categorical labels to numerical labels 
+columns_for_one_hot = [&#039;project_id&#039;, &#039;Sample_Type&#039;]
+ml_df = pd.get_dummies(ge_kidney_cancer_data_correct_labels, columns=[&#039;project_id&#039;, &#039;Sample_Type&#039;], prefix=[&#039;cancer_subtype&#039;, &#039;tumor_subtype&#039;])" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre data-line="110" class="code-line" dir="auto"><code class="hljs">/var/folders/ng/bwk7d4ds7wz95l011dbvtc9r0000gn/T/ipykernel_2920/1726230766.py:9: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-files/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  ge_kidney_cancer_data_correct_labels[gene_cols] = ge_kidney_cancer_data_correct_labels[gene_cols] + 1
+/var/folders/ng/bwk7d4ds7wz95l011dbvtc9r0000gn/T/ipykernel_2920/1726230766.py:10: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-files/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  ge_kidney_cancer_data_correct_labels[gene_cols] = transformer.fit_transform(ge_kidney_cancer_data_correct_labels[gene_cols])
+</code></pre>
+
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="/var/folders/ng/bwk7d4ds7wz95l011dbvtc9r0000gn/T/ipykernel_2920/1726230766.py:9: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-files/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  ge_kidney_cancer_data_correct_labels[gene_cols] = ge_kidney_cancer_data_correct_labels[gene_cols] + 1
+/var/folders/ng/bwk7d4ds7wz95l011dbvtc9r0000gn/T/ipykernel_2920/1726230766.py:10: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-files/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  ge_kidney_cancer_data_correct_labels[gene_cols] = transformer.fit_transform(ge_kidney_cancer_data_correct_labels[gene_cols])" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>columns_for_one_hot = ['project_id', 'Sample_Type']
+ge_kidney_cancer_data_correct_labels['project_id_orig'] =ge_kidney_cancer_data_correct_labels['project_id']
+ge_kidney_cancer_data_correct_labels['Sample_Type_orig'] = ge_kidney_cancer_data_correct_labels['Sample_Type']
+ml_df = pd.get_dummies(ge_kidney_cancer_data_correct_labels, columns=['project_id', 'Sample_Type'], prefix=['cancer_subtype', 'tumor_subtype'])
+
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="columns_for_one_hot = [&#039;project_id&#039;, &#039;Sample_Type&#039;]
+ge_kidney_cancer_data_correct_labels[&#039;project_id_orig&#039;] =ge_kidney_cancer_data_correct_labels[&#039;project_id&#039;]
+ge_kidney_cancer_data_correct_labels[&#039;Sample_Type_orig&#039;] = ge_kidney_cancer_data_correct_labels[&#039;Sample_Type&#039;]
+ml_df = pd.get_dummies(ge_kidney_cancer_data_correct_labels, columns=[&#039;project_id&#039;, &#039;Sample_Type&#039;], prefix=[&#039;cancer_subtype&#039;, &#039;tumor_subtype&#039;])" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre data-line="133" class="code-line" dir="auto"><code class="hljs">/var/folders/ng/bwk7d4ds7wz95l011dbvtc9r0000gn/T/ipykernel_2920/2156470527.py:2: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
+  ge_kidney_cancer_data_correct_labels['project_id_orig'] =ge_kidney_cancer_data_correct_labels['project_id']
+/var/folders/ng/bwk7d4ds7wz95l011dbvtc9r0000gn/T/ipykernel_2920/2156470527.py:2: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-files/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  ge_kidney_cancer_data_correct_labels['project_id_orig'] =ge_kidney_cancer_data_correct_labels['project_id']
+/var/folders/ng/bwk7d4ds7wz95l011dbvtc9r0000gn/T/ipykernel_2920/2156470527.py:3: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
+  ge_kidney_cancer_data_correct_labels['Sample_Type_orig'] = ge_kidney_cancer_data_correct_labels['Sample_Type']
+/var/folders/ng/bwk7d4ds7wz95l011dbvtc9r0000gn/T/ipykernel_2920/2156470527.py:3: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-files/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  ge_kidney_cancer_data_correct_labels['Sample_Type_orig'] = ge_kidney_cancer_data_correct_labels['Sample_Type']
+</code></pre>
+
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="/var/folders/ng/bwk7d4ds7wz95l011dbvtc9r0000gn/T/ipykernel_2920/2156470527.py:2: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
+  ge_kidney_cancer_data_correct_labels[&#039;project_id_orig&#039;] =ge_kidney_cancer_data_correct_labels[&#039;project_id&#039;]
+/var/folders/ng/bwk7d4ds7wz95l011dbvtc9r0000gn/T/ipykernel_2920/2156470527.py:2: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-files/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  ge_kidney_cancer_data_correct_labels[&#039;project_id_orig&#039;] =ge_kidney_cancer_data_correct_labels[&#039;project_id&#039;]
+/var/folders/ng/bwk7d4ds7wz95l011dbvtc9r0000gn/T/ipykernel_2920/2156470527.py:3: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
+  ge_kidney_cancer_data_correct_labels[&#039;Sample_Type_orig&#039;] = ge_kidney_cancer_data_correct_labels[&#039;Sample_Type&#039;]
+/var/folders/ng/bwk7d4ds7wz95l011dbvtc9r0000gn/T/ipykernel_2920/2156470527.py:3: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-files/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  ge_kidney_cancer_data_correct_labels[&#039;Sample_Type_orig&#039;] = ge_kidney_cancer_data_correct_labels[&#039;Sample_Type&#039;]" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><h2 id="heading-ii.-exploratory-analysis">II. Exploratory Analysis</h2>
+<h2 id="heading-2.1-check-overall-info-of-datatypes2c-null-values">2.1 Check overall info of datatypes, null values</h2>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>ge_kidney_cancer_data_correct_labels.info()
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="ge_kidney_cancer_data_correct_labels.info()" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre data-line="160" class="code-line" dir="auto"><code class="hljs">&lt;class 'pandas.core.frame.DataFrame'&gt;
+Index: 924 entries, 2 to 1293
+Columns: 60673 entries, ENSG00000000003.15 to Sample_Type_orig
+dtypes: float64(60660), object(13)
+memory usage: 427.7+ MB
+</code></pre>
+
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="&lt;class &#039;pandas.core.frame.DataFrame&#039;&gt;
+Index: 924 entries, 2 to 1293
+Columns: 60673 entries, ENSG00000000003.15 to Sample_Type_orig
+dtypes: float64(60660), object(13)
+memory usage: 427.7+ MB" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><h2 id="heading-2.2.-check-unique-sample-ids">2.2. Check Unique sample IDs</h2>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>print(f"The total patient ids are {ge_kidney_cancer_data_correct_labels['Case_ID'].count()}, from those the unique ids are {ge_kidney_cancer_data_correct_labels['Case_ID'].value_counts().shape[0]} ")
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="print(f&quot;The total patient ids are {ge_kidney_cancer_data_correct_labels[&#039;Case_ID&#039;].count()}, from those the unique ids are {ge_kidney_cancer_data_correct_labels[&#039;Case_ID&#039;].value_counts().shape[0]} &quot;)" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre data-line="174" class="code-line" dir="auto"><code class="hljs">The total patient ids are 924, from those the unique ids are 799 
+</code></pre>
+
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="The total patient ids are 924, from those the unique ids are 799" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><h2 id="heading-2.3.-check-number-of-data-labels-by-project-type-and-tumor-type">2.3. Check number of data labels by project type and tumor type</h2>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>ge_kidney_cancer_data_correct_labels.groupby(['Sample_Type'])['Sample_Type'].count()
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="ge_kidney_cancer_data_correct_labels.groupby([&#039;Sample_Type&#039;])[&#039;Sample_Type&#039;].count()" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre data-line="187" class="code-line" dir="auto"><code class="hljs">Sample_Type
+Additional - New Primary      2
+Primary Tumor               800
+Solid Tissue Normal         122
+Name: Sample_Type, dtype: int64
+</code></pre>
+
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="Sample_Type
+Additional - New Primary      2
+Primary Tumor               800
+Solid Tissue Normal         122
+Name: Sample_Type, dtype: int64" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>ax = sns.countplot(x='Sample_Type', data=ge_kidney_cancer_data_correct_labels)
+ax.bar_label(ax.containers[0])
+
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="ax = sns.countplot(x=&#039;Sample_Type&#039;, data=ge_kidney_cancer_data_correct_labels)
+ax.bar_label(ax.containers[0])" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre data-line="205" class="code-line" dir="auto"><code class="hljs">[Text(0, 0, '800'), Text(0, 0, '122'), Text(0, 0, '2')]
+</code></pre>
+
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="[Text(0, 0, &#039;800&#039;), Text(0, 0, &#039;122&#039;), Text(0, 0, &#039;2&#039;)]" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><p><img src="/files/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_16_1.png" alt="png" data-src="/files/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_16_1.png" /></p><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>ge_kidney_cancer_data_correct_labels.groupby(['project_id'])['project_id'].count()
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="ge_kidney_cancer_data_correct_labels.groupby([&#039;project_id&#039;])[&#039;project_id&#039;].count()" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre data-line="223" class="code-line" dir="auto"><code class="hljs">project_id
+TCGA-KICH     84
+TCGA-KIRC    539
+TCGA-KIRP    301
+Name: project_id, dtype: int64
+</code></pre>
+
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="project_id
+TCGA-KICH     84
+TCGA-KIRC    539
+TCGA-KIRP    301
+Name: project_id, dtype: int64" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>ax = sns.countplot(x='project_id', data=ge_kidney_cancer_data_correct_labels)
+ax.bar_label(ax.containers[0])
+
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="ax = sns.countplot(x=&#039;project_id&#039;, data=ge_kidney_cancer_data_correct_labels)
+ax.bar_label(ax.containers[0])" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre data-line="241" class="code-line" dir="auto"><code class="hljs">[Text(0, 0, '539'), Text(0, 0, '301'), Text(0, 0, '84')]
+</code></pre>
+
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="[Text(0, 0, &#039;539&#039;), Text(0, 0, &#039;301&#039;), Text(0, 0, &#039;84&#039;)]" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><p><img src="/files/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_18_1.png" alt="png" data-src="/files/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_18_1.png" /></p><h2 id="heading-iii.-data-sampling2c-augmentation-and-splitting-into-training2c-testing-and-validation-sets-for-supervised-clustering">III. Data sampling, Augmentation and splitting into training, testing and validation sets for Supervised Clustering</h2>
+<p>Given that we have imbalanced datasets for Tumor Types and Kidney Cancer subtypes (project_id), we should consider the following for an <strong>unbiased analysis</strong></p><ol data-line="255" class="code-line" dir="auto">
+<li><p><strong>Patient overlap</strong>: Given 924 total patients with 799 unique,</p><div  data-line="257" class="code-line" dir="auto" ></div>
+<br>
+<ol data-line="259" class="code-line" dir="auto">
+<li>We should keep same ID patients in only one set i.e (Training or Validation or Testing)</li>
+<li>Preferably, we should have have all overlapping patients in Testing so as to not bias our training</li>
+</ol>
+</li>
+</ol>
+<div  data-line="262" class="code-line" dir="auto" ></div>
+<br>
+<ol start="2" data-line="264" class="code-line" dir="auto">
+<li><p><strong>Set Sampling</strong>: For minority classes, we sample atleast X% into our testing first followed by validation and then all the remaining in training.</p></li>
+<li><p>Additionally for one of the minority classes (New Primary - we should group it into the same category as Primary)</p></li>
+<li><p><strong>Data augmention</strong>: Applying oversampling, undersampling techniques for minority or majority classes</p></li>
+</ol>
+<h2 id="heading-3.1.-label-correction-of-additional---new-primary-tumor">3.1. Label correction of Additional - New Primary tumor</h2>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>ge_kidney_cancer_data_correct_labels['Sample_Type'] = ge_kidney_cancer_data_correct_labels['Sample_Type'].apply(lambda x: 'Primary Tumor' if x == 'Additional - New Primary' else x)
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="ge_kidney_cancer_data_correct_labels[&#039;Sample_Type&#039;] = ge_kidney_cancer_data_correct_labels[&#039;Sample_Type&#039;].apply(lambda x: &#039;Primary Tumor&#039; if x == &#039;Additional - New Primary&#039; else x)" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre data-line="277" class="code-line" dir="auto"><code class="hljs">/var/folders/ng/bwk7d4ds7wz95l011dbvtc9r0000gn/T/ipykernel_2920/2849659451.py:1: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-files/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  ge_kidney_cancer_data_correct_labels['Sample_Type'] = ge_kidney_cancer_data_correct_labels['Sample_Type'].apply(lambda x: 'Primary Tumor' if x == 'Additional - New Primary' else x)
+</code></pre>
+
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="/var/folders/ng/bwk7d4ds7wz95l011dbvtc9r0000gn/T/ipykernel_2920/2849659451.py:1: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-files/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  ge_kidney_cancer_data_correct_labels[&#039;Sample_Type&#039;] = ge_kidney_cancer_data_correct_labels[&#039;Sample_Type&#039;].apply(lambda x: &#039;Primary Tumor&#039; if x == &#039;Additional - New Primary&#039; else x)" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>ge_kidney_cancer_data_correct_labels.groupby(['Sample_Type'])['Sample_Type'].count()
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="ge_kidney_cancer_data_correct_labels.groupby([&#039;Sample_Type&#039;])[&#039;Sample_Type&#039;].count()" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre data-line="293" class="code-line" dir="auto"><code class="hljs">Sample_Type
+Primary Tumor          802
+Solid Tissue Normal    122
+Name: Sample_Type, dtype: int64
+</code></pre>
+
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="Sample_Type
+Primary Tumor          802
+Solid Tissue Normal    122
+Name: Sample_Type, dtype: int64" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>ax = sns.countplot(x='Sample_Type', data=ge_kidney_cancer_data_correct_labels)
+ax.bar_label(ax.containers[0])
+
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="ax = sns.countplot(x=&#039;Sample_Type&#039;, data=ge_kidney_cancer_data_correct_labels)
+ax.bar_label(ax.containers[0])" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre data-line="310" class="code-line" dir="auto"><code class="hljs">[Text(0, 0, '802'), Text(0, 0, '122')]
+</code></pre>
+
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="[Text(0, 0, &#039;802&#039;), Text(0, 0, &#039;122&#039;)]" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><p><img src="/files/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_23_1.png" alt="png" data-src="/files/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_23_1.png" /></p><h2 id="heading-3.2-separation-of-training2c-validation-and-testing-data-for-unbiased-analysis">3.2 Separation of training, validation and testing data for unbiased analysis</h2>
+<p>Strategy</p><ol data-line="323" class="code-line" dir="auto">
+<li>Find pairs of all duplicate sample IDs and randomly sample pairs 70% in training, 20% in validation and 10% in testing (with seed)</li>
+<li>Out of the remaining samples For the 2 lowest groups KICH (10% - 84 samples) and Solid tissue(13% - 122 samples) put more than 25% samples into testing set first
+<ol data-line="325" class="code-line" dir="auto">
+<li>Take union of 21 samples from KICH (25%) and 30 samples from Solid tissue (25%)  and put all those samples into testing set first</li>
+<li>Hold out this set till model training has occurred</li>
+<li>Out of the remaining samples, again put more than 25% samples from minority classes into validation</li>
+<li>Put all the remaining into training</li>
+</ol>
+</li>
+</ol>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>from sklearn.model_selection import train_test_split
+
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="from sklearn.model_selection import train_test_split" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>y_true = ml_df.iloc[:, -6:].drop(['tumor_subtype_Additional - New Primary'], axis=1).astype(int).to_numpy()
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="y_true = ml_df.iloc[:, -6:].drop([&#039;tumor_subtype_Additional - New Primary&#039;], axis=1).astype(int).to_numpy()" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre># Count of each unique value
+value_counts = ml_df['Case_ID'].value_counts()
+
+# list of duplicate ids
+duplicate_ids = value_counts[value_counts > 1].reset_index()['Case_ID'].unique()
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="# Count of each unique value
+value_counts = ml_df[&#039;Case_ID&#039;].value_counts()
+
+# list of duplicate ids
+duplicate_ids = value_counts[value_counts &gt; 1].reset_index()[&#039;Case_ID&#039;].unique()" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><h2 id="heading-3.2.1-separating-patient-overlap-samples">3.2.1 Separating patient overlap samples</h2>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre># First split: Separate out a test set
+train_val_ids, test_overlap_ids = train_test_split(duplicate_ids, test_size=0.1, random_state=42)
+
+# Second split: Separate the remaining data into training and validation sets
+train_overlap_ids, val_overlap_ids = train_test_split(train_val_ids, test_size=0.2, random_state=42) # 0.25 x 0.8 = 0.2
+
+print(f"Number of Patient overlap Training IDs: {len(train_overlap_ids)}")
+print(f"Number of Patient overlap Validation IDs: {len(val_overlap_ids)}")
+print(f"Number of Patient overlap Testing IDs: {len(test_overlap_ids)}")
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="# First split: Separate out a test set
+train_val_ids, test_overlap_ids = train_test_split(duplicate_ids, test_size=0.1, random_state=42)
+
+# Second split: Separate the remaining data into training and validation sets
+train_overlap_ids, val_overlap_ids = train_test_split(train_val_ids, test_size=0.2, random_state=42) # 0.25 x 0.8 = 0.2
+
+print(f&quot;Number of Patient overlap Training IDs: {len(train_overlap_ids)}&quot;)
+print(f&quot;Number of Patient overlap Validation IDs: {len(val_overlap_ids)}&quot;)
+print(f&quot;Number of Patient overlap Testing IDs: {len(test_overlap_ids)}&quot;)" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre data-line="366" class="code-line" dir="auto"><code class="hljs">Number of Patient overlap Training IDs: 87
+Number of Patient overlap Validation IDs: 22
+Number of Patient overlap Testing IDs: 13
+</code></pre>
+
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="Number of Patient overlap Training IDs: 87
+Number of Patient overlap Validation IDs: 22
+Number of Patient overlap Testing IDs: 13" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><h2 id="heading-3.2.2-set-sampling">3.2.2 Set sampling</h2>
+<p>Shows that majority of duplicate samples came from the Solid tissue class</p><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>ml_df_without_overlap = ml_df[~ml_df['Case_ID'].isin(duplicate_ids)].reset_index(drop=True)
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="ml_df_without_overlap = ml_df[~ml_df[&#039;Case_ID&#039;].isin(duplicate_ids)].reset_index(drop=True)" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>ax1 = sns.countplot(x='Sample_Type', data=ge_kidney_cancer_data_correct_labels)
+ax1.bar_label(ax1.containers[0])
+ax1.set_title("Count of samples originally across tumors")
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="ax1 = sns.countplot(x=&#039;Sample_Type&#039;, data=ge_kidney_cancer_data_correct_labels)
+ax1.bar_label(ax1.containers[0])
+ax1.set_title(&quot;Count of samples originally across tumors&quot;)" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre data-line="390" class="code-line" dir="auto"><code class="hljs">Text(0.5, 1.0, 'Count of samples originally across tumors')
+</code></pre>
+
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="Text(0.5, 1.0, &#039;Count of samples originally across tumors&#039;)" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><p><img src="/files/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_32_1.png" alt="png" data-src="/files/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_32_1.png" /></p><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>ax = sns.countplot(x='Sample_Type_orig', data=ml_df_without_overlap )
+ax.bar_label(ax.containers[0])
+ax.set_title("Count of samples after separating patient overlap samples")
+
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="ax = sns.countplot(x=&#039;Sample_Type_orig&#039;, data=ml_df_without_overlap )
+ax.bar_label(ax.containers[0])
+ax.set_title(&quot;Count of samples after separating patient overlap samples&quot;)" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre data-line="411" class="code-line" dir="auto"><code class="hljs">Text(0.5, 1.0, 'Count of samples after separating patient overlap samples')
+</code></pre>
+
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="Text(0.5, 1.0, &#039;Count of samples after separating patient overlap samples&#039;)" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><p><img src="/files/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_33_1.png" alt="png" data-src="/files/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_33_1.png" /></p><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>ax = sns.countplot(x='project_id', data=ge_kidney_cancer_data_correct_labels)
+ax.bar_label(ax.containers[0])
+ax.set_title("Samples Count in Kidney cancer(KC) subtypes Originally")
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="ax = sns.countplot(x=&#039;project_id&#039;, data=ge_kidney_cancer_data_correct_labels)
+ax.bar_label(ax.containers[0])
+ax.set_title(&quot;Samples Count in Kidney cancer(KC) subtypes Originally&quot;)" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre data-line="431" class="code-line" dir="auto"><code class="hljs">Text(0.5, 1.0, 'Samples Count in Kidney cancer(KC) subtypes Originally')
+</code></pre>
+
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="Text(0.5, 1.0, &#039;Samples Count in Kidney cancer(KC) subtypes Originally&#039;)" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><p><img src="/files/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_34_1.png" alt="png" data-src="/files/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_34_1.png" /></p><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>ax = sns.countplot(x='project_id_orig', data=ml_df_without_overlap)
+ax.bar_label(ax.containers[0])
+ax.set_title("Samples count in KC subtypes after separating patient overlap")
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="ax = sns.countplot(x=&#039;project_id_orig&#039;, data=ml_df_without_overlap)
+ax.bar_label(ax.containers[0])
+ax.set_title(&quot;Samples count in KC subtypes after separating patient overlap&quot;)" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre data-line="451" class="code-line" dir="auto"><code class="hljs">Text(0.5, 1.0, 'Samples count in KC subtypes after separating patient overlap')
+</code></pre>
+
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="Text(0.5, 1.0, &#039;Samples count in KC subtypes after separating patient overlap&#039;)" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><p><img src="/files/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_35_1.png" alt="png" data-src="/files/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_35_1.png" /></p><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>all_minority_samples1 = ml_df_without_overlap[(ml_df_without_overlap['Sample_Type_orig'] == 'Solid Tissue Normal')
+| (ml_df_without_overlap['project_id_orig'] == 'TCGA-KICH')]['Case_ID'].to_numpy()
+
+# First split: Separate out a test set with 50% 
+train_val_set_sampl_ids1, test_set_samp_ids1 = train_test_split(all_minority_samples1, test_size=0.5, random_state=42)
+
+# Second split: Separate the remaining data into training and validation sets
+train_set_samp_ids1, val_set_samp_ids1 = train_test_split(train_val_set_sampl_ids1, test_size=0.5, random_state=42) 
+
+print(f"Number of Minority set sampled Training IDs: {len(train_set_samp_ids1)}")
+print(f"Number of Minority set sampled  Validation IDs: {len(val_set_samp_ids1)}")
+print(f"Number of Minority set sampled  Testing IDs: {len(test_set_samp_ids1)}")
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="all_minority_samples1 = ml_df_without_overlap[(ml_df_without_overlap[&#039;Sample_Type_orig&#039;] == &#039;Solid Tissue Normal&#039;)
+| (ml_df_without_overlap[&#039;project_id_orig&#039;] == &#039;TCGA-KICH&#039;)][&#039;Case_ID&#039;].to_numpy()
+
+# First split: Separate out a test set with 50% 
+train_val_set_sampl_ids1, test_set_samp_ids1 = train_test_split(all_minority_samples1, test_size=0.5, random_state=42)
+
+# Second split: Separate the remaining data into training and validation sets
+train_set_samp_ids1, val_set_samp_ids1 = train_test_split(train_val_set_sampl_ids1, test_size=0.5, random_state=42) 
+
+print(f&quot;Number of Minority set sampled Training IDs: {len(train_set_samp_ids1)}&quot;)
+print(f&quot;Number of Minority set sampled  Validation IDs: {len(val_set_samp_ids1)}&quot;)
+print(f&quot;Number of Minority set sampled  Testing IDs: {len(test_set_samp_ids1)}&quot;)" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre data-line="477" class="code-line" dir="auto"><code class="hljs">Number of Minority set sampled Training IDs: 10
+Number of Minority set sampled  Validation IDs: 11
+Number of Minority set sampled  Testing IDs: 21
+</code></pre>
+
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="Number of Minority set sampled Training IDs: 10
+Number of Minority set sampled  Validation IDs: 11
+Number of Minority set sampled  Testing IDs: 21" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>rem_majority_samples = ml_df_without_overlap[~ml_df_without_overlap['Case_ID'].isin(all_minority_samples1)]['Case_ID'].to_numpy()
+
+# First split: Separate out a test set
+train_val_major_ids1, test_major_ids1 = train_test_split(rem_majority_samples, test_size=0.1, random_state=42)
+
+# Second split: Separate the remaining data into training and validation sets
+train_major_ids1, val_major_ids1 = train_test_split(train_val_major_ids1, test_size=0.2, random_state=42) # 0.25 x 0.8 = 0.2
+
+print(f"Number of majority classes Training IDs: {len(train_major_ids1)}")
+print(f"Number of majority classes Validation IDs: {len(val_major_ids1)}")
+print(f"Number of majority classes Testing IDs: {len(test_major_ids1)}")
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="rem_majority_samples = ml_df_without_overlap[~ml_df_without_overlap[&#039;Case_ID&#039;].isin(all_minority_samples1)][&#039;Case_ID&#039;].to_numpy()
+
+# First split: Separate out a test set
+train_val_major_ids1, test_major_ids1 = train_test_split(rem_majority_samples, test_size=0.1, random_state=42)
+
+# Second split: Separate the remaining data into training and validation sets
+train_major_ids1, val_major_ids1 = train_test_split(train_val_major_ids1, test_size=0.2, random_state=42) # 0.25 x 0.8 = 0.2
+
+print(f&quot;Number of majority classes Training IDs: {len(train_major_ids1)}&quot;)
+print(f&quot;Number of majority classes Validation IDs: {len(val_major_ids1)}&quot;)
+print(f&quot;Number of majority classes Testing IDs: {len(test_major_ids1)}&quot;)" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre data-line="497" class="code-line" dir="auto"><code class="hljs">Number of majority classes Training IDs: 456
+Number of majority classes Validation IDs: 115
+Number of majority classes Testing IDs: 64
+</code></pre>
+
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="Number of majority classes Training IDs: 456
+Number of majority classes Validation IDs: 115
+Number of majority classes Testing IDs: 64" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>train_ids_df = pd.DataFrame({'Case_ID': list(train_overlap_ids) + list(train_major_ids1) + list(train_set_samp_ids1)}).assign(label='training')
+val_ids_df = pd.DataFrame({'Case_ID': list(val_overlap_ids) + list(val_major_ids1) + list(val_set_samp_ids1)}).assign(label='validation')
+test_ids_df = pd.DataFrame({'Case_ID': list(test_overlap_ids) + list(test_major_ids1) + list(test_set_samp_ids1)}).assign(label='testing') 
+train_val_test_ids_df = pd.concat([train_ids_df, val_ids_df, test_ids_df], axis=0)
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="train_ids_df = pd.DataFrame({&#039;Case_ID&#039;: list(train_overlap_ids) + list(train_major_ids1) + list(train_set_samp_ids1)}).assign(label=&#039;training&#039;)
+val_ids_df = pd.DataFrame({&#039;Case_ID&#039;: list(val_overlap_ids) + list(val_major_ids1) + list(val_set_samp_ids1)}).assign(label=&#039;validation&#039;)
+test_ids_df = pd.DataFrame({&#039;Case_ID&#039;: list(test_overlap_ids) + list(test_major_ids1) + list(test_set_samp_ids1)}).assign(label=&#039;testing&#039;) 
+train_val_test_ids_df = pd.concat([train_ids_df, val_ids_df, test_ids_df], axis=0)" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>train_val_test_ids_df = pd.merge(train_val_test_ids_df, ml_df[['Case_ID', 'project_id_orig', 'Sample_Type_orig']],
+left_on='Case_ID',
+right_on='Case_ID')
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="train_val_test_ids_df = pd.merge(train_val_test_ids_df, ml_df[[&#039;Case_ID&#039;, &#039;project_id_orig&#039;, &#039;Sample_Type_orig&#039;]],
+left_on=&#039;Case_ID&#039;,
+right_on=&#039;Case_ID&#039;)" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>train_val_test_ids_df 
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="train_val_test_ids_df" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div  data-line="525" class="code-line" dir="auto" ></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre data-line="531" class="code-line" dir="auto"><code class="hljs">.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value=".dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div  data-line="538" class="code-line" dir="auto" ></div>
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Case_ID</th>
+      <th>label</th>
+      <th>project_id_orig</th>
+      <th>Sample_Type_orig</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>TCGA-CW-5585</td>
+      <td>training</td>
+      <td>TCGA-KIRC</td>
+      <td>Primary Tumor</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>TCGA-CW-5585</td>
+      <td>training</td>
+      <td>TCGA-KIRC</td>
+      <td>Solid Tissue Normal</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>TCGA-B0-5706</td>
+      <td>training</td>
+      <td>TCGA-KIRC</td>
+      <td>Solid Tissue Normal</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>TCGA-B0-5706</td>
+      <td>training</td>
+      <td>TCGA-KIRC</td>
+      <td>Primary Tumor</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>TCGA-DZ-6132</td>
+      <td>training</td>
+      <td>TCGA-KIRP</td>
+      <td>Solid Tissue Normal</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>919</th>
+      <td>TCGA-KN-8418</td>
+      <td>testing</td>
+      <td>TCGA-KICH</td>
+      <td>Primary Tumor</td>
+    </tr>
+    <tr>
+      <th>920</th>
+      <td>TCGA-KO-8406</td>
+      <td>testing</td>
+      <td>TCGA-KICH</td>
+      <td>Primary Tumor</td>
+    </tr>
+    <tr>
+      <th>921</th>
+      <td>TCGA-KO-8414</td>
+      <td>testing</td>
+      <td>TCGA-KICH</td>
+      <td>Primary Tumor</td>
+    </tr>
+    <tr>
+      <th>922</th>
+      <td>TCGA-KL-8325</td>
+      <td>testing</td>
+      <td>TCGA-KICH</td>
+      <td>Primary Tumor</td>
+    </tr>
+    <tr>
+      <th>923</th>
+      <td>TCGA-KM-8438</td>
+      <td>testing</td>
+      <td>TCGA-KICH</td>
+      <td>Primary Tumor</td>
+    </tr>
+  </tbody>
+</table>
+<p>924 rows × 4 columns</p>
+</div>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>train_val_test_ids_df[['label', 'project_id_orig']].value_counts()
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="train_val_test_ids_df[[&#039;label&#039;, &#039;project_id_orig&#039;]].value_counts()" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre data-line="642" class="code-line" dir="auto"><code class="hljs">label       project_id_orig
+training    TCGA-KIRC          394
+            TCGA-KIRP          215
+validation  TCGA-KIRC           96
+            TCGA-KIRP           51
+testing     TCGA-KIRC           49
+            TCGA-KIRP           35
+training    TCGA-KICH           34
+testing     TCGA-KICH           27
+validation  TCGA-KICH           23
+Name: count, dtype: int64
+</code></pre>
+
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="label       project_id_orig
+training    TCGA-KIRC          394
+            TCGA-KIRP          215
+validation  TCGA-KIRC           96
+            TCGA-KIRP           51
+testing     TCGA-KIRC           49
+            TCGA-KIRP           35
+training    TCGA-KICH           34
+testing     TCGA-KICH           27
+validation  TCGA-KICH           23
+Name: count, dtype: int64" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>train_val_test_ids_df[['label', 'Sample_Type_orig']].value_counts()
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="train_val_test_ids_df[[&#039;label&#039;, &#039;Sample_Type_orig&#039;]].value_counts()" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre data-line="664" class="code-line" dir="auto"><code class="hljs">label       Sample_Type_orig        
+training    Primary Tumor               556
+validation  Primary Tumor               148
+testing     Primary Tumor                96
+training    Solid Tissue Normal          86
+validation  Solid Tissue Normal          21
+testing     Solid Tissue Normal          15
+training    Additional - New Primary      1
+validation  Additional - New Primary      1
+Name: count, dtype: int64
+</code></pre>
+
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="label       Sample_Type_orig        
+training    Primary Tumor               556
+validation  Primary Tumor               148
+testing     Primary Tumor                96
+training    Solid Tissue Normal          86
+validation  Solid Tissue Normal          21
+testing     Solid Tissue Normal          15
+training    Additional - New Primary      1
+validation  Additional - New Primary      1
+Name: count, dtype: int64" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>print(f"Final train-validation-test split dataframe has {train_val_test_ids_df.shape[0]} unique samples")
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="print(f&quot;Final train-validation-test split dataframe has {train_val_test_ids_df.shape[0]} unique samples&quot;)" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre data-line="682" class="code-line" dir="auto"><code class="hljs">Final train-validation-test split dataframe has 924 unique samples
+</code></pre>
+
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="Final train-validation-test split dataframe has 924 unique samples" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><h2 id="heading-iv.-apply-multi-label-classification-on-all-features">IV. Apply multi-label classification on all features</h2>
+<p>Objectives:</p><ul data-line="689" class="code-line" dir="auto">
+<li><p>Here we will train different classification models on the data with no embeddings</p></li>
+<li><p>Address class imbalance (2 options):</p><ul data-line="692" class="code-line" dir="auto">
+<li>Modify loss functions of different classifiers for imbalanced training and testing data</li>
+<li>Re-sampling of minority class in each of training and validation sets</li>
+</ul>
+</li>
+<li><p>Evaluate performance of different classifiers in training and validation cycle</p></li>
+<li><p>Rank features using shapley values</p></li>
+</ul>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>y_label_cols = ['cancer_subtype_TCGA-KICH', 'cancer_subtype_TCGA-KIRC',
+       'cancer_subtype_TCGA-KIRP', 
+       'tumor_subtype_Primary Tumor', 'tumor_subtype_Solid Tissue Normal']
+X_train = ml_df[ml_df['Case_ID'].isin(train_val_test_ids_df[train_val_test_ids_df['label'] == 'training']['Case_ID'].to_numpy())][gene_cols].to_numpy()
+y_train = ml_df[ml_df['Case_ID'].isin(train_val_test_ids_df[train_val_test_ids_df['label'] == 'training']['Case_ID'].to_numpy())][y_label_cols].astype(int).to_numpy()
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="y_label_cols = [&#039;cancer_subtype_TCGA-KICH&#039;, &#039;cancer_subtype_TCGA-KIRC&#039;,
+       &#039;cancer_subtype_TCGA-KIRP&#039;, 
+       &#039;tumor_subtype_Primary Tumor&#039;, &#039;tumor_subtype_Solid Tissue Normal&#039;]
+X_train = ml_df[ml_df[&#039;Case_ID&#039;].isin(train_val_test_ids_df[train_val_test_ids_df[&#039;label&#039;] == &#039;training&#039;][&#039;Case_ID&#039;].to_numpy())][gene_cols].to_numpy()
+y_train = ml_df[ml_df[&#039;Case_ID&#039;].isin(train_val_test_ids_df[train_val_test_ids_df[&#039;label&#039;] == &#039;training&#039;][&#039;Case_ID&#039;].to_numpy())][y_label_cols].astype(int).to_numpy()" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>y_label_cols = ['cancer_subtype_TCGA-KICH', 'cancer_subtype_TCGA-KIRC',
+       'cancer_subtype_TCGA-KIRP', 
+       'tumor_subtype_Primary Tumor', 'tumor_subtype_Solid Tissue Normal']
+X_val = ml_df[ml_df['Case_ID'].isin(train_val_test_ids_df[train_val_test_ids_df['label'] == 'validation']['Case_ID'].to_numpy())][gene_cols].to_numpy()
+y_val = ml_df[ml_df['Case_ID'].isin(train_val_test_ids_df[train_val_test_ids_df['label'] == 'validation']['Case_ID'].to_numpy())][y_label_cols].astype(int).to_numpy()
+
+X_val_umap = plane_mapper.fit_transform(X_val) 
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="y_label_cols = [&#039;cancer_subtype_TCGA-KICH&#039;, &#039;cancer_subtype_TCGA-KIRC&#039;,
+       &#039;cancer_subtype_TCGA-KIRP&#039;, 
+       &#039;tumor_subtype_Primary Tumor&#039;, &#039;tumor_subtype_Solid Tissue Normal&#039;]
+X_val = ml_df[ml_df[&#039;Case_ID&#039;].isin(train_val_test_ids_df[train_val_test_ids_df[&#039;label&#039;] == &#039;validation&#039;][&#039;Case_ID&#039;].to_numpy())][gene_cols].to_numpy()
+y_val = ml_df[ml_df[&#039;Case_ID&#039;].isin(train_val_test_ids_df[train_val_test_ids_df[&#039;label&#039;] == &#039;validation&#039;][&#039;Case_ID&#039;].to_numpy())][y_label_cols].astype(int).to_numpy()
+
+X_val_umap = plane_mapper.fit_transform(X_val)" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre data-line="721" class="code-line" dir="auto"><code class="hljs">/opt/homebrew/anaconda3/envs/umap-env/lib/python3.11/site-packages/umap/umap_.py:1943: UserWarning: n_jobs value -1 overridden to 1 by setting random_state. Use no seed for parallelism.
+  warn(f&quot;n_jobs value {self.n_jobs} overridden to 1 by setting random_state. Use no seed for parallelism.&quot;)
+</code></pre>
+
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="/opt/homebrew/anaconda3/envs/umap-env/lib/python3.11/site-packages/umap/umap_.py:1943: UserWarning: n_jobs value -1 overridden to 1 by setting random_state. Use no seed for parallelism.
+  warn(f&quot;n_jobs value {self.n_jobs} overridden to 1 by setting random_state. Use no seed for parallelism.&quot;)" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>y_label_cols = ['cancer_subtype_TCGA-KICH', 'cancer_subtype_TCGA-KIRC',
+       'cancer_subtype_TCGA-KIRP',
+       'tumor_subtype_Primary Tumor', 'tumor_subtype_Solid Tissue Normal']
+X_test = ml_df[ml_df['Case_ID'].isin(train_val_test_ids_df[train_val_test_ids_df['label'] == 'testing']['Case_ID'].to_numpy())][gene_cols].to_numpy()
+y_test = ml_df[ml_df['Case_ID'].isin(train_val_test_ids_df[train_val_test_ids_df['label'] == 'testing']['Case_ID'].to_numpy())][y_label_cols].astype(int).to_numpy()
+
+
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="y_label_cols = [&#039;cancer_subtype_TCGA-KICH&#039;, &#039;cancer_subtype_TCGA-KIRC&#039;,
+       &#039;cancer_subtype_TCGA-KIRP&#039;,
+       &#039;tumor_subtype_Primary Tumor&#039;, &#039;tumor_subtype_Solid Tissue Normal&#039;]
+X_test = ml_df[ml_df[&#039;Case_ID&#039;].isin(train_val_test_ids_df[train_val_test_ids_df[&#039;label&#039;] == &#039;testing&#039;][&#039;Case_ID&#039;].to_numpy())][gene_cols].to_numpy()
+y_test = ml_df[ml_df[&#039;Case_ID&#039;].isin(train_val_test_ids_df[train_val_test_ids_df[&#039;label&#039;] == &#039;testing&#039;][&#039;Case_ID&#039;].to_numpy())][y_label_cols].astype(int).to_numpy()" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><h2 id="heading-4.2.-apply-multiple-classification-models-to-train-and-evaluate-performance">4.2. Apply multiple classification Models to train and evaluate performance</h2>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>from sklearn.pipeline import make_pipeline
+from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.multioutput import MultiOutputClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.svm import SVC
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.naive_bayes import GaussianNB
+from sklearn.svm import SVC
+from sklearn.multioutput import MultiOutputClassifier
+from sklearn.linear_model import LogisticRegression
+import matplotlib.pyplot as plt
+from sklearn.metrics import RocCurveDisplay
+from sklearn.metrics import roc_auc_score
+from sklearn.datasets import make_circles, make_classification, make_moons
+from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
+from sklearn.ensemble import AdaBoostClassifier, RandomForestClassifier
+from sklearn.gaussian_process import GaussianProcessClassifier
+from sklearn.gaussian_process.kernels import RBF
+from sklearn.inspection import DecisionBoundaryDisplay
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import GaussianNB
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.neural_network import MLPClassifier
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.svm import SVC
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import auc, roc_curve
+from itertools import cycle
+from sklearn.metrics import multilabel_confusion_matrix
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="from sklearn.pipeline import make_pipeline
+from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.multioutput import MultiOutputClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.svm import SVC
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.naive_bayes import GaussianNB
+from sklearn.svm import SVC
+from sklearn.multioutput import MultiOutputClassifier
+from sklearn.linear_model import LogisticRegression
+import matplotlib.pyplot as plt
+from sklearn.metrics import RocCurveDisplay
+from sklearn.metrics import roc_auc_score
+from sklearn.datasets import make_circles, make_classification, make_moons
+from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
+from sklearn.ensemble import AdaBoostClassifier, RandomForestClassifier
+from sklearn.gaussian_process import GaussianProcessClassifier
+from sklearn.gaussian_process.kernels import RBF
+from sklearn.inspection import DecisionBoundaryDisplay
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import GaussianNB
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.neural_network import MLPClassifier
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.svm import SVC
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import auc, roc_curve
+from itertools import cycle
+from sklearn.metrics import multilabel_confusion_matrix" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre># svc = SVC(gamma='auto', random_state=42, kernel='radial') #instantiate the base model
+clf_svc = MultiOutputClassifier(SVC(kernel="rbf", C=0.025, random_state=42))
+clf_lg = MultiOutputClassifier(LogisticRegression(solver='liblinear', penalty='l1', random_state=42))
+clf_dtc = MultiOutputClassifier(DecisionTreeClassifier(random_state=42))
+clf_rf = MultiOutputClassifier(RandomForestClassifier(
+        max_depth=5, n_estimators=10, max_features=1, random_state=42
+    ))
+clf_gnb = MultiOutputClassifier(GaussianNB())
+clf_knn = MultiOutputClassifier(KNeighborsClassifier())
+clf_ada = MultiOutputClassifier(AdaBoostClassifier())
+modelclasses = [
+    ["log regression", clf_lg],
+    ["decision tree", clf_dtc],
+    ["random forest", clf_rf],
+    ["k neighbors", clf_knn],
+    ["naive bayes", clf_gnb],
+    ["support vector machines", clf_svc],
+    ["Adaboost", clf_ada]
+]
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="# svc = SVC(gamma=&#039;auto&#039;, random_state=42, kernel=&#039;radial&#039;) #instantiate the base model
+clf_svc = MultiOutputClassifier(SVC(kernel=&quot;rbf&quot;, C=0.025, random_state=42))
+clf_lg = MultiOutputClassifier(LogisticRegression(solver=&#039;liblinear&#039;, penalty=&#039;l1&#039;, random_state=42))
+clf_dtc = MultiOutputClassifier(DecisionTreeClassifier(random_state=42))
+clf_rf = MultiOutputClassifier(RandomForestClassifier(
+        max_depth=5, n_estimators=10, max_features=1, random_state=42
+    ))
+clf_gnb = MultiOutputClassifier(GaussianNB())
+clf_knn = MultiOutputClassifier(KNeighborsClassifier())
+clf_ada = MultiOutputClassifier(AdaBoostClassifier())
+modelclasses = [
+    [&quot;log regression&quot;, clf_lg],
+    [&quot;decision tree&quot;, clf_dtc],
+    [&quot;random forest&quot;, clf_rf],
+    [&quot;k neighbors&quot;, clf_knn],
+    [&quot;naive bayes&quot;, clf_gnb],
+    [&quot;support vector machines&quot;, clf_svc],
+    [&quot;Adaboost&quot;, clf_ada]
+]" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><h2 id="heading-4.2.1-training-of-7-models">4.2.1 Training of 7 models</h2>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>preds_lg_train_all = {}
+preds_lg_val_all = {}
+
+for model, clf_i in modelclasses:
+    clf_i.fit(X_train, y_train)
+    preds_lg_val_i = clf_i.predict(X_val) #predict target
+    preds_lg_train_i =clf_i.predict(X_train)
+
+    preds_lg_train_all[model] = preds_lg_train_i
+    preds_lg_val_all[model] = preds_lg_val_i
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="preds_lg_train_all = {}
+preds_lg_val_all = {}
+
+for model, clf_i in modelclasses:
+    clf_i.fit(X_train, y_train)
+    preds_lg_val_i = clf_i.predict(X_val) #predict target
+    preds_lg_train_i =clf_i.predict(X_train)
+
+    preds_lg_train_all[model] = preds_lg_train_i
+    preds_lg_val_all[model] = preds_lg_val_i" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><h2 id="heading-4.2.2.-plot-roc-curves-for-all-classifiers-training-and-testing-performance">4.2.2. Plot ROC curves for all classifiers training and testing performance</h2>
+<h2 id="heading-4.2.2.1-micro-averaged-roc27s">4.2.2.1 Micro averaged ROC's</h2>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>def roc_plot(y_val, preds_val, name, color, plot_chance_level, ax):
+    RocCurveDisplay.from_predictions(
+        y_val.ravel(),
+        preds_val.ravel(),
+        name=name,
+        color=color,
+        plot_chance_level=plot_chance_level,
+        ax=ax
+    )
+    return 
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="def roc_plot(y_val, preds_val, name, color, plot_chance_level, ax):
+    RocCurveDisplay.from_predictions(
+        y_val.ravel(),
+        preds_val.ravel(),
+        name=name,
+        color=color,
+        plot_chance_level=plot_chance_level,
+        ax=ax
+    )
+    return" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>colors = ['black', 'blue', 'orange', 'green', 'yellow', 'red', 'magenta']
+
+i = 0
+fig, ax = plt.subplots(figsize=(10, 10))
+for model, clf_i in modelclasses:
+    if i == 0:
+        roc_plot(y_val=y_train, preds_val=preds_lg_train_all[model], name=model, color=colors[i], plot_chance_level=True, ax=ax)
+    else:
+       roc_plot(y_val=y_train, preds_val=preds_lg_train_all[model], name=model, color=colors[i], plot_chance_level=False, ax=ax) 
+    i += 1
+
+# RocCurveDisplay.from_predictions(
+#     y_train.ravel(),
+#     preds_lg_train.ravel(),
+#     name="micro-average OvR train",
+#     color="blue",
+#     plot_chance_level=True,
+#     ax=ax
+# )
+plt.axis("square")
+plt.xlabel("False Positive Rate")
+plt.ylabel("True Positive Rate")
+plt.title("Micro-averaged Classifier Training performance: \nReceiver Operating Characteristic")
+plt.legend()
+plt.show()
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="colors = [&#039;black&#039;, &#039;blue&#039;, &#039;orange&#039;, &#039;green&#039;, &#039;yellow&#039;, &#039;red&#039;, &#039;magenta&#039;]
+
+i = 0
+fig, ax = plt.subplots(figsize=(10, 10))
+for model, clf_i in modelclasses:
+    if i == 0:
+        roc_plot(y_val=y_train, preds_val=preds_lg_train_all[model], name=model, color=colors[i], plot_chance_level=True, ax=ax)
+    else:
+       roc_plot(y_val=y_train, preds_val=preds_lg_train_all[model], name=model, color=colors[i], plot_chance_level=False, ax=ax) 
+    i += 1
+
+# RocCurveDisplay.from_predictions(
+#     y_train.ravel(),
+#     preds_lg_train.ravel(),
+#     name=&quot;micro-average OvR train&quot;,
+#     color=&quot;blue&quot;,
+#     plot_chance_level=True,
+#     ax=ax
+# )
+plt.axis(&quot;square&quot;)
+plt.xlabel(&quot;False Positive Rate&quot;)
+plt.ylabel(&quot;True Positive Rate&quot;)
+plt.title(&quot;Micro-averaged Classifier Training performance: \nReceiver Operating Characteristic&quot;)
+plt.legend()
+plt.show()" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><p><img src="/files/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_56_0.png" alt="png" data-src="/files/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_56_0.png" /></p><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>colors = ['black', 'blue', 'orange', 'green', 'yellow', 'red', 'magenta']
+
+i = 0
+fig, ax = plt.subplots(figsize=(10, 10))
+for model, clf_i in modelclasses:
+    if i == 0:
+        roc_plot(y_val=y_val, preds_val=preds_lg_val_all[model], name=model, color=colors[i], plot_chance_level=True, ax=ax)
+    else:
+       roc_plot(y_val=y_val, preds_val=preds_lg_val_all[model], name=model, color=colors[i], plot_chance_level=False, ax=ax) 
+    i += 1
+
+# RocCurveDisplay.from_predictions(
+#     y_train.ravel(),
+#     preds_lg_train.ravel(),
+#     name="micro-average OvR train",
+#     color="blue",
+#     plot_chance_level=True,
+#     ax=ax
+# )
+plt.axis("square")
+plt.xlabel("False Positive Rate")
+plt.ylabel("True Positive Rate")
+plt.title("Micro-averaged Classifier Validation Performance\nReceiver Operating Characteristic")
+plt.legend()
+plt.show()
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="colors = [&#039;black&#039;, &#039;blue&#039;, &#039;orange&#039;, &#039;green&#039;, &#039;yellow&#039;, &#039;red&#039;, &#039;magenta&#039;]
+
+i = 0
+fig, ax = plt.subplots(figsize=(10, 10))
+for model, clf_i in modelclasses:
+    if i == 0:
+        roc_plot(y_val=y_val, preds_val=preds_lg_val_all[model], name=model, color=colors[i], plot_chance_level=True, ax=ax)
+    else:
+       roc_plot(y_val=y_val, preds_val=preds_lg_val_all[model], name=model, color=colors[i], plot_chance_level=False, ax=ax) 
+    i += 1
+
+# RocCurveDisplay.from_predictions(
+#     y_train.ravel(),
+#     preds_lg_train.ravel(),
+#     name=&quot;micro-average OvR train&quot;,
+#     color=&quot;blue&quot;,
+#     plot_chance_level=True,
+#     ax=ax
+# )
+plt.axis(&quot;square&quot;)
+plt.xlabel(&quot;False Positive Rate&quot;)
+plt.ylabel(&quot;True Positive Rate&quot;)
+plt.title(&quot;Micro-averaged Classifier Validation Performance\nReceiver Operating Characteristic&quot;)
+plt.legend()
+plt.show()" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><p><img src="/files/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_57_0.png" alt="png" data-src="/files/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_57_0.png" /></p><h2 id="heading-4.2.2.2-macro-averaged-roc27s">4.2.2.2 Macro averaged ROC's</h2>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>def macro_roc_calc(y_true, y_pred):
+    macro_roc_auc_ovr = roc_auc_score(
+        y_true,
+        y_pred,
+        multi_class="ovr",
+        average="macro",
+    )
+    return macro_roc_auc_ovr
+
+for model, clf_i in modelclasses:
+    macro_roc_i = macro_roc_calc(y_val, preds_lg_val_all[model])
+    print(f"Macro-averaged One-vs-Rest ROC AUC score for {model}:\n{macro_roc_i:.2f}")
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="def macro_roc_calc(y_true, y_pred):
+    macro_roc_auc_ovr = roc_auc_score(
+        y_true,
+        y_pred,
+        multi_class=&quot;ovr&quot;,
+        average=&quot;macro&quot;,
+    )
+    return macro_roc_auc_ovr
+
+for model, clf_i in modelclasses:
+    macro_roc_i = macro_roc_calc(y_val, preds_lg_val_all[model])
+    print(f&quot;Macro-averaged One-vs-Rest ROC AUC score for {model}:\n{macro_roc_i:.2f}&quot;)" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre data-line="922" class="code-line" dir="auto"><code class="hljs">Macro-averaged One-vs-Rest ROC AUC score for log regression:
+0.96
+Macro-averaged One-vs-Rest ROC AUC score for decision tree:
+0.89
+Macro-averaged One-vs-Rest ROC AUC score for random forest:
+0.59
+Macro-averaged One-vs-Rest ROC AUC score for k neighbors:
+0.91
+Macro-averaged One-vs-Rest ROC AUC score for naive bayes:
+0.53
+Macro-averaged One-vs-Rest ROC AUC score for support vector machines:
+0.50
+Macro-averaged One-vs-Rest ROC AUC score for Adaboost:
+0.96
+</code></pre>
+
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="Macro-averaged One-vs-Rest ROC AUC score for log regression:
+0.96
+Macro-averaged One-vs-Rest ROC AUC score for decision tree:
+0.89
+Macro-averaged One-vs-Rest ROC AUC score for random forest:
+0.59
+Macro-averaged One-vs-Rest ROC AUC score for k neighbors:
+0.91
+Macro-averaged One-vs-Rest ROC AUC score for naive bayes:
+0.53
+Macro-averaged One-vs-Rest ROC AUC score for support vector machines:
+0.50
+Macro-averaged One-vs-Rest ROC AUC score for Adaboost:
+0.96" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><h2 id="heading-4.2.2.3-comparison-of-macro-vs-micro-for-best-classifier-28lr29">4.2.2.3 Comparison of macro vs micro for best classifier (LR)</h2>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>fig, ax = plt.subplots(figsize=(8, 8))
+def create_roc_micro_vs_macro_plot(y_val, preds_lg_val_all, model, ax):
+    n_classes = 5
+    # store the fpr, tpr, and roc_auc for all averaging strategies
+    fpr, tpr, roc_auc = dict(), dict(), dict()
+    # Compute micro-average ROC curve and ROC area
+    fpr["micro"], tpr["micro"], _ = roc_curve(y_val.ravel(), preds_lg_val_all[model].ravel())
+    roc_auc["micro"] = auc(fpr["micro"], tpr["micro"])
+
+    print(f"Micro-averaged One-vs-Rest ROC AUC score:\n{roc_auc['micro']:.2f}")
+
+    for i in range(n_classes):
+        fpr[i], tpr[i], _ = roc_curve(y_val[:, i], preds_lg_val_all[model][:, i])
+        roc_auc[i] = auc(fpr[i], tpr[i])
+
+    fpr_grid = np.linspace(0.0, 1.0, 1000)
+
+    # Interpolate all ROC curves at these points
+    mean_tpr = np.zeros_like(fpr_grid)
+
+    for i in range(n_classes):
+        mean_tpr += np.interp(fpr_grid, fpr[i], tpr[i])  # linear interpolation
+
+    # Average it and compute AUC
+    mean_tpr /= n_classes
+
+    fpr["macro"] = fpr_grid
+    tpr["macro"] = mean_tpr
+    roc_auc["macro"] = auc(fpr["macro"], tpr["macro"])
+
+    print(f"Macro-averaged One-vs-Rest ROC AUC score:\n{roc_auc['macro']:.2f}")
+    ax.plot(
+        fpr["micro"],
+        tpr["micro"],
+        label=f"micro-average ROC curve (AUC = {roc_auc['micro']:.2f})",
+        color="deeppink",
+        linestyle=":",
+        linewidth=4,
+        
+    )
+
+    ax.plot(
+        fpr["macro"],
+        tpr["macro"],
+        label=f"macro-average ROC curve (AUC = {roc_auc['macro']:.2f})",
+        color="navy",
+        linestyle=":",
+        linewidth=4,
+
+    )
+
+    colors = cycle(["aqua", "darkorange", "cornflowerblue", "green", "pink"])
+    for class_id, color in zip(range(n_classes), colors):
+        RocCurveDisplay.from_predictions(
+            y_val[:, class_id],
+            preds_lg_val_all[model][:, class_id],
+            name=f"ROC curve for {y_label_cols[class_id].split('subtype_')[1]}",
+            color=color,
+            ax=ax,
+            plot_chance_level=(class_id == 2),
+        )
+
+    ax.axis("square")
+    ax.set_xlabel("False Positive Rate")
+    ax.set_ylabel("True Positive Rate")
+    ax.set_title(f"{model}")
+    ax.legend(bbox_to_anchor =(0.5,-0.77), loc='lower center')
+    return
+
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="fig, ax = plt.subplots(figsize=(8, 8))
+def create_roc_micro_vs_macro_plot(y_val, preds_lg_val_all, model, ax):
+    n_classes = 5
+    # store the fpr, tpr, and roc_auc for all averaging strategies
+    fpr, tpr, roc_auc = dict(), dict(), dict()
+    # Compute micro-average ROC curve and ROC area
+    fpr[&quot;micro&quot;], tpr[&quot;micro&quot;], _ = roc_curve(y_val.ravel(), preds_lg_val_all[model].ravel())
+    roc_auc[&quot;micro&quot;] = auc(fpr[&quot;micro&quot;], tpr[&quot;micro&quot;])
+
+    print(f&quot;Micro-averaged One-vs-Rest ROC AUC score:\n{roc_auc[&#039;micro&#039;]:.2f}&quot;)
+
+    for i in range(n_classes):
+        fpr[i], tpr[i], _ = roc_curve(y_val[:, i], preds_lg_val_all[model][:, i])
+        roc_auc[i] = auc(fpr[i], tpr[i])
+
+    fpr_grid = np.linspace(0.0, 1.0, 1000)
+
+    # Interpolate all ROC curves at these points
+    mean_tpr = np.zeros_like(fpr_grid)
+
+    for i in range(n_classes):
+        mean_tpr += np.interp(fpr_grid, fpr[i], tpr[i])  # linear interpolation
+
+    # Average it and compute AUC
+    mean_tpr /= n_classes
+
+    fpr[&quot;macro&quot;] = fpr_grid
+    tpr[&quot;macro&quot;] = mean_tpr
+    roc_auc[&quot;macro&quot;] = auc(fpr[&quot;macro&quot;], tpr[&quot;macro&quot;])
+
+    print(f&quot;Macro-averaged One-vs-Rest ROC AUC score:\n{roc_auc[&#039;macro&#039;]:.2f}&quot;)
+    ax.plot(
+        fpr[&quot;micro&quot;],
+        tpr[&quot;micro&quot;],
+        label=f&quot;micro-average ROC curve (AUC = {roc_auc[&#039;micro&#039;]:.2f})&quot;,
+        color=&quot;deeppink&quot;,
+        linestyle=&quot;:&quot;,
+        linewidth=4,
+        
+    )
+
+    ax.plot(
+        fpr[&quot;macro&quot;],
+        tpr[&quot;macro&quot;],
+        label=f&quot;macro-average ROC curve (AUC = {roc_auc[&#039;macro&#039;]:.2f})&quot;,
+        color=&quot;navy&quot;,
+        linestyle=&quot;:&quot;,
+        linewidth=4,
+
+    )
+
+    colors = cycle([&quot;aqua&quot;, &quot;darkorange&quot;, &quot;cornflowerblue&quot;, &quot;green&quot;, &quot;pink&quot;])
+    for class_id, color in zip(range(n_classes), colors):
+        RocCurveDisplay.from_predictions(
+            y_val[:, class_id],
+            preds_lg_val_all[model][:, class_id],
+            name=f&quot;ROC curve for {y_label_cols[class_id].split(&#039;subtype_&#039;)[1]}&quot;,
+            color=color,
+            ax=ax,
+            plot_chance_level=(class_id == 2),
+        )
+
+    ax.axis(&quot;square&quot;)
+    ax.set_xlabel(&quot;False Positive Rate&quot;)
+    ax.set_ylabel(&quot;True Positive Rate&quot;)
+    ax.set_title(f&quot;{model}&quot;)
+    ax.legend(bbox_to_anchor =(0.5,-0.77), loc=&#039;lower center&#039;)
+    return" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>fig, axes = plt.subplots(1, 4, sharex=True, sharey=True, figsize=(20,4))
+fig.suptitle('Extension of ROC Validation: to One-vs-Rest multiclass')
+i = 0
+best_model_classes =[["log regression", clf_lg],
+    ["decision tree", clf_dtc],
+    # ["random forest", clf_rf],
+    ["k neighbors", clf_knn],
+    # ["naive bayes", clf_gnb],
+    # ["support vector machines", clf_svc],
+    ["Adaboost", clf_ada]]
+
+for model, clf_i in best_model_classes:
+    if i == 4:
+        break
+    else:
+        macro_roc_i = macro_roc_calc(y_val, preds_lg_val_all[model])
+        print(f"Macro-averaged One-vs-Rest ROC AUC score for {model}:\n{macro_roc_i:.2f}")   
+        create_roc_micro_vs_macro_plot(y_val, preds_lg_val_all, model, ax=axes[i])
+    i += 1
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="fig, axes = plt.subplots(1, 4, sharex=True, sharey=True, figsize=(20,4))
+fig.suptitle(&#039;Extension of ROC Validation: to One-vs-Rest multiclass&#039;)
+i = 0
+best_model_classes =[[&quot;log regression&quot;, clf_lg],
+    [&quot;decision tree&quot;, clf_dtc],
+    # [&quot;random forest&quot;, clf_rf],
+    [&quot;k neighbors&quot;, clf_knn],
+    # [&quot;naive bayes&quot;, clf_gnb],
+    # [&quot;support vector machines&quot;, clf_svc],
+    [&quot;Adaboost&quot;, clf_ada]]
+
+for model, clf_i in best_model_classes:
+    if i == 4:
+        break
+    else:
+        macro_roc_i = macro_roc_calc(y_val, preds_lg_val_all[model])
+        print(f&quot;Macro-averaged One-vs-Rest ROC AUC score for {model}:\n{macro_roc_i:.2f}&quot;)   
+        create_roc_micro_vs_macro_plot(y_val, preds_lg_val_all, model, ax=axes[i])
+    i += 1" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre data-line="1037" class="code-line" dir="auto"><code class="hljs">Macro-averaged One-vs-Rest ROC AUC score for log regression:
+0.96
+Micro-averaged One-vs-Rest ROC AUC score:
+0.98
+Macro-averaged One-vs-Rest ROC AUC score:
+0.96
+Macro-averaged One-vs-Rest ROC AUC score for decision tree:
+0.89
+Micro-averaged One-vs-Rest ROC AUC score:
+0.92
+Macro-averaged One-vs-Rest ROC AUC score:
+0.89
+Macro-averaged One-vs-Rest ROC AUC score for k neighbors:
+0.91
+Micro-averaged One-vs-Rest ROC AUC score:
+0.95
+Macro-averaged One-vs-Rest ROC AUC score:
+0.91
+Macro-averaged One-vs-Rest ROC AUC score for Adaboost:
+0.96
+Micro-averaged One-vs-Rest ROC AUC score:
+0.97
+Macro-averaged One-vs-Rest ROC AUC score:
+0.96
+</code></pre>
+
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="Macro-averaged One-vs-Rest ROC AUC score for log regression:
+0.96
+Micro-averaged One-vs-Rest ROC AUC score:
+0.98
+Macro-averaged One-vs-Rest ROC AUC score:
+0.96
+Macro-averaged One-vs-Rest ROC AUC score for decision tree:
+0.89
+Micro-averaged One-vs-Rest ROC AUC score:
+0.92
+Macro-averaged One-vs-Rest ROC AUC score:
+0.89
+Macro-averaged One-vs-Rest ROC AUC score for k neighbors:
+0.91
+Micro-averaged One-vs-Rest ROC AUC score:
+0.95
+Macro-averaged One-vs-Rest ROC AUC score:
+0.91
+Macro-averaged One-vs-Rest ROC AUC score for Adaboost:
+0.96
+Micro-averaged One-vs-Rest ROC AUC score:
+0.97
+Macro-averaged One-vs-Rest ROC AUC score:
+0.96" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><p><img src="/files/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_62_1.png" alt="png" data-src="/files/SupervisedLearningApplication/TCGA_Supervised_Multilabel_Classification_files/TCGA_Supervised_Multilabel_Classification_62_1.png" /></p><h2 id="heading-next-steps">Next steps</h2>
+<h2 id="heading-4.2.3.-evaluation-of-sensitivity-at-9925-specificity-for-best-performing-models3a">4.2.3. Evaluation of Sensitivity at 99% specificity for best performing models:</h2>
+<ul data-line="1072" class="code-line" dir="auto">
+<li>Swarmplots of diseases by categories for best performing models</li>
+<li>Currently 4 models show AUC-ROC &gt; 0.9 based on micro-averaging. Hence for each of the models across the 5 sets of categories (Primary Tumor, Solid Tissue Normal, KICH, KIRP, KIRC), we want to plot swarm plots in a single plot for each of training and testing</li>
+<li>Plot area (4, 5): Each row will have the classifier and column will have the category and plot of 0, 1 across each plot</li>
+</ul>
+<h2 id="heading-4.2.4.-evaluating-feature-importances-from-training-and-validation-28using-shapley-values29">4.2.4. Evaluating feature importances from training and validation (using SHapley values)</h2>
+<h2 id="heading-5.0-evaluating-performance-on-held-out-test-set">5.0 Evaluating Performance on Held out test set</h2>
+</div>
+        </div>
+
+</body>
+</html>

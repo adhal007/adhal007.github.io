@@ -1,0 +1,2294 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Converted from: workflow.md</title>
+    <meta charset="utf-8"/>
+
+</head>
+<body>
+
+<div
+            class="github-markdown-body"
+            data-color-mode="auto"
+            data-light-theme="light"
+            data-dark-theme="dark"
+        >
+            <div class="github-markdown-content"><span id="markdown-mermaid" aria-hidden="true"
+                    data-dark-mode-theme="dark"
+                    data-light-mode-theme="default"></span>
+                <script type="module" src="https://unpkg.com/@github/clipboard-copy-element@latest"></script>
+<style>
+    .ClipboardButton {
+        position: relative;
+    }
+
+    clipboard-copy {
+        /* padding: 0.4em 0.6em; */
+        font: 0.9rem system-ui, sans-serif;
+        display: inline-block;
+        cursor: default;
+        color: var(--vscode-button-foreground);
+        background-color: var(--vscode-button-border);
+        border-color: var(--vscode-textCodeBlock-background);
+        border-radius: 6px;
+        border: 1px solid var(--vscode-widget-border);
+        box-shadow: inset 0 -1px 0 var(--vscode-widget-shadow);
+        transition: 80ms cubic-bezier(0.33, 1, 0.68, 1);
+        transition-property: color,background-color,box-shadow,border-color;
+    }
+
+    clipboard-copy:hover {
+        background-color: var(--vscode-statusBarItem-hoverBackground);
+    }
+
+    clipboard-copy:active {
+        outline: 1px solid var(--vscode-contrastActiveBorder) !important;
+        outline-offset: -1px;
+    }
+
+    clipboard-copy:focus-visible {
+        outline: 1px solid var(--vscode-focusBorder);
+    }
+
+    .d-none {
+        display: none !important;
+    }
+
+    .position-relative {
+        position: relative !important;
+    }
+
+    .position-absolute {
+        position: absolute !important;
+    }
+
+    .right-0 {
+        right: 0 !important;
+    }
+
+    .top-0 {
+        top: 0 !important;
+    }
+
+    .m-2 {
+        margin: var(--base-size-8, 8px) !important;
+    }
+
+    .color-fg-success {
+        color: #3fb950 !important;
+        stroke: #3fb950 !important;
+        border-color: #3fb950 !important;
+    }
+</style>
+<script>
+    document.addEventListener('clipboard-copy', function (event) {
+        const notice_clipboard_copy = event.target;
+        console.log(`notice_clipboard_copy = ${notice_clipboard_copy}`)
+        const notice_copy = event.target.querySelector('.clipboard-copy-icon');
+        const notice_check = event.target.querySelector('.clipboard-check-icon');
+        notice_clipboard_copy.classList.add("color-fg-success");
+        notice_copy.classList.add("d-none");
+        notice_check.classList.remove("d-none");
+        setTimeout(function () {
+            notice_clipboard_copy.classList.remove("color-fg-success");
+            notice_copy.classList.remove("d-none");
+            notice_check.classList.add("d-none");
+        }, 1000)
+    })
+</script><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>import OmicsUtils.pydeseq_utils as pydeseq_utils
+import pandas as pd
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="import OmicsUtils.pydeseq_utils as pydeseq_utils
+import pandas as pd" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><h2 id="heading-i.-process-counts-data">I. Process Counts data</h2>
+<h2 id="heading-1.1-read-in-counts-data-and-metadata">1.1 Read in counts data and metadata</h2>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>count_data_kidney_cancer = pd.read_csv('./Transcriptomics/data/processed_data/stranded_first_data_with_labels.csv')
+count_data_kidney_cancer
+count_data_kidney_cancer[['Case ID', 'Project ID']]
+kidney_cancer_count_data = count_data_kidney_cancer.iloc[:, :60660].T
+counts = kidney_cancer_count_data.copy().reset_index()
+counts = counts.set_index('index')
+counts
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="count_data_kidney_cancer = pd.read_csv(&#039;./Transcriptomics/data/processed_data/stranded_first_data_with_labels.csv&#039;)
+count_data_kidney_cancer
+count_data_kidney_cancer[[&#039;Case ID&#039;, &#039;Project ID&#039;]]
+kidney_cancer_count_data = count_data_kidney_cancer.iloc[:, :60660].T
+counts = kidney_cancer_count_data.copy().reset_index()
+counts = counts.set_index(&#039;index&#039;)
+counts" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div  data-line="23" class="code-line" dir="auto" ></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre data-line="29" class="code-line" dir="auto"><code class="hljs">.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value=".dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div  data-line="36" class="code-line" dir="auto" ></div>
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+      <th>9</th>
+      <th>...</th>
+      <th>1633</th>
+      <th>1634</th>
+      <th>1635</th>
+      <th>1636</th>
+      <th>1637</th>
+      <th>1638</th>
+      <th>1639</th>
+      <th>1640</th>
+      <th>1641</th>
+      <th>1642</th>
+    </tr>
+    <tr>
+      <th>index</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>ENSG00000000003.15</th>
+      <td>4</td>
+      <td>677</td>
+      <td>1561</td>
+      <td>2296</td>
+      <td>4929</td>
+      <td>6</td>
+      <td>1340</td>
+      <td>1</td>
+      <td>2</td>
+      <td>2383</td>
+      <td>...</td>
+      <td>1</td>
+      <td>5554</td>
+      <td>8</td>
+      <td>2538</td>
+      <td>2005</td>
+      <td>0</td>
+      <td>1774</td>
+      <td>2</td>
+      <td>1928</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>ENSG00000000005.6</th>
+      <td>12</td>
+      <td>6</td>
+      <td>1</td>
+      <td>96</td>
+      <td>8</td>
+      <td>4</td>
+      <td>0</td>
+      <td>22</td>
+      <td>26</td>
+      <td>191</td>
+      <td>...</td>
+      <td>1</td>
+      <td>18</td>
+      <td>1</td>
+      <td>3</td>
+      <td>8</td>
+      <td>1</td>
+      <td>9</td>
+      <td>8</td>
+      <td>3</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>ENSG00000000419.13</th>
+      <td>9</td>
+      <td>499</td>
+      <td>693</td>
+      <td>714</td>
+      <td>936</td>
+      <td>13</td>
+      <td>904</td>
+      <td>15</td>
+      <td>8</td>
+      <td>840</td>
+      <td>...</td>
+      <td>8</td>
+      <td>948</td>
+      <td>17</td>
+      <td>984</td>
+      <td>482</td>
+      <td>8</td>
+      <td>1122</td>
+      <td>10</td>
+      <td>991</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>ENSG00000000457.14</th>
+      <td>294</td>
+      <td>457</td>
+      <td>175</td>
+      <td>456</td>
+      <td>841</td>
+      <td>251</td>
+      <td>394</td>
+      <td>410</td>
+      <td>961</td>
+      <td>835</td>
+      <td>...</td>
+      <td>311</td>
+      <td>798</td>
+      <td>1112</td>
+      <td>1325</td>
+      <td>341</td>
+      <td>300</td>
+      <td>332</td>
+      <td>142</td>
+      <td>461</td>
+      <td>185</td>
+    </tr>
+    <tr>
+      <th>ENSG00000000460.17</th>
+      <td>366</td>
+      <td>242</td>
+      <td>90</td>
+      <td>185</td>
+      <td>367</td>
+      <td>262</td>
+      <td>227</td>
+      <td>371</td>
+      <td>270</td>
+      <td>489</td>
+      <td>...</td>
+      <td>317</td>
+      <td>351</td>
+      <td>883</td>
+      <td>1062</td>
+      <td>189</td>
+      <td>291</td>
+      <td>204</td>
+      <td>322</td>
+      <td>280</td>
+      <td>181</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>ENSG00000288669.1</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>ENSG00000288670.1</th>
+      <td>0</td>
+      <td>168</td>
+      <td>400</td>
+      <td>455</td>
+      <td>159</td>
+      <td>4</td>
+      <td>348</td>
+      <td>1</td>
+      <td>0</td>
+      <td>377</td>
+      <td>...</td>
+      <td>0</td>
+      <td>712</td>
+      <td>7</td>
+      <td>366</td>
+      <td>172</td>
+      <td>0</td>
+      <td>258</td>
+      <td>2</td>
+      <td>288</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>ENSG00000288671.1</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>ENSG00000288674.1</th>
+      <td>4</td>
+      <td>7</td>
+      <td>0</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>5</td>
+      <td>7</td>
+      <td>...</td>
+      <td>1</td>
+      <td>1</td>
+      <td>2</td>
+      <td>2</td>
+      <td>1</td>
+      <td>4</td>
+      <td>1</td>
+      <td>1</td>
+      <td>4</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>ENSG00000288675.1</th>
+      <td>16</td>
+      <td>27</td>
+      <td>30</td>
+      <td>5</td>
+      <td>27</td>
+      <td>11</td>
+      <td>36</td>
+      <td>22</td>
+      <td>72</td>
+      <td>20</td>
+      <td>...</td>
+      <td>31</td>
+      <td>10</td>
+      <td>93</td>
+      <td>56</td>
+      <td>14</td>
+      <td>22</td>
+      <td>6</td>
+      <td>8</td>
+      <td>24</td>
+      <td>9</td>
+    </tr>
+  </tbody>
+</table>
+<p>60660 rows × 1643 columns</p>
+</div>
+<h2 id="heading-1.2.-transpose-the-data-for-deseq2">1.2. Transpose the data for deseq2</h2>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>counts = counts.T
+counts = pd.concat( [count_data_kidney_cancer[['Case ID']], counts],axis=1)
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="counts = counts.T
+counts = pd.concat( [count_data_kidney_cancer[[&#039;Case ID&#039;]], counts],axis=1)" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>counts.rename(columns={'Case ID':'Geneid'}, inplace=True)
+counts.set_index('Geneid', inplace=True)
+counts.head()
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="counts.rename(columns={&#039;Case ID&#039;:&#039;Geneid&#039;}, inplace=True)
+counts.set_index(&#039;Geneid&#039;, inplace=True)
+counts.head()" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div  data-line="378" class="code-line" dir="auto" ></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre data-line="384" class="code-line" dir="auto"><code class="hljs">.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value=".dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div  data-line="391" class="code-line" dir="auto" ></div>
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ENSG00000000003.15</th>
+      <th>ENSG00000000005.6</th>
+      <th>ENSG00000000419.13</th>
+      <th>ENSG00000000457.14</th>
+      <th>ENSG00000000460.17</th>
+      <th>ENSG00000000938.13</th>
+      <th>ENSG00000000971.16</th>
+      <th>ENSG00000001036.14</th>
+      <th>ENSG00000001084.13</th>
+      <th>ENSG00000001167.14</th>
+      <th>...</th>
+      <th>ENSG00000288661.1</th>
+      <th>ENSG00000288662.1</th>
+      <th>ENSG00000288663.1</th>
+      <th>ENSG00000288665.1</th>
+      <th>ENSG00000288667.1</th>
+      <th>ENSG00000288669.1</th>
+      <th>ENSG00000288670.1</th>
+      <th>ENSG00000288671.1</th>
+      <th>ENSG00000288674.1</th>
+      <th>ENSG00000288675.1</th>
+    </tr>
+    <tr>
+      <th>Geneid</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>C3L-00966</th>
+      <td>4</td>
+      <td>12</td>
+      <td>9</td>
+      <td>294</td>
+      <td>366</td>
+      <td>1</td>
+      <td>22</td>
+      <td>87</td>
+      <td>9</td>
+      <td>11</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>4</td>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>TCGA-MM-A563</th>
+      <td>677</td>
+      <td>6</td>
+      <td>499</td>
+      <td>457</td>
+      <td>242</td>
+      <td>1046</td>
+      <td>2378</td>
+      <td>1263</td>
+      <td>616</td>
+      <td>383</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>10</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>168</td>
+      <td>0</td>
+      <td>7</td>
+      <td>27</td>
+    </tr>
+    <tr>
+      <th>TCGA-GL-8500</th>
+      <td>1561</td>
+      <td>1</td>
+      <td>693</td>
+      <td>175</td>
+      <td>90</td>
+      <td>95</td>
+      <td>53</td>
+      <td>3168</td>
+      <td>1540</td>
+      <td>682</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>6</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>400</td>
+      <td>0</td>
+      <td>0</td>
+      <td>30</td>
+    </tr>
+    <tr>
+      <th>TCGA-BQ-5877</th>
+      <td>2296</td>
+      <td>96</td>
+      <td>714</td>
+      <td>456</td>
+      <td>185</td>
+      <td>195</td>
+      <td>1120</td>
+      <td>3311</td>
+      <td>1722</td>
+      <td>606</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>455</td>
+      <td>0</td>
+      <td>2</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>TCGA-KN-8423</th>
+      <td>4929</td>
+      <td>8</td>
+      <td>936</td>
+      <td>841</td>
+      <td>367</td>
+      <td>152</td>
+      <td>271</td>
+      <td>3019</td>
+      <td>1440</td>
+      <td>639</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>11</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>159</td>
+      <td>0</td>
+      <td>0</td>
+      <td>27</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 60660 columns</p>
+</div>
+<h2 id="heading-ii.-metadata-pre-processing">II. Metadata pre-processing</h2>
+<h2 id="heading-2.1.-create-a-metadata-dataframe-with-case-id-and-cancer-subtype">2.1. Create a metadata dataframe with Case ID and Cancer subtype</h2>
+<p>Only 3 cancers from TCGA (Renal Cell Carcinoma) are included in this</p><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>metadata = count_data_kidney_cancer[['Case ID', 'Project ID']]
+metadata.columns = ['Sample', 'Condition']
+metadata = metadata.set_index(keys='Sample') 
+TCGA_rcc_metadata = metadata[metadata['Condition'].isin(values=['TCGA-KIRC', 'TCGA-KIRP', 'TCGA-KICH'])]
+TCGA_rcc_metadata
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="metadata = count_data_kidney_cancer[[&#039;Case ID&#039;, &#039;Project ID&#039;]]
+metadata.columns = [&#039;Sample&#039;, &#039;Condition&#039;]
+metadata = metadata.set_index(keys=&#039;Sample&#039;) 
+TCGA_rcc_metadata = metadata[metadata[&#039;Condition&#039;].isin(values=[&#039;TCGA-KIRC&#039;, &#039;TCGA-KIRP&#039;, &#039;TCGA-KICH&#039;])]
+TCGA_rcc_metadata" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div  data-line="589" class="code-line" dir="auto" ></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre data-line="595" class="code-line" dir="auto"><code class="hljs">.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value=".dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div  data-line="602" class="code-line" dir="auto" ></div>
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Condition</th>
+    </tr>
+    <tr>
+      <th>Sample</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>TCGA-MM-A563</th>
+      <td>TCGA-KIRC</td>
+    </tr>
+    <tr>
+      <th>TCGA-GL-8500</th>
+      <td>TCGA-KIRP</td>
+    </tr>
+    <tr>
+      <th>TCGA-BQ-5877</th>
+      <td>TCGA-KIRP</td>
+    </tr>
+    <tr>
+      <th>TCGA-KN-8423</th>
+      <td>TCGA-KICH</td>
+    </tr>
+    <tr>
+      <th>TCGA-5P-A9K0</th>
+      <td>TCGA-KIRP</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>TCGA-CW-6087</th>
+      <td>TCGA-KIRC</td>
+    </tr>
+    <tr>
+      <th>TCGA-BQ-5884</th>
+      <td>TCGA-KIRP</td>
+    </tr>
+    <tr>
+      <th>TCGA-AK-3456</th>
+      <td>TCGA-KIRC</td>
+    </tr>
+    <tr>
+      <th>TCGA-KN-8436</th>
+      <td>TCGA-KICH</td>
+    </tr>
+    <tr>
+      <th>TCGA-B0-5697</th>
+      <td>TCGA-KIRC</td>
+    </tr>
+  </tbody>
+</table>
+<p>924 rows × 1 columns</p>
+</div>
+<h2 id="heading-2.2.-subset-the-counts-data-to-only-include-the-3-cancers">2.2. Subset the counts data to only include the 3 cancers</h2>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>counts_rcc = counts[counts.index.isin(TCGA_rcc_metadata.index.values)]
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="counts_rcc = counts[counts.index.isin(TCGA_rcc_metadata.index.values)]" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><h2 id="heading-iii.-running-deseq2">III. Running Deseq2</h2>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>from importlib import reload
+import OmicsUtils.pydeseq_utils as pydeseq_utils
+reload(pydeseq_utils)
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="from importlib import reload
+import OmicsUtils.pydeseq_utils as pydeseq_utils
+reload(pydeseq_utils)" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre data-line="685" class="code-line" dir="auto"><code class="hljs">&lt;module 'OmicsUtils.pydeseq_utils' from '/Users/abhilashdhal/Projects/OmicsUtils/pydeseq_utils.py'&gt;
+</code></pre>
+
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="&lt;module &#039;OmicsUtils.pydeseq_utils&#039; from &#039;/Users/abhilashdhal/Projects/OmicsUtils/pydeseq_utils.py&#039;&gt;" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>## Initialize the pydeseq_utils object
+pydeseq_obj = pydeseq_utils.PyDeSeqWrapper(count_matrix=counts_rcc, metadata=TCGA_rcc_metadata, design_factors='Condition', groups = {'group1':'TCGA-KIRC', 'group2':'TCGA-KIRP'})
+design_factor = 'Condition'
+result = pydeseq_obj.run_deseq(design_factor=design_factor, group1 = 'TCGA-KIRC', group2 = 'TCGA-KIRP')
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="## Initialize the pydeseq_utils object
+pydeseq_obj = pydeseq_utils.PyDeSeqWrapper(count_matrix=counts_rcc, metadata=TCGA_rcc_metadata, design_factors=&#039;Condition&#039;, groups = {&#039;group1&#039;:&#039;TCGA-KIRC&#039;, &#039;group2&#039;:&#039;TCGA-KIRP&#039;})
+design_factor = &#039;Condition&#039;
+result = pydeseq_obj.run_deseq(design_factor=design_factor, group1 = &#039;TCGA-KIRC&#039;, group2 = &#039;TCGA-KIRP&#039;)" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre data-line="697" class="code-line" dir="auto"><code class="hljs">13/11//2023 05:59:1699878581 PM - INFO - PyDeSeqWrapper.run_deseq: Running DESeq2 for groups: {'group1': 'TCGA-KIRC', 'group2': 'TCGA-KIRP'}
+13/11//2023 05:59:1699878581 PM - INFO - PyDeSeqWrapper.run_deseq: Running DESeq2 for groups: {'group1': 'TCGA-KIRC', 'group2': 'TCGA-KIRP'}
+13/11//2023 05:59:1699878581 PM - INFO - PyDeSeqWrapper.run_deseq: Running DESeq2 for groups: {'group1': 'TCGA-KIRC', 'group2': 'TCGA-KIRP'}
+13/11//2023 05:59:1699878581 PM - INFO - PyDeSeqWrapper.run_deseq: Running DESeq2  factor analysis with design factor: C and o
+13/11//2023 05:59:1699878581 PM - INFO - PyDeSeqWrapper.run_deseq: Running DESeq2  factor analysis with design factor: C and o
+13/11//2023 05:59:1699878581 PM - INFO - PyDeSeqWrapper.run_deseq: Running DESeq2  factor analysis with design factor: C and o
+13/11//2023 05:59:1699878581 PM - INFO - PyDeSeqWrapper.run_deseq: Statistical analysis of TCGA-KIRC vs TCGA-KIRP in {'group1': 'TCGA-KIRC', 'group2': 'TCGA-KIRP'}
+13/11//2023 05:59:1699878581 PM - INFO - PyDeSeqWrapper.run_deseq: Statistical analysis of TCGA-KIRC vs TCGA-KIRP in {'group1': 'TCGA-KIRC', 'group2': 'TCGA-KIRP'}
+13/11//2023 05:59:1699878581 PM - INFO - PyDeSeqWrapper.run_deseq: Statistical analysis of TCGA-KIRC vs TCGA-KIRP in {'group1': 'TCGA-KIRC', 'group2': 'TCGA-KIRP'}
+
+
+/opt/homebrew/anaconda3/envs/umap-env/lib/python3.11/site-packages/anndata/_core/anndata.py:1897: UserWarning: Observation names are not unique. To make them unique, call `.obs_names_make_unique`.
+  utils.warn_names_duplicates(&quot;obs&quot;)
+Fitting size factors...
+... done in 0.71 seconds.
+
+Fitting dispersions...
+... done in 12.99 seconds.
+
+Fitting dispersion trend curve...
+... done in 4.57 seconds.
+
+Fitting MAP dispersions...
+... done in 14.78 seconds.
+
+Fitting LFCs...
+... done in 30.33 seconds.
+
+/opt/homebrew/anaconda3/envs/umap-env/lib/python3.11/site-packages/anndata/_core/anndata.py:1897: UserWarning: Observation names are not unique. To make them unique, call `.obs_names_make_unique`.
+  utils.warn_names_duplicates(&quot;obs&quot;)
+Refitting 10827 outliers.
+
+/opt/homebrew/anaconda3/envs/umap-env/lib/python3.11/site-packages/anndata/_core/anndata.py:1897: UserWarning: Observation names are not unique. To make them unique, call `.obs_names_make_unique`.
+  utils.warn_names_duplicates(&quot;obs&quot;)
+/opt/homebrew/anaconda3/envs/umap-env/lib/python3.11/site-packages/anndata/_core/anndata.py:1897: UserWarning: Observation names are not unique. To make them unique, call `.obs_names_make_unique`.
+  utils.warn_names_duplicates(&quot;obs&quot;)
+Fitting size factors...
+... done in 0.08 seconds.
+
+Fitting dispersions...
+... done in 2.75 seconds.
+
+Fitting MAP dispersions...
+... done in 2.71 seconds.
+
+Fitting LFCs...
+... done in 5.80 seconds.
+</code></pre>
+
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="13/11//2023 05:59:1699878581 PM - INFO - PyDeSeqWrapper.run_deseq: Running DESeq2 for groups: {&#039;group1&#039;: &#039;TCGA-KIRC&#039;, &#039;group2&#039;: &#039;TCGA-KIRP&#039;}
+13/11//2023 05:59:1699878581 PM - INFO - PyDeSeqWrapper.run_deseq: Running DESeq2 for groups: {&#039;group1&#039;: &#039;TCGA-KIRC&#039;, &#039;group2&#039;: &#039;TCGA-KIRP&#039;}
+13/11//2023 05:59:1699878581 PM - INFO - PyDeSeqWrapper.run_deseq: Running DESeq2 for groups: {&#039;group1&#039;: &#039;TCGA-KIRC&#039;, &#039;group2&#039;: &#039;TCGA-KIRP&#039;}
+13/11//2023 05:59:1699878581 PM - INFO - PyDeSeqWrapper.run_deseq: Running DESeq2  factor analysis with design factor: C and o
+13/11//2023 05:59:1699878581 PM - INFO - PyDeSeqWrapper.run_deseq: Running DESeq2  factor analysis with design factor: C and o
+13/11//2023 05:59:1699878581 PM - INFO - PyDeSeqWrapper.run_deseq: Running DESeq2  factor analysis with design factor: C and o
+13/11//2023 05:59:1699878581 PM - INFO - PyDeSeqWrapper.run_deseq: Statistical analysis of TCGA-KIRC vs TCGA-KIRP in {&#039;group1&#039;: &#039;TCGA-KIRC&#039;, &#039;group2&#039;: &#039;TCGA-KIRP&#039;}
+13/11//2023 05:59:1699878581 PM - INFO - PyDeSeqWrapper.run_deseq: Statistical analysis of TCGA-KIRC vs TCGA-KIRP in {&#039;group1&#039;: &#039;TCGA-KIRC&#039;, &#039;group2&#039;: &#039;TCGA-KIRP&#039;}
+13/11//2023 05:59:1699878581 PM - INFO - PyDeSeqWrapper.run_deseq: Statistical analysis of TCGA-KIRC vs TCGA-KIRP in {&#039;group1&#039;: &#039;TCGA-KIRC&#039;, &#039;group2&#039;: &#039;TCGA-KIRP&#039;}
+
+
+/opt/homebrew/anaconda3/envs/umap-env/lib/python3.11/site-packages/anndata/_core/anndata.py:1897: UserWarning: Observation names are not unique. To make them unique, call `.obs_names_make_unique`.
+  utils.warn_names_duplicates(&quot;obs&quot;)
+Fitting size factors...
+... done in 0.71 seconds.
+
+Fitting dispersions...
+... done in 12.99 seconds.
+
+Fitting dispersion trend curve...
+... done in 4.57 seconds.
+
+Fitting MAP dispersions...
+... done in 14.78 seconds.
+
+Fitting LFCs...
+... done in 30.33 seconds.
+
+/opt/homebrew/anaconda3/envs/umap-env/lib/python3.11/site-packages/anndata/_core/anndata.py:1897: UserWarning: Observation names are not unique. To make them unique, call `.obs_names_make_unique`.
+  utils.warn_names_duplicates(&quot;obs&quot;)
+Refitting 10827 outliers.
+
+/opt/homebrew/anaconda3/envs/umap-env/lib/python3.11/site-packages/anndata/_core/anndata.py:1897: UserWarning: Observation names are not unique. To make them unique, call `.obs_names_make_unique`.
+  utils.warn_names_duplicates(&quot;obs&quot;)
+/opt/homebrew/anaconda3/envs/umap-env/lib/python3.11/site-packages/anndata/_core/anndata.py:1897: UserWarning: Observation names are not unique. To make them unique, call `.obs_names_make_unique`.
+  utils.warn_names_duplicates(&quot;obs&quot;)
+Fitting size factors...
+... done in 0.08 seconds.
+
+Fitting dispersions...
+... done in 2.75 seconds.
+
+Fitting MAP dispersions...
+... done in 2.71 seconds.
+
+Fitting LFCs...
+... done in 5.80 seconds." tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><h2 id="heading-iv.-data-interpretation-of-the-results">IV. Data Interpretation of the results</h2>
+<h2 id="heading-4.1.-create-a-pca-plot">4.1. Create a PCA plot</h2>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>import scanpy as sc
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="import scanpy as sc" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>sc.tl.pca(pydeseq_obj.dds)
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="sc.tl.pca(pydeseq_obj.dds)" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>sc.pl.pca(pydeseq_obj.dds, color = 'Condition', size = 200)
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="sc.pl.pca(pydeseq_obj.dds, color = &#039;Condition&#039;, size = 200)" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre data-line="766" class="code-line" dir="auto"><code class="hljs">/opt/homebrew/anaconda3/envs/umap-env/lib/python3.11/site-packages/scanpy/plotting/_tools/scatterplots.py:394: UserWarning: No data for colormapping provided via 'c'. Parameters 'cmap' will be ignored
+  cax = scatter(
+</code></pre>
+
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="/opt/homebrew/anaconda3/envs/umap-env/lib/python3.11/site-packages/scanpy/plotting/_tools/scatterplots.py:394: UserWarning: No data for colormapping provided via &#039;c&#039;. Parameters &#039;cmap&#039; will be ignored
+  cax = scatter(" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><p><img src="/files/DeSeqApplication/images/TCGA_Deseq2_analysis_files/TCGA_Deseq2_analysis_19_1.png" alt="png" data-src="/files/DeSeqApplication/images/TCGA_Deseq2_analysis_files/TCGA_Deseq2_analysis_19_1.png" /></p><h2 id="heading-4.2.-create-a-volcano-plot-of-the-results">4.2. Create a volcano plot of the results</h2>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>import numpy as np
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="import numpy as np" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>result.summary()
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="result.summary()" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre data-line="788" class="code-line" dir="auto"><code class="hljs">Running Wald tests...
+... done in 26.52 seconds.
+
+
+
+Log2 fold change &amp; Wald test p-value: Condition TCGA-KIRC vs TCGA-KIRP
+</code></pre>
+
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="Running Wald tests...
+... done in 26.52 seconds.
+
+
+
+Log2 fold change &amp; Wald test p-value: Condition TCGA-KIRC vs TCGA-KIRP" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div  data-line="797" class="code-line" dir="auto" ></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre data-line="803" class="code-line" dir="auto"><code class="hljs">.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value=".dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div  data-line="810" class="code-line" dir="auto" ></div>
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>baseMean</th>
+      <th>log2FoldChange</th>
+      <th>lfcSE</th>
+      <th>stat</th>
+      <th>pvalue</th>
+      <th>padj</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>ENSG00000000003.15</th>
+      <td>1745.846969</td>
+      <td>-0.229056</td>
+      <td>0.054051</td>
+      <td>-4.237788</td>
+      <td>2.257328e-05</td>
+      <td>4.716019e-05</td>
+    </tr>
+    <tr>
+      <th>ENSG00000000005.6</th>
+      <td>24.765175</td>
+      <td>1.245152</td>
+      <td>0.164656</td>
+      <td>7.562141</td>
+      <td>3.964869e-14</td>
+      <td>1.391292e-13</td>
+    </tr>
+    <tr>
+      <th>ENSG00000000419.13</th>
+      <td>688.768193</td>
+      <td>0.013235</td>
+      <td>0.028567</td>
+      <td>0.463276</td>
+      <td>6.431665e-01</td>
+      <td>7.231618e-01</td>
+    </tr>
+    <tr>
+      <th>ENSG00000000457.14</th>
+      <td>456.921769</td>
+      <td>0.171048</td>
+      <td>0.031631</td>
+      <td>5.407658</td>
+      <td>6.385407e-08</td>
+      <td>1.593618e-07</td>
+    </tr>
+    <tr>
+      <th>ENSG00000000460.17</th>
+      <td>280.125529</td>
+      <td>0.348439</td>
+      <td>0.041999</td>
+      <td>8.296374</td>
+      <td>1.073368e-16</td>
+      <td>4.215969e-16</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>ENSG00000288669.1</th>
+      <td>0.164879</td>
+      <td>0.127490</td>
+      <td>0.423766</td>
+      <td>0.300851</td>
+      <td>7.635283e-01</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>ENSG00000288670.1</th>
+      <td>263.675230</td>
+      <td>-0.167515</td>
+      <td>0.038957</td>
+      <td>-4.300023</td>
+      <td>1.707803e-05</td>
+      <td>3.598875e-05</td>
+    </tr>
+    <tr>
+      <th>ENSG00000288671.1</th>
+      <td>0.000000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>ENSG00000288674.1</th>
+      <td>3.072331</td>
+      <td>0.264358</td>
+      <td>0.088761</td>
+      <td>2.978326</td>
+      <td>2.898276e-03</td>
+      <td>4.982204e-03</td>
+    </tr>
+    <tr>
+      <th>ENSG00000288675.1</th>
+      <td>21.585309</td>
+      <td>-0.656003</td>
+      <td>0.066130</td>
+      <td>-9.919931</td>
+      <td>3.409917e-23</td>
+      <td>1.742860e-22</td>
+    </tr>
+  </tbody>
+</table>
+<p>60660 rows × 6 columns</p>
+</div>
+<h2 id="heading-4.2.1.-process-results-dataframe-for-plotting">4.2.1. Process results dataframe for plotting</h2>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+import numpy as n
+import random
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+import numpy as n
+import random" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><h2 id="heading-4.2.1.1-read-and-merge-dataframe-of-deseq-with-gene-annotation-to-display">4.2.1.1 Read and merge dataframe of DESeq with gene annotation to display</h2>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>gene_annotation = pd.read_csv('./Transcriptomics/data/gene_annotation/gene_id_to_gene_name_mapping.csv')
+
+results_df = result.results_df
+results_df_filtered = results_df.dropna()
+results_df_filtered = results_df_filtered.reset_index()
+results_df_filtered['nlog10'] = -1*np.log10(results_df_filtered.padj)
+
+results_df_filtered = results_df_filtered.merge(gene_annotation, left_on='index', right_on='gene_id')
+results_df_filtered  = results_df_filtered .replace([np.inf, -np.inf], 300)
+results_df_filtered.sort_values('padj', ascending=False)
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="gene_annotation = pd.read_csv(&#039;./Transcriptomics/data/gene_annotation/gene_id_to_gene_name_mapping.csv&#039;)
+
+results_df = result.results_df
+results_df_filtered = results_df.dropna()
+results_df_filtered = results_df_filtered.reset_index()
+results_df_filtered[&#039;nlog10&#039;] = -1*np.log10(results_df_filtered.padj)
+
+results_df_filtered = results_df_filtered.merge(gene_annotation, left_on=&#039;index&#039;, right_on=&#039;gene_id&#039;)
+results_df_filtered  = results_df_filtered .replace([np.inf, -np.inf], 300)
+results_df_filtered.sort_values(&#039;padj&#039;, ascending=False)" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre data-line="956" class="code-line" dir="auto"><code class="hljs">/opt/homebrew/anaconda3/envs/umap-env/lib/python3.11/site-packages/pandas/core/arraylike.py:396: RuntimeWarning: divide by zero encountered in log10
+  result = getattr(ufunc, method)(*inputs, **kwargs)
+</code></pre>
+
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="/opt/homebrew/anaconda3/envs/umap-env/lib/python3.11/site-packages/pandas/core/arraylike.py:396: RuntimeWarning: divide by zero encountered in log10
+  result = getattr(ufunc, method)(*inputs, **kwargs)" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div  data-line="963" class="code-line" dir="auto" ></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre data-line="969" class="code-line" dir="auto"><code class="hljs">.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value=".dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div  data-line="976" class="code-line" dir="auto" ></div>
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>index</th>
+      <th>baseMean</th>
+      <th>log2FoldChange</th>
+      <th>lfcSE</th>
+      <th>stat</th>
+      <th>pvalue</th>
+      <th>padj</th>
+      <th>nlog10</th>
+      <th>gene_id</th>
+      <th>gene_name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>4797</th>
+      <td>ENSG00000118600.12</td>
+      <td>497.937357</td>
+      <td>-0.000004</td>
+      <td>0.029879</td>
+      <td>-0.000121</td>
+      <td>0.999904</td>
+      <td>0.999904</td>
+      <td>0.000042</td>
+      <td>ENSG00000118600.12</td>
+      <td>RXYLT1</td>
+    </tr>
+    <tr>
+      <th>26080</th>
+      <td>ENSG00000235196.3</td>
+      <td>0.204566</td>
+      <td>0.000078</td>
+      <td>0.364299</td>
+      <td>0.000215</td>
+      <td>0.999828</td>
+      <td>0.999851</td>
+      <td>0.000065</td>
+      <td>ENSG00000235196.3</td>
+      <td>Z68868.1</td>
+    </tr>
+    <tr>
+      <th>1153</th>
+      <td>ENSG00000071539.14</td>
+      <td>133.506374</td>
+      <td>-0.000023</td>
+      <td>0.080789</td>
+      <td>-0.000282</td>
+      <td>0.999775</td>
+      <td>0.999820</td>
+      <td>0.000078</td>
+      <td>ENSG00000071539.14</td>
+      <td>TRIP13</td>
+    </tr>
+    <tr>
+      <th>17434</th>
+      <td>ENSG00000200247.1</td>
+      <td>0.373922</td>
+      <td>-0.000196</td>
+      <td>0.604076</td>
+      <td>-0.000324</td>
+      <td>0.999741</td>
+      <td>0.999810</td>
+      <td>0.000083</td>
+      <td>ENSG00000200247.1</td>
+      <td>RNU6-254P</td>
+    </tr>
+    <tr>
+      <th>30471</th>
+      <td>ENSG00000251061.2</td>
+      <td>1.063364</td>
+      <td>0.000117</td>
+      <td>0.314020</td>
+      <td>0.000372</td>
+      <td>0.999703</td>
+      <td>0.999794</td>
+      <td>0.000089</td>
+      <td>ENSG00000251061.2</td>
+      <td>LINC02512</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>21165</th>
+      <td>ENSG00000224490.5</td>
+      <td>577.790849</td>
+      <td>4.755576</td>
+      <td>0.123465</td>
+      <td>38.517561</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>300.000000</td>
+      <td>ENSG00000224490.5</td>
+      <td>TTC21B-AS1</td>
+    </tr>
+    <tr>
+      <th>1744</th>
+      <td>ENSG00000087494.16</td>
+      <td>730.546390</td>
+      <td>5.894148</td>
+      <td>0.156149</td>
+      <td>37.747042</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>300.000000</td>
+      <td>ENSG00000087494.16</td>
+      <td>PTHLH</td>
+    </tr>
+    <tr>
+      <th>13974</th>
+      <td>ENSG00000177464.5</td>
+      <td>898.444596</td>
+      <td>3.328664</td>
+      <td>0.086959</td>
+      <td>38.278497</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>300.000000</td>
+      <td>ENSG00000177464.5</td>
+      <td>GPR4</td>
+    </tr>
+    <tr>
+      <th>8122</th>
+      <td>ENSG00000142319.18</td>
+      <td>2490.584653</td>
+      <td>7.940965</td>
+      <td>0.193696</td>
+      <td>40.997152</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>300.000000</td>
+      <td>ENSG00000142319.18</td>
+      <td>SLC6A3</td>
+    </tr>
+    <tr>
+      <th>8244</th>
+      <td>ENSG00000143248.13</td>
+      <td>35522.914658</td>
+      <td>3.997299</td>
+      <td>0.102497</td>
+      <td>38.999202</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>300.000000</td>
+      <td>ENSG00000143248.13</td>
+      <td>RGS5</td>
+    </tr>
+  </tbody>
+</table>
+<p>44007 rows × 10 columns</p>
+</div>
+<h2 id="heading-4.2.1.2-set-outlier-threshold-for-log2foldchange-and-nlog10-padj-using-tukey27s-fences">4.2.1.2 Set outlier threshold for log2FoldChange and nlog10 padj using tukey's fences</h2>
+<p>Tukey's fence's outlier thresholds are as follows:</p><p>General form: <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mi>u</mi><mi>t</mi><mi>l</mi><mi>i</mi><mi>e</mi><msub><mi>r</mi><mi>x</mi></msub><mo>=</mo><mi>k</mi><mo>×</mo><mo stretchy="false">(</mo><msub><mi>q</mi><mn>75</mn></msub><mo>−</mo><msub><mi>q</mi><mn>25</mn></msub><mo stretchy="false">)</mo><mo>+</mo><msub><mi>q</mi><mn>75</mn></msub></mrow><annotation encoding="application/x-tex">Outlier_{x} = k \times (q_{75} - q_{25}) + q_{75}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mord mathnormal">u</span><span class="mord mathnormal" style="margin-right:0.01968em;">tl</span><span class="mord mathnormal">i</span><span class="mord mathnormal">e</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.0278em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">75</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">25</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">75</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></p><ul data-line="1150" class="code-line" dir="auto">
+<li>Upper outlier threshold: k = 3.0</li>
+<li>middle outlier threshold: k = 1.5</li>
+<li>lower outlier threshold: k = 1.0</li>
+</ul>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>k = 3.0
+log2_threshold = k*(np.percentile(results_df_filtered['log2FoldChange'], 75) - np.percentile(results_df_filtered['log2FoldChange'], 25)) + np.percentile(results_df_filtered['log2FoldChange'], 75)
+log10_threshold = k*(np.percentile(results_df_filtered['nlog10'], 75) - np.percentile(results_df_filtered['nlog10'], 25)) + np.percentile(results_df_filtered['nlog10'], 75)
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="k = 3.0
+log2_threshold = k*(np.percentile(results_df_filtered[&#039;log2FoldChange&#039;], 75) - np.percentile(results_df_filtered[&#039;log2FoldChange&#039;], 25)) + np.percentile(results_df_filtered[&#039;log2FoldChange&#039;], 75)
+log10_threshold = k*(np.percentile(results_df_filtered[&#039;nlog10&#039;], 75) - np.percentile(results_df_filtered[&#039;nlog10&#039;], 25)) + np.percentile(results_df_filtered[&#039;nlog10&#039;], 75)" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>print(f"The threshold for log2FoldChange is {log2_threshold}")
+print(f"The threshold for nlog10 is {log10_threshold}")
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="print(f&quot;The threshold for log2FoldChange is {log2_threshold}&quot;)
+print(f&quot;The threshold for nlog10 is {log10_threshold}&quot;)" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre data-line="1167" class="code-line" dir="auto"><code class="hljs">The threshold for log2FoldChange is 3.0146824737036013
+The threshold for nlog10 is 61.22039206963072
+</code></pre>
+
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="The threshold for log2FoldChange is 3.0146824737036013
+The threshold for nlog10 is 61.22039206963072" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>#picked1 and picked2 simulate user lists of genes to label by color
+picked1 = random.choices(population=results_df_filtered.gene_name.tolist(), weights = results_df_filtered.nlog10.tolist(), k = 250)
+picked2 = random.choices(population=results_df_filtered.gene_name.tolist(), weights = results_df_filtered.nlog10.tolist(), k = 300)
+picked2 = [x for x in picked2 if x not in picked1]
+
+def map_color(a):
+    log2FoldChange, gene_name, nlog10 = a
+    
+    if abs(log2FoldChange) < log2_threshold or nlog10 < log10_threshold:
+        return 'Not significant'
+    if gene_name in picked1:
+        return 'picked1'
+    if gene_name in picked2:
+        return 'picked2'
+    
+    return 'Cherry picked'
+
+results_df_filtered['color'] = results_df_filtered[['log2FoldChange', 'gene_name', 'nlog10']].apply(map_color, axis = 1)
+
+#picked3 and picked24 simulate user lists of genes to label by shape
+df = results_df_filtered.copy()
+picked3 = random.choices(df.gene_name.tolist(), weights = df.nlog10.tolist(), k = 250)
+picked4 = random.choices(df.gene_name.tolist(), weights = df.nlog10.tolist(), k = 300)
+picked4 = [x for x in picked4 if x not in picked3]
+
+def map_shape(symbol):
+    if symbol in picked3:
+        return 'picked3'
+    if symbol in picked4:
+        return 'picked4'
+    
+    return 'not_important'
+
+df['shape'] = df.gene_name.map(map_shape)
+df.head()
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="#picked1 and picked2 simulate user lists of genes to label by color
+picked1 = random.choices(population=results_df_filtered.gene_name.tolist(), weights = results_df_filtered.nlog10.tolist(), k = 250)
+picked2 = random.choices(population=results_df_filtered.gene_name.tolist(), weights = results_df_filtered.nlog10.tolist(), k = 300)
+picked2 = [x for x in picked2 if x not in picked1]
+
+def map_color(a):
+    log2FoldChange, gene_name, nlog10 = a
+    
+    if abs(log2FoldChange) &lt; log2_threshold or nlog10 &lt; log10_threshold:
+        return &#039;Not significant&#039;
+    if gene_name in picked1:
+        return &#039;picked1&#039;
+    if gene_name in picked2:
+        return &#039;picked2&#039;
+    
+    return &#039;Cherry picked&#039;
+
+results_df_filtered[&#039;color&#039;] = results_df_filtered[[&#039;log2FoldChange&#039;, &#039;gene_name&#039;, &#039;nlog10&#039;]].apply(map_color, axis = 1)
+
+#picked3 and picked24 simulate user lists of genes to label by shape
+df = results_df_filtered.copy()
+picked3 = random.choices(df.gene_name.tolist(), weights = df.nlog10.tolist(), k = 250)
+picked4 = random.choices(df.gene_name.tolist(), weights = df.nlog10.tolist(), k = 300)
+picked4 = [x for x in picked4 if x not in picked3]
+
+def map_shape(symbol):
+    if symbol in picked3:
+        return &#039;picked3&#039;
+    if symbol in picked4:
+        return &#039;picked4&#039;
+    
+    return &#039;not_important&#039;
+
+df[&#039;shape&#039;] = df.gene_name.map(map_shape)
+df.head()" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div  data-line="1213" class="code-line" dir="auto" ></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre data-line="1219" class="code-line" dir="auto"><code class="hljs">.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value=".dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><div  data-line="1226" class="code-line" dir="auto" ></div>
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>index</th>
+      <th>baseMean</th>
+      <th>log2FoldChange</th>
+      <th>lfcSE</th>
+      <th>stat</th>
+      <th>pvalue</th>
+      <th>padj</th>
+      <th>nlog10</th>
+      <th>gene_id</th>
+      <th>gene_name</th>
+      <th>color</th>
+      <th>shape</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>ENSG00000000003.15</td>
+      <td>1745.846969</td>
+      <td>-0.229056</td>
+      <td>0.054051</td>
+      <td>-4.237788</td>
+      <td>2.257328e-05</td>
+      <td>4.716019e-05</td>
+      <td>4.326424</td>
+      <td>ENSG00000000003.15</td>
+      <td>TSPAN6</td>
+      <td>Not significant</td>
+      <td>not_important</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>ENSG00000000005.6</td>
+      <td>24.765175</td>
+      <td>1.245152</td>
+      <td>0.164656</td>
+      <td>7.562141</td>
+      <td>3.964869e-14</td>
+      <td>1.391292e-13</td>
+      <td>12.856582</td>
+      <td>ENSG00000000005.6</td>
+      <td>TNMD</td>
+      <td>Not significant</td>
+      <td>not_important</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>ENSG00000000419.13</td>
+      <td>688.768193</td>
+      <td>0.013235</td>
+      <td>0.028567</td>
+      <td>0.463276</td>
+      <td>6.431665e-01</td>
+      <td>7.231618e-01</td>
+      <td>0.140765</td>
+      <td>ENSG00000000419.13</td>
+      <td>DPM1</td>
+      <td>Not significant</td>
+      <td>not_important</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>ENSG00000000457.14</td>
+      <td>456.921769</td>
+      <td>0.171048</td>
+      <td>0.031631</td>
+      <td>5.407658</td>
+      <td>6.385407e-08</td>
+      <td>1.593618e-07</td>
+      <td>6.797616</td>
+      <td>ENSG00000000457.14</td>
+      <td>SCYL3</td>
+      <td>Not significant</td>
+      <td>not_important</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>ENSG00000000460.17</td>
+      <td>280.125529</td>
+      <td>0.348439</td>
+      <td>0.041999</td>
+      <td>8.296374</td>
+      <td>1.073368e-16</td>
+      <td>4.215969e-16</td>
+      <td>15.375103</td>
+      <td>ENSG00000000460.17</td>
+      <td>C1orf112</td>
+      <td>Not significant</td>
+      <td>not_important</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<h2 id="heading-4.2.2.-plot-differentially-expressed-genes">4.2.2. Plot differentially expressed genes</h2>
+<h2 id="heading-4.2.2.1-full-volcano-plot">4.2.2.1 FUll volcano plot</h2>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>ax1 = sns.scatterplot(data = df, x = 'log2FoldChange', y = 'nlog10',
+                    hue = 'color', hue_order = ['Not significant', 'picked1', 'picked2', 'Cherry picked'],
+                    palette = ['lightgrey', 'orange', 'purple', 'grey'],
+                    style = 'shape', 
+                    style_order = ['picked3', 'picked4', 'not_important'],
+                    markers = ['^', 's', 'o'], 
+                    size = 'baseMean', sizes = (40, 400),
+                    )
+
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="ax1 = sns.scatterplot(data = df, x = &#039;log2FoldChange&#039;, y = &#039;nlog10&#039;,
+                    hue = &#039;color&#039;, hue_order = [&#039;Not significant&#039;, &#039;picked1&#039;, &#039;picked2&#039;, &#039;Cherry picked&#039;],
+                    palette = [&#039;lightgrey&#039;, &#039;orange&#039;, &#039;purple&#039;, &#039;grey&#039;],
+                    style = &#039;shape&#039;, 
+                    style_order = [&#039;picked3&#039;, &#039;picked4&#039;, &#039;not_important&#039;],
+                    markers = [&#039;^&#039;, &#039;s&#039;, &#039;o&#039;], 
+                    size = &#039;baseMean&#039;, sizes = (40, 400),
+                    )" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><p><img src="/files/DeSeqApplication/images/TCGA_Deseq2_analysis_files/TCGA_Deseq2_analysis_33_0.png" alt="png" data-src="/files/DeSeqApplication/images/TCGA_Deseq2_analysis_files/TCGA_Deseq2_analysis_33_0.png" /></p><h2 id="heading-4.2.2.2-zoomed-in-and-well-annotated-plot-plot">4.2.2.2 Zoomed in and well annotated plot plot</h2>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>plt.figure(figsize = (6,6))
+ax = sns.scatterplot(data = df, x = 'log2FoldChange', y = 'nlog10',
+                    hue = 'color', hue_order = ['Not significant', 'picked1', 'picked2', 'Cherry picked'],
+                    palette = ['lightgrey', 'orange', 'purple', 'grey'],
+                    style = 'shape', 
+                    style_order = ['picked3', 'picked4', 'not_important'],
+                    markers = ['^', 's', 'o'], 
+                    size = 'baseMean', sizes = (40, 400))
+
+ax.axhline(log10_threshold, zorder = 0, c = 'k', lw = 2, ls = '--')
+ax.axvline(log2_threshold, zorder = 0, c = 'k', lw = 2, ls = '--')
+ax.axvline(-log2_threshold, zorder = 0, c = 'k', lw = 2, ls = '--')
+
+
+
+## print texts for only very top genes
+texts = []
+for i in range(len(df)):
+    if df.iloc[i].nlog10 > 150 and abs(df.iloc[i].log2FoldChange) > 6.5:
+        texts.append(plt.text(x = df.iloc[i].log2FoldChange, y = df.iloc[i].nlog10, s = df.iloc[i].gene_name,
+                             fontsize = 8, weight = 'bold'))
+        
+# adjust_text(texts, arrowprops = dict(arrowstyle = '-', color = 'k'))
+
+plt.legend(loc = 1, bbox_to_anchor = (1.4,1), frameon = False, prop = {'weight':'bold'})
+
+for axis in ['bottom', 'left']:
+    ax.spines[axis].set_linewidth(2)
+    
+ax.spines['top'].set_visible(False)
+ax.spines['right'].set_visible(False)
+
+ax.tick_params(width = 2)
+ax.set_xlim(-10, 10)
+ax.set_ylim(100, 400)
+plt.xticks(size = 12, weight = 'bold')
+plt.yticks(size = 12, weight = 'bold')
+
+plt.xlabel("$log_{2}$ fold change", size = 15)
+plt.ylabel("-$log_{10}$ FDR", size = 15)
+plt.title('Differential gene expression in TCGA-KIRC vs TCGA-KIRP', weight='bold', size = 15)
+plt.savefig('volcano.png', dpi = 300, bbox_inches = 'tight', facecolor = 'white')
+
+plt.show()
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="plt.figure(figsize = (6,6))
+ax = sns.scatterplot(data = df, x = &#039;log2FoldChange&#039;, y = &#039;nlog10&#039;,
+                    hue = &#039;color&#039;, hue_order = [&#039;Not significant&#039;, &#039;picked1&#039;, &#039;picked2&#039;, &#039;Cherry picked&#039;],
+                    palette = [&#039;lightgrey&#039;, &#039;orange&#039;, &#039;purple&#039;, &#039;grey&#039;],
+                    style = &#039;shape&#039;, 
+                    style_order = [&#039;picked3&#039;, &#039;picked4&#039;, &#039;not_important&#039;],
+                    markers = [&#039;^&#039;, &#039;s&#039;, &#039;o&#039;], 
+                    size = &#039;baseMean&#039;, sizes = (40, 400))
+
+ax.axhline(log10_threshold, zorder = 0, c = &#039;k&#039;, lw = 2, ls = &#039;--&#039;)
+ax.axvline(log2_threshold, zorder = 0, c = &#039;k&#039;, lw = 2, ls = &#039;--&#039;)
+ax.axvline(-log2_threshold, zorder = 0, c = &#039;k&#039;, lw = 2, ls = &#039;--&#039;)
+
+
+
+## print texts for only very top genes
+texts = []
+for i in range(len(df)):
+    if df.iloc[i].nlog10 &gt; 150 and abs(df.iloc[i].log2FoldChange) &gt; 6.5:
+        texts.append(plt.text(x = df.iloc[i].log2FoldChange, y = df.iloc[i].nlog10, s = df.iloc[i].gene_name,
+                             fontsize = 8, weight = &#039;bold&#039;))
+        
+# adjust_text(texts, arrowprops = dict(arrowstyle = &#039;-&#039;, color = &#039;k&#039;))
+
+plt.legend(loc = 1, bbox_to_anchor = (1.4,1), frameon = False, prop = {&#039;weight&#039;:&#039;bold&#039;})
+
+for axis in [&#039;bottom&#039;, &#039;left&#039;]:
+    ax.spines[axis].set_linewidth(2)
+    
+ax.spines[&#039;top&#039;].set_visible(False)
+ax.spines[&#039;right&#039;].set_visible(False)
+
+ax.tick_params(width = 2)
+ax.set_xlim(-10, 10)
+ax.set_ylim(100, 400)
+plt.xticks(size = 12, weight = &#039;bold&#039;)
+plt.yticks(size = 12, weight = &#039;bold&#039;)
+
+plt.xlabel(&quot;$log_{2}$ fold change&quot;, size = 15)
+plt.ylabel(&quot;-$log_{10}$ FDR&quot;, size = 15)
+plt.title(&#039;Differential gene expression in TCGA-KIRC vs TCGA-KIRP&#039;, weight=&#039;bold&#039;, size = 15)
+plt.savefig(&#039;volcano.png&#039;, dpi = 300, bbox_inches = &#039;tight&#039;, facecolor = &#039;white&#039;)
+
+plt.show()" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div><p><img src="/files/DeSeqApplication/images/TCGA_Deseq2_analysis_files/TCGA_Deseq2_analysis_35_0.png" alt="png" data-src="/files/DeSeqApplication/images/TCGA_Deseq2_analysis_files/TCGA_Deseq2_analysis_35_0.png" /></p><div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+              <pre>
+</pre>
+              <div class="zeroclipboard-container position-absolute right-0 top-0">
+                <clipboard-copy aria-label="Copy" class="ClipboardButton clipboard-copy m-2 p-0 tooltipped-no-delay"
+                  value="" tabindex="0" role="button">
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-copy clipboard-copy-icon m-2">
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+                    </path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
+                    class="octicon octicon-check clipboard-check-icon color-fg-success d-none m-2">
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+                    </path>
+                  </svg>
+                </clipboard-copy>
+              </div>
+            </div></div>
+        </div>
+
+</body>
+</html>
