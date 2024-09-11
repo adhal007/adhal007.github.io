@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Workflow</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css/github-markdown.min.css">
+    <style>
+        .markdown-body {
+            box-sizing: border-box;
+            min-width: 200px;
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 45px;
+        }
+    </style>
+</head>
+<body>
+    <div id="content" class="markdown-body">
+        <p>Loading...</p>
+    </div>
+    <div id="debug"></div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const debugElement = document.getElementById('debug');
+            const contentElement = document.getElementById('content');
+
+            debugElement.innerHTML += '<p>JavaScript is running</p>';
+
+            // Get the Markdown file URL from the query parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            let markdownFile = urlParams.get('file');
+
+            // If file parameter is not found, check for an encoded version
+            if (!markdownFile) {
+                const encodedParams = new URLSearchParams(decodeURIComponent(window.location.search.slice(1)));
+                markdownFile = encodedParams.get('file');
+            }
+
+            debugElement.innerHTML += `<p>URL: ${window.location.href}</p>`;
+            debugElement.innerHTML += `<p>Search params: ${window.location.search}</p>`;
+            debugElement.innerHTML += `<p>Detected file: ${markdownFile || 'None'}</p>`;
+
+            // Function to fetch and render Markdown
+            function renderMarkdown(url) {
+                debugElement.innerHTML += `<p>Attempting to load: ${url}</p>`;
+                fetch(url)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.text();
+                    })
+                    .then(text => {
+                        debugElement.innerHTML += `<p>Markdown content loaded, length: ${text.length}</p>`;
+                        contentElement.innerHTML = marked.parse(text);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        contentElement.innerHTML = `<p>Error loading file: ${error.message}</p>`;
+                        debugElement.innerHTML += `<p>Error: ${error.message}</p>`;
+                    });
+            }
+
+            // Render the Markdown file
+            if (markdownFile) {
+                renderMarkdown(markdownFile);
+            } else {
+                contentElement.innerHTML = '<p>No file specified</p>';
+            }
+        });
+    </script>
+</body>
+</html>
