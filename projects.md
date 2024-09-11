@@ -34,10 +34,10 @@ As a data scientist, I believe in the power of open source, open science, and op
 
 <h3 class="project-title">Implemented Projects</h3>
 <ul class="project-list project-description">
-  <li><a href="markdown-viewer.html?file=files/DeSeqApplication/docs/workflow.md">Differential Gene Expression in Kidney Cancer Subtypes</a></li>
-  <li><a href="markdown-viewer.html?file=files/SupervisedLearningApplication/docs/workflow.md">Multi-label Classification of Kidney Cancer Subtypes</a></li>
-  <li><a href="markdown-viewer.html?file=files/SuperviseLearningEnsembleApplication/workflow.md">Ensemble Classifiers for Kidney Cancer Classification</a></li>
-  <li><a href="markdown-viewer.html?file=files/UmapApplication/docs/workflow.md">Disease Stratification using UMAP and DBSCAN</a></li>
+  <li><a href="markdown-viewer.html?file=https://abhilashdhal.com/files/DeSeqApplication/docs/workflow.md">Differential Gene Expression in Kidney Cancer Subtypes</a></li>
+  <li><a href="markdown-viewer.html?file=https://abhilashdhal.com/files/SupervisedLearningApplication/docs/workflow.md">Multi-label Classification of Kidney Cancer Subtypes</a></li>
+  <li><a href="markdown-viewer.html?file=https://abhilashdhal.com/files/SuperviseLearningEnsembleApplication/workflow.md">Ensemble Classifiers for Kidney Cancer Classification</a></li>
+  <li><a href="markdown-viewer.html?file=https://abhilashdhal.com/files/UmapApplication/docs/workflow.md">Disease Stratification using UMAP and DBSCAN</a></li>
 </ul>
 
 <p><strong>Data source:</strong> <a href="https://portal.gdc.cancer.gov/repository">Genomic Data Commons</a></p>
