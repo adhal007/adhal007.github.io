@@ -27,7 +27,7 @@ navbar-links:
   
   # Certifications: "certifications"  
   Blogs:  "blog"
-  Projects: "projects"
+  Projects: "projectsoverview"
     # - DeSeq: "https://github.com/adhal007/adhal007.github.io/tree/master/files" 
     # - Umap and clustering on GE data: "https://github.com/adhal007/OmicsProjects/blob/main/UmapApplication/README.md"
     # - Starcraft II Agent: "https://github.com/adhal007/SC2-GCP-CNN"
