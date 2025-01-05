@@ -1,3 +1,9 @@
+---
+layout: post
+title: Network Analysis Part I. How to build a network and detect communities using gephi
+tags: ["NetworkX", "Gephi", "Wikipedia Pages", "Community Detection", "Snowball Sampling"]
+mathjax: true
+---
 ## Network Analysis Part I. How to build a network and detect communities using gephi
 
 In this post, we will discuss the concept of community detection in network analysis. Community detection is a fundamental concept in network analysis that involves identifying groups of nodes that are more densely connected to each other than to the rest of the network. These groups are known as communities or clusters, and they represent substructures within the network that exhibit a higher degree of internal connectivity. We will explore a case study of community detection in a network of Wikipedia pages to illustrate the concept in practice.
@@ -5,8 +11,6 @@ In this post, we will discuss the concept of community detection in network anal
 ### Case study: Network of Wikipedia Pages
 
 To demonstrate community detection in practice, we will consider a network of Wikipedia pages related to data science topics. Each node in the network represents a Wikipedia page, and edges between nodes indicate hyperlinks between the corresponding pages. The goal is to identify communities of pages that are thematically related based on their hyperlink structure.
-
-**Tools:** ```NetworkX, Snowball Sampling, Gephi```
 
 ##### Part I. Creation of the Network using Snowball Sampling
 
