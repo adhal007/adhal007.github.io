@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Network Analysis Part I. How to build a network and detect communities using gephi</title>
+    <style>
+        /* Basic styling */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        code {
+            font-family: 'Courier New', Courier, monospace;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            margin: 20px 0;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h2, h3, h4, h5 {
+            color: #2c3e50;
+            margin-top: 30px;
+        }
+        .math {
+            font-style: italic;
+        }
+        .output {
+            background-color: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h2>Network Analysis Part I. How to build a network and detect communities using gephi</h2>
+
+    <p>In this post, we will discuss the concept of community detection in network analysis. Community detection is a fundamental concept in network analysis that involves identifying groups of nodes that are more densely connected to each other than to the rest of the network. These groups are known as communities or clusters, and they represent substructures within the network that exhibit a higher degree of internal connectivity. We will explore a case study of community detection in a network of Wikipedia pages to illustrate the concept in practice.</p>
+
+    <h3>Case study: Network of Wikipedia Pages</h3>
+
+    <p>To demonstrate community detection in practice, we will consider a network of Wikipedia pages related to data science topics. Each node in the network represents a Wikipedia page, and edges between nodes indicate hyperlinks between the corresponding pages. The goal is to identify communities of pages that are thematically related based on their hyperlink structure.</p>
+
+    <p><strong>Tools:</strong> <code>NetworkX, Snowball Sampling, Gephi</code></p>
+
+    <h5>Part I. Creation of the Network using Snowball Sampling</h5>
+
+    <p>We will start by creating a network of Wikipedia pages using snowball sampling.</p>
+
+    <p>Snowball sampling is a technique that involves iteratively expanding a network by adding nodes and edges based on a set of initial seed nodes. In this case, we will select a single seed node corresponding to the word <em>"data science"</em> and expand the network by adding pages that are linked to the seed nodes.</p>
+
+    <h4>A. Importing Libraries and Setting Seed and Stop Words</h4>
+    <pre><code class="python">
+from operator import itemgetter 
+import networkx as nx
+import wikipedia
+SEED = "Data Science".title()
+
+STOPS = ("International Standard Serial Number", "International Standard Book Number",
+"National Diet Library",
+"International Standard Name Identifier", "International Standard Book Number (Identifier)", "Pubmed Identifier", "Pubmed Central",
+"Digital Object Identifier", "Arxiv",
+"Proc Natl Acad Sci Usa", "Bibcode",
+"Library Of Congress Control Number", "Jstor")
+    </code></pre>
+
+    <h4>B. Concept of Layers and Expansion of the Network</h4>
+    <ul>
+        <li>Starting with seed(Layer 0), we will expand the network by adding nodes and edges iteratively based on the hyperlinks in the Wikipedia pages.</li>
+        <li>Therefore, Layer 1 will contain say <span class="math">N₁</span> nodes, Layer 2 will contain <span class="math">N₁ × N₂</span> nodes, and so on.</li>
+        <li>As you can see, for Layer K, the number of nodes will be <span class="math">N₁ × N₂ × ... × Nₖ</span>.</li>
+        <li>Total number of nodes in the network will be <span class="math">N(K) = N₀ + N₁ + N₁ × N₂ + ... + N₁ × N₂ × ... × Nₖ</span>.
+            <ul>
+                <li>Where K is the number of layers.</li>
+            </ul>
+        </li>
+        <li>The network will grow exponentially with the number of layers. Hence for our case study, we will limit the number of layers to 2.</li>
+    </ul>
+
+    <h4>C. Algorithm for Snowball Sampling</h4>
+    <pre><code class="python">
+todo_lst = [(0, SEED)] # The SEED is in the layer 0 
+todo_set = set(SEED) # The SEED itself
+done_set = set() # Nothing is done yet
+
+while layer < 2:
+    # Block 1: Remove current page from todo_lst and mark as processed
+    if not todo_lst:
+        break
+    del todo_lst[0]
+    done_set.add(page)
+    print(layer, page)  # Show progress
+    
+    # Block 2: Attempt to download the page
+    try:
+        wiki = wikipedia.page(page)
+    except:
+        layer, page = todo_lst[0]  # Get next page if download fails
+        print("Could not load", page)
+        continue
+    
+    # Block 3: Evaluate and process links
+    for link in wiki.links:
+        link = link.title()
+        if link not in STOPS and not link.startswith("List Of"):
+            if link not in todo_set and link not in done_set:
+                todo_lst.append((layer + 1, link))
+                todo_set.add(link)
+            F.add_edge(page, link)
+    
+    # Block 4: Get the next page from todo_lst
+    layer, page = todo_lst[0]
+    </code></pre>
+
+    <h4>Explanation:</h4>
+    <ol>
+        <li><strong>Initialization of the todo_lst, todo_set, and done_set</strong>
+            Why do we need a todo_lst and todo_set?
+            <ul>
+                <li>todo_lst: It is a list of tuples where each tuple contains the layer number and the page name. The todo_lst is used to keep track of the pages that need to be processed in the current layer.</li>
+                <li>todo_set: It is a set that contains the names of the pages that need to be processed. The todo_set is used to efficiently check if a page is already in the todo_lst or done_set.</li>
+            </ul>
+        </li>
+        <li>The while loop iterates until the specified number of layers is reached or the todo_lst is empty.</li>
+        <li><strong>Block 1:</strong> Remove the current page from the todo_lst and mark it as processed by adding it to the done_set.</li>
+        <li><strong>Block 2:</strong> Attempt to download the page using the Wikipedia API. If the download fails, move to the next page in the todo_lst.</li>
+        <li><strong>Block 3:</strong> Evaluate and process the links on the downloaded page. For each link, check if it is a stop word or starts with "List Of". If not, add it to the todo_lst and todo_set and create an edge between the current page and the linked page in the network.</li>
+    </ol>
+
+    <h4>D. Result of Snowball Sampling</h4>
+    <pre><code class="python">
+print("{} nodes, {} edges".format(len(F), nx.number_of_edges(F)))
+    </code></pre>
+
+    <div class="output">
+        <p>21318 nodes, 37891 edges</p>
+    </div>
+
+    <p>As we can see, the snowball sampling process has resulted in a network with 21,318 nodes and 37,891 edges. Even with a limited number of layers, the network has grown significantly in size.</p>
+
+    <h5>Part II. Graph Truncation and Community Detection using Gephi</h5>
+
+    <p>In this part, we will truncate the graph to focus on a subset of nodes and edges for community detection using Gephi.</p>
+
+    <h4>A. Removing Self-Loops and Merging Duplicate Nodes</h4>
+    <pre><code class="python">
+## Removing self loops
+loops = list(nx.selfloop_edges(F, data=True, keys=True))
+F.remove_edges_from(loops) 
+
+## Merging duplicate nodes in the graph 
+duplicates = [(node, node + "s") for node in F if node + "s" in F] 
+for dup in duplicates:
+    F = nx.contracted_nodes(F, *dup, self_loops=False) 
+duplicates = [(x, y) for x, y in [(node, node.replace("-", " ")) for node in F] if x != y and y in F] 
+for dup in duplicates:
+    F = nx.contracted_nodes(F, *dup, self_loops=False) 
+    
+## nx.contracted_nodes creates a new node attribute called "contraction" whose value is a dictionary
+## GrapML does not support dictionary attributes - hence we set the "contraction" to 0
+nx.set_node_attributes(F, "contraction", 0)
+    </code></pre>
+
+    <h4>B. Truncation of Graph</h4>
+    <pre><code class="python">
+# Create subgraph first
+core = [node for node, deg in F.degree() if deg >= 2]
+G = nx.subgraph(F, core)
+
+# Remove all dictionary attributes from nodes
+for node in G.nodes():
+    node_attrs = dict(G.nodes[node])
+    for key, value in node_attrs.items():
+        if isinstance(value, dict):
+            del G.nodes[node][key]
+
+# Remove all dictionary attributes from edges
+for u, v, data in G.edges(data=True):
+    edge_attrs = dict(data)
+    for key, value in edge_attrs.items():
+        if isinstance(value, dict):
+            del G.edges[u, v][key]
+
+print("{} nodes, {} edges".format(len(G), nx.number_of_edges(G)))
+
+# Save using the basic GraphML writer
+nx.write_graphml(G, "cnads.graphml")
+    </code></pre>
+
+    <h4>C. Visualization and Community Detection using Gephi</h4>
+
+    <p>Now that we saved our graph as a GraphML file, we can import it into Gephi for visualization and community detection.</p>
+
+    <ol>
+        <li>Open Gephi and create a new project.</li>
+        <li>Go to File > Open and select the "cnads.graphml" file.</li>
+        <li>Use the layout algorithms in Gephi to visualize the network. For example, you can use the ForceAtlas2 layout for a good initial layout.</li>
+        <li>Use the modularity statistic in Gephi to detect communities in the network. Go to the Statistics tab, select Modularity, and click Run.</li>
+        <li>Apply the modularity partition to the network by going to the Partition tab, selecting Modularity, and clicking Apply.</li>
+        <li>Use the color palette in Gephi to visualize the communities in the network.</li>
+        <li>Explore the network to identify thematic clusters and analyze the structure of the communities.</li>
+    </ol>
+
+    <p>In our case study of the Wikipedia pages related to data science topics, community detection can help identify groups of pages that are thematically related - Here is a snapshot of the network visualization in Gephi:</p>
+
+    <img src="../files/NetworkAnalysis/cna_ds_wiki_with_eccentricity_nodes.png" alt="Wikipedia Pages Network starting with seed 'Data Science'">
+
+    <h4>Observations:</h4>
+    <ol>
+        <li>The network visualization shows <strong>13 distinct communities</strong> for different pages associated with the word "Data Science".</li>
+        <li>The <strong>communities represent thematic clusters of pages</strong> that are more densely connected to each other than to the rest of the network.
+            <ol>
+                <li>For example, the community in the top left corner represents pages related to "Machine Learning" and "Artificial Intelligence".</li>
+                <li>The Dark Green community in the bottom right corner represents pages related to "Data Analysis" and "Data Visualization".</li>
+            </ol>
+        </li>
+        <li>The bigger nodes represent the pages with <strong>higher eccentricity values</strong>, indicating their <strong>ability to connect cross communities</strong>.</li>
+    </ol>
+
+</body>
+</html>
