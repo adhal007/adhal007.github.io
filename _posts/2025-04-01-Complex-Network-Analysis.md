@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Network Analysis Part I. How to build a network and detect communities using gephi
+title: Network Analysis: How to build a network and detect communities using gephi (Part 1)
 tags: ["NetworkX", "Gephi", "Wikipedia Pages", "Community Detection", "Snowball Sampling"]
 mathjax: true
 ---
