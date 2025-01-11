@@ -12,15 +12,26 @@ use-site-title: true
         color: #333;
         margin: 0;
         padding: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
     }
 
     .content-wrapper {
+        display: flex;
+        flex-direction: row;
+        gap: 30px;
+        margin: 20px auto;
         width: 100%;
-        max-width: 800px;
+        max-width: 1400px;
         padding: 20px;
+    }
+
+    .about-section {
+        flex: 1;
+        min-width: 300px;
+    }
+
+    .updates-section {
+        flex: 1;
+        min-width: 300px;
     }
 
     h1, h2 {
@@ -58,11 +69,12 @@ use-site-title: true
     }
 
     .updates-list {
-        height: 300px;
+        height: 600px; /* Increased height to match about section */
         overflow: auto;
         border: 1px solid #e9ecef;
         border-radius: 4px;
         padding: 15px;
+        list-style: none;
     }
 
     .updates-list li {
@@ -71,91 +83,96 @@ use-site-title: true
         border-bottom: 1px solid #e9ecef;
     }
 
-    .updates-list li:last-child {
-        border-bottom: none;
-    }
-
     .date {
         font-weight: bold;
-        color: #6c757d;
+        color: #007bff;
+    }
+
+    /* Make it responsive for mobile */
+    @media (max-width: 768px) {
+        .content-wrapper {
+            flex-direction: column;
+        }
     }
 </style>
 
 <div class="content-wrapper">
-    <p class="about-text">
-        <span class="fa fa-graduation-cap about-icon"></span>
-        I'm a data scientist, with 6+ years of expertise in statistical design, modeling and analysis of high dimensional data-sets. At <a href="https://serimmune.com" target="_blank"><strong>Serimmune</strong></a>. I 
-        most recently worked on statistical modeling of Long-Covid immune response using unbiased ML models. Currently, I'm also building a streamlined codebase for different ML, DL and bioinformatics analysis tools <a href="https://abhilashdhal.com/projects" target="_blank"><strong>OmixHub</strong></a>. I have an MS in 
-        <strong>Biophysics</strong> from the University of California (supervised by the awesome
-        <a href="http://qtl.rocks/chenglab.html" target="_blank">Professor Hao Cheng</a>) and my Bachelor of <strong>Biochemical Engineering</strong> from 
-        IIT-BHU, India. My masters thesis project involved
-        <a href="https://github.com/adhal007/SSBR-JWAS-Implementation" target="_blank">Statistical analysis of GWAS by bayesian methods</a>.
-    </p>
+    <div class="about-section">
+        <p class="about-text">
+            <span class="fa fa-graduation-cap about-icon"></span>
+            I am a <strong>Data Scientist</strong> with a strong background in <strong>Machine Learning</strong> and <strong>Bioinformatics</strong>. 
+            Currently working on <a href="https://github.com/adhal007/OmixHub">OmixHub</a>, a tool for analyzing high-dimensional NGS cancer datasets.
+        </p>
 
-    <p class="about-text">
-        <span class="fa fa-code about-icon"></span>
-        I pride myself in end to end development of software tools for <strong> Statistical Models </strong>. I'm experienced in python, R, julia, SQL and google cloud infrastructure.
-    </p>
+        <p class="about-text">
+            <span class="fa fa-flask about-icon"></span>
+            My research focuses on developing <strong>Machine Learning</strong> models for analyzing biological data. Recent work includes 
+            <a href="https://github.com/adhal007/SSBR-JWAS-Implementation">Statistical analysis of GWAS by bayesian methods</a>.
+        </p>
 
-    <p class="about-text">
-        <span class="fa fa-heart about-icon"></span>
-        I'm a real madrid fan (Hala Madrid), and enjoy scientific enterpreneurial debates and problem solving.  
-    </p>
+        <p class="about-text">
+            <span class="fa fa-code about-icon"></span>
+            I pride myself in end to end development of software tools for <strong>Statistical Models</strong>. I'm experienced in python, R, julia, SQL and google cloud infrastructure.
+        </p>
 
-    <p class="about-text">
-        <span class="fa fa-globe about-icon"></span>
-        Grew up in <i>mumbai, India</i>; moved to <i>Davis, California</i> for my graduate study, Currently in Santa Barbara, CA .
-    </p>
+        <p class="about-text">
+            <span class="fa fa-heart about-icon"></span>
+            I'm a real madrid fan (Hala Madrid), and enjoy scientific enterpreneurial debates and problem solving.  
+        </p>
 
-    <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+        <p class="about-text">
+            <span class="fa fa-globe about-icon"></span>
+            Grew up in <i>mumbai, India</i>; moved to <i>Davis, California</i> for my graduate study, Currently in Santa Barbara, CA.
+        </p>
+    </div>
 
-    <b>Updates:</b><br><br>
-
-    <ul class="updates-list">
-        <li>
-            <span class="date">December 2024:</span> Deployed dashboard for microbiome analysis tool   
-            <a href="https://toposcore.shinyapps.io/toposcore-calculator/">TOPOSCORE</a> to aid clinicians and bioinformaticians.  
-        </li><br>
-        <li>
-            <span class="date">October 2024:</span> Started Working as a Research Fellow for  
-            <a href="https://portale.units.it/it">University of Trieste</a>.  
-        </li><br>
-        <li>
-            <span class="date">September 2024:</span> I released the documentation for <a href="https://omixhub.readthedocs.io/en/latest/">OmixHub</a>, 
-            a one-stop application of well-known ML and DL based classification, feature selection and 
-            other bioinformatics in high dimensional NGS cancer datasets 
-            from <a href="https://portal.gdc.cancer.gov/">Genomic Data Commons</a>.  
-        </li><br>
-
-        <li><i>August 2024:</i> I successfully completed  
-            <a href="https://summerofcode.withgoogle.com/programs/2024/projects/TgAYG5dKGoogle">Summer of Code(GSOC), 2024</a> as a Contributor! I will be looking
-            forward to writing a paper on metadata harmonization with </b> Sehyun Oh, Jonathan Davenport and Michele W</b>.
-        </li><br>
-
-        <li><i>May 2024:</i> I joined <a href="https://www.cbioportal.org/" ><b>cBioPortal</b></a> through 
-            <a href="https://summerofcode.withgoogle.com/programs/2024/projects/TgAYG5dKGoogle">Summer of Code(GSOC), 2024</a> as a Contributor! I will be working
-            on Clinical metadata harmonization using advanced NLP models mentored by </b> Sehyun Oh, Jonathan Davenport and Michele W</b>.
-        </li><br>
-
-        <li><i>March 2024:</i> Our <b> Moderna paper</b> 
-            <a href="https://www.frontiersin.org/journals/immunology/articles/10.3389/fimmu.2024.1285278/full">Profiling antibody epitopes induced by mRNA-1273 vaccination and boosters </a> 
-            got accepted at <a href="https://www.frontiersin.org/journals/immunology"> </b>Frontiers in Immunology</b></a>.
-        </li><br>
-
-        <li><i>November 2023:</i> I started an open source tool <a href="https://github.com/adhal007/OmixHub"></b>Omixhub</b></a>
-            for a one stop application of well known ML and DL based classification, feature selection and other bioinformatics in high dimensional NGS cancer datasets 
-            from <a href="https://portal.gdc.cancer.gov/"> Genomic Data Commons</a> .
-        </li><br>
-
-        <li><i>September 2023:</i> <b>Long COVID paper</b> published in <a href="https://www.nature.com/">nature</a>
-            . The paper investigated the unbiased machine learning models to identify the key features that are most strongly 
-            associated with long COVID status<a href="https://www.nature.com/articles/s41586-023-06651-y">(Led by </b>Jon Klein's Group)</b></a> .
-        </li><br>
-    
-        <li><i>April 2022:</i> I was invited by my masters PI, Hao Cheng to give a talk on 
-            <a href="https://video.ucdavis.edu/media/Abhilash+Dhal+ANSCI+Seminar+4-11-2022/1_l50244q2"> Application of Serum epitope repertoire analysis (SERA) 
-            for early detection for Renal Cell Carcinoma</a> at <a href="https://animalscience.ucdavis.edu/"> UC Davis, Animal Science Group</a>.
-        </li><br>
-    </ul>
-    <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+    <div class="updates-section">
+        <b>Updates:</b><br><br>
+        <ul class="updates-list">
+            <li>
+                <span class="date">December 2024:</span> Deployed dashboard for microbiome analysis tool   
+                <a href="https://toposcore.shinyapps.io/toposcore-calculator/">TOPOSCORE</a> to aid clinicians and bioinformaticians.  
+            </li>
+            <li>
+                <span class="date">October 2024:</span> Started Working as a Research Fellow for  
+                <a href="https://portale.units.it/it">University of Trieste</a>.  
+            </li>
+            <li>
+                <span class="date">September 2024:</span> I released the documentation for <a href="https://omixhub.readthedocs.io/en/latest/">OmixHub</a>, 
+                a one-stop application of well-known ML and DL based classification, feature selection and 
+                other bioinformatics in high dimensional NGS cancer datasets 
+                from <a href="https://portal.gdc.cancer.gov/">Genomic Data Commons</a>.  
+            </li>
+            <li>
+                <span class="date">August 2024:</span> I successfully completed  
+                <a href="https://summerofcode.withgoogle.com/programs/2024/projects/TgAYG5dKGoogle">Summer of Code(GSOC), 2024</a> as a Contributor! I will be looking
+                forward to writing a paper on metadata harmonization with Sehyun Oh, Jonathan Davenport and Michele W.
+            </li>
+            <li>
+                <span class="date">May 2024:</span> I joined <a href="https://www.cbioportal.org/">cBioPortal</a> through 
+                <a href="https://summerofcode.withgoogle.com/programs/2024/projects/TgAYG5dKGoogle">Summer of Code(GSOC), 2024</a> as a Contributor! I will be working
+                on Clinical metadata harmonization using advanced NLP models mentored by Sehyun Oh, Jonathan Davenport and Michele W.
+            </li>
+            <li>
+                <span class="date">March 2024:</span> Our Moderna paper 
+                <a href="https://www.frontiersin.org/journals/immunology/articles/10.3389/fimmu.2024.1285278/full">Profiling antibody epitopes induced by mRNA-1273 vaccination and boosters</a> 
+                got accepted at <a href="https://www.frontiersin.org/journals/immunology">Frontiers in Immunology</a>.
+            </li>
+            <li>
+                <span class="date">November 2023:</span> I started an open source tool <a href="https://github.com/adhal007/OmixHub">Omixhub</a>
+                for a one stop application of well known ML and DL based classification, feature selection and other bioinformatics in high dimensional NGS cancer datasets 
+                from <a href="https://portal.gdc.cancer.gov/">Genomic Data Commons</a>.
+            </li>
+            <li>
+                <span class="date">September 2023:</span> Long COVID paper published in <a href="https://www.nature.com/">nature</a>. 
+                The paper investigated the unbiased machine learning models to identify the key features that are most strongly 
+                associated with long COVID status<a href="https://www.nature.com/articles/s41586-023-06651-y">(Led by Jon Klein's Group)</a>.
+            </li>
+            <li>
+                <span class="date">April 2022:</span> I was invited by my masters PI, Hao Cheng to give a talk on 
+                <a href="https://video.ucdavis.edu/media/Abhilash+Dhal+ANSCI+Seminar+4-11-2022/1_l50244q2">Application of Serum epitope repertoire analysis (SERA) 
+                for early detection for Renal Cell Carcinoma</a> at <a href="https://animalscience.ucdavis.edu/">UC Davis, Animal Science Group</a>.
+            </li>
+        </ul>
+    </div>
 </div>
