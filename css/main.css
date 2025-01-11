@@ -75,6 +75,30 @@ img::-moz-selection {
 .disqus-comments {
   margin-top: 30px;
 }
+/* Modify or add these rules */
+.container {
+  max-width: 95%;  /* Increased from default */
+  padding: 15px;
+}
+
+@media (min-width: 768px) {
+  .container {
+    width: 95%;  /* Increased from ~750px */
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    width: 95%;  /* Increased from ~970px */
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    width: 95%;  /* Increased from ~1170px */
+    max-width: 1400px; /* Added to prevent too wide layout on very large screens */
+  }
+}
 
 @media only screen and (min-width: 768px) {
   .disqus-comments {
