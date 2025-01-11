@@ -1,3 +1,40 @@
+/* Add or modify these rules at the top of your CSS file */
+.container {
+  max-width: 95%; /* Increased from default */
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+@media only screen and (min-width: 768px) {
+  .container {
+    width: 90%; /* Increased from default */
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .container {
+    width: 90%; /* Increased from default */
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .container {
+    width: 90%; /* Increased from default */
+    max-width: 1400px; /* Added max-width to prevent too wide layout */
+  }
+}
+
+/* Rest of your existing CSS remains the same */
+.header-section.has-img .no-img {
+  margin-top: 0;
+  background: #FCFCFC;
+  margin: 0 0 40px;
+  padding: 20px 0;
+  box-shadow: 0 0 5px #AAA;
+}
+
 .header-section.has-img .no-img {
   margin-top: 0;
   background: #FCFCFC;
