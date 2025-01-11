@@ -280,6 +280,10 @@ prose:
           label: "Publish"
           help: "Check to publish post, uncheck to hide."
 
+# Add your custom CSS here
+extracss:
+  - "/assets/css/custom.css"
+
 plugins:
   - jekyll-paginate
   
