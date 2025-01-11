@@ -1,0 +1,83 @@
+---
+layout: page
+title: Projects
+---
+
+<style>
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 2rem 0;
+}
+
+.project-card {
+  border: 1px solid #eee;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.2s;
+  text-decoration: none;
+  color: inherit;
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.project-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.project-info {
+  padding: 1rem;
+}
+
+.project-category {
+  font-size: 0.8rem;
+  color: #0085A1;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.project-title {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
+  color: #2c3e50;
+}
+
+.project-description {
+  color: #666;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.category-title {
+  margin: 2rem 0 1rem;
+  color: #2c3e50;
+  border-bottom: 2px solid #0085A1;
+  padding-bottom: 0.5rem;
+}
+</style>
+
+{% assign categories = site.projects | map: "category" | uniq %}
+
+{% for category in categories %}
+<h2 class="category-title">{{ category }}</h2>
+<div class="project-grid">
+  {% assign category_projects = site.projects | where: "category", category %}
+  {% for project in category_projects %}
+    <a href="{{ project.link }}" class="project-card">
+      <img src="{{ project.image }}" alt="{{ project.title }}" class="project-image">
+      <div class="project-info">
+        <div class="project-category">{{ project.category }}</div>
+        <h3 class="project-title">{{ project.title }}</h3>
+        <p class="project-description">{{ project.description }}</p>
+      </div>
+    </a>
+  {% endfor %}
+</div>
+{% endfor %}

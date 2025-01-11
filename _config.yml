@@ -28,6 +28,7 @@ navbar-links:
   # Certifications: "certifications"  
   Blogs:  "blog"
   Projects: "projectsoverview"
+  NewProjects: "newprojectsoverview"
     # - DeSeq: "https://github.com/adhal007/adhal007.github.io/tree/master/files" 
     # - Umap and clustering on GE data: "https://github.com/adhal007/OmicsProjects/blob/main/UmapApplication/README.md"
     # - Starcraft II Agent: "https://github.com/adhal007/SC2-GCP-CNN"
@@ -183,8 +184,21 @@ paginate: 5
 kramdown:
   input: GFM
 
+# Add this to your collections configuration
+collections:
+  projects:
+    output: true
+    permalink: /projects/:title/
+
 # Default YAML values (more information on Jekyll's site)
 defaults:
+  -
+    scope:
+      path: ""
+      type: "projects"
+    values:
+      layout: "project"
+      show-avatar: true  
   -
     scope:
       path: ""
